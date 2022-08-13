@@ -7,7 +7,7 @@
 - Simple and lightweight
 
 [GitHub](https://github.com/lycheeverse/lychee/)
-[Get Started](#welcome-to-lychee)
+[Get Started](#main)
 
 <!-- background color -->
 
