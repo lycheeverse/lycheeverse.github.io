@@ -5,7 +5,7 @@
 
 - Installation
 
-  - [Installation](install.md)
+  - [Command Line](install.md)
   - [Github Action](github-action.md)
   - [Docker](docker.md)
 

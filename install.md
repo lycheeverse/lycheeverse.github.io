@@ -58,5 +58,4 @@ apt install gcc pkg-config libc6-dev libssl-dev
 cargo install lychee
 ```
 
-
 [contribute]: https://github.com/lycheeverse/lychee/issues/59
