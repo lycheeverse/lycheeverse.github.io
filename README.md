@@ -1,4 +1,8 @@
-# Official lychee documentation
+<img align="left" width="90" height="90" src="_media/icon.svg"> 
+
+## Documentation
+
+<br clear="both"/>
 
 This is the source code for the official documentation page of [lychee].
 
