@@ -1,4 +1,4 @@
-![lychee](_media/icon.svg)
+![lychee](_media/logo.svg)
 
 > A fast, async link checker written in Rust
 
