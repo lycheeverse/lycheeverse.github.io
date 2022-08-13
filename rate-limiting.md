@@ -8,7 +8,7 @@ GitHub token not specified. To check GitHub links reliably, use `--github-token`
 flag / `GITHUB_TOKEN` env var.
 ```
 
-it means you're getting rate-limited. As per the message, you can make lychee
+it means **you're getting rate-limited** 😐. As per the message, you can make lychee
 use a GitHub personal access token to circumvent this.
 
 The token can be generated in your GitHub account settings page. A personal

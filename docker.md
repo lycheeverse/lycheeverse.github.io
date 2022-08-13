@@ -16,7 +16,7 @@ is required to show the progress bar.
 docker run --init -it -v `pwd`:/input lycheeverse/lychee /input/README.md
 ```
 
-Once you're inside Docker, use lychee as usual, e.g.
+Once you're inside the Docker container, use lychee as usual, e.g.
 
 ```
 lychee .
