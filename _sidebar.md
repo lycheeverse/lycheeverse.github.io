@@ -1,6 +1,6 @@
 - Welcome
 
-  - [Introduction](/README.md)
+  - [Introduction](/home.md)
   - [Features](/features.md)
 
 - Installation
