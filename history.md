@@ -14,6 +14,15 @@ most of the time and the result is called lychee.
 ## Trivia
 
 Matthias live-coded the first version of lychee in an episode of [Hello Rust][hello-rust].
-You can watch it [here](https://hello-rust.show/10/).
+
+You can watch it below or [here](https://hello-rust.show/10/).
+
+<div style=" position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; margin-bottom: 40px;">
+<iframe
+style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+src="https://www.youtube.com/embed/DArJCR0HDL8"
+webkitallowfullscreen mozallowfullscreen allowfullscreen>
+</iframe>
+</div>
 
 [hello-rust]: https://hello-rust.show/
