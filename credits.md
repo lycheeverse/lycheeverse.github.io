@@ -3,10 +3,14 @@
 lychee would not be possible without the following projects.
 **Thanks a lot to all maintainers and contributors.**
 
-- [robinst/linkify]: Rust library to find links such as URLs and email addresses in plain text, handling surrounding punctuation correctly.
-- [reacherhq/check-if-mail-exists]: Check if an email address exists without sending any email.
 - [peter-evans/link-checker]: A GitHub action for link checking repository Markdown and HTML files. It served as the original template for lychee-action.
+- [raphlinus/pulldown-cmark]: A pull parser for CommonMark, written in Rust. It comes with a simple command-line tool, useful for rendering to HTML, and is also designed to be easy to use from as a library.
+- [reacherhq/check-if-mail-exists]: Check if an email address exists without sending any email.
+- [robinst/linkify]: Rust library to find links such as URLs and email addresses in plain text, handling surrounding punctuation correctly.
+- [untitaker/html5gum]: A WHATWG-compliant HTML5 tokenizer and tag soup parser
 
-[robinst/linkify]: https://github.com/robinst/linkify
-[reacherhq/check-if-mail-exists]: https://github.com/reacherhq/check-if-email-exists
 [peter-evans/link-checker]: https://github.com/peter-evans/link-checker
+[raphlinus/pulldown-cmark]: https://github.com/raphlinus/pulldown-cmark
+[reacherhq/check-if-mail-exists]: https://github.com/reacherhq/check-if-email-exists
+[robinst/linkify]: https://github.com/robinst/linkify
+[untitaker/html5gum]: https://github.com/untitaker/html5gum
