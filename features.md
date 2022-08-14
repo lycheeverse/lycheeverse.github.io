@@ -56,3 +56,5 @@ outdated information.
 [skip private domains]: https://github.com/appscodelabs/liche/blob/a5102b0bf90203b467a4f3b4597d22cd83d94f99/url_checker.go
 [use as library]: https://github.com/raviqqe/liche/issues/13
 [config file]: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml
+
+<sup>1</sup> Other machine-readable formats like CSV are supported.
