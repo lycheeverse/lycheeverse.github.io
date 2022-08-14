@@ -13,6 +13,15 @@ most of the time and the result is called lychee.
 
 ## Trivia
 
+
+### Project Name
+
+The name lychee is a play on *link checker*. Originally we wanted to call it
+[liche](https://github.com/raviqqe/liche), but that name was already used by a
+link checker written in Go (which has since been deprecated).
+
+### Original Motivation
+
 Matthias live-coded the first version of lychee in an episode of [Hello Rust][hello-rust].
 
 You can watch it below or [here](https://hello-rust.show/10/).
