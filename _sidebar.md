@@ -8,6 +8,7 @@
   - [Command Line](install.md)
   - [Github Action](github-action.md)
   - [Docker](docker.md)
+  - [Library Usage](library.md)
 
 - Troubleshooting Guide
 
@@ -16,6 +17,10 @@
   - [Mail Addresses](mail.md)
   - [Too Many Open Files](open-files.md)
   - [Custom Status Codes](status-codes.md)
+
+- Development
+
+  - [How It Works](how-it-works.md)
 
 - About Us
 
