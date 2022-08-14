@@ -12,7 +12,7 @@
 
 - Troubleshooting Guide
 
-  - [Rate Limiting](rate-limiting.md)
+  - [Rate Limits](rate-limits.md)
   - [Custom Headers](custom-headers.md)
   - [Mail Addresses](mail.md)
   - [Too Many Open Files](open-files.md)
