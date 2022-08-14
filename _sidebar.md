@@ -21,6 +21,7 @@
 - Development
 
   - [How It Works](how-it-works.md)
+  - [Contributing](contributing.md)
 
 - About Us
 
