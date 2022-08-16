@@ -25,6 +25,7 @@
 
 - About Us
 
+  - [Sponsoring](/sponsoring.md)
   - [Credits](/credits.md)
   - [Community](/community.md)
   - [Users](/users.md)
