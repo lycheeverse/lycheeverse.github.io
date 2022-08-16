@@ -15,7 +15,7 @@ Let's start with the most simple usage example:
 lychee .
 ```
 
-This _recursively_ check all links in all supported files inside the current
+This _recursively_ checks all links in all supported files inside the current
 directory.
 
 ## Advanced Usage
