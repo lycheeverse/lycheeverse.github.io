@@ -22,5 +22,5 @@ We use three main extractors
 The extractors do all the heavy lifting, so we want them to be as fast and
 memory-efficient as possible.
 
-[stream]: https://docs.rs/futures/latest/futures/stream/trait.Stream.html.
+[stream]: https://docs.rs/futures/latest/futures/stream/trait.Stream.html
 [reqwest]: https://github.com/seanmonstar/reqwest
