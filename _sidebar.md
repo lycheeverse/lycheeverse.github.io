@@ -18,6 +18,10 @@
   - [Too Many Open Files](open-files.md)
   - [Custom Status Codes](status-codes.md)
 
+- Github Action Recipes
+
+  - [Reuse Issue](reuse-issue.md)
+
 - Development
 
   - [How It Works](how-it-works.md)
