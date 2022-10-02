@@ -13,14 +13,15 @@ Each link gets filtered by an async pipeline and finally gets sent to a pool of
 
 ## Extractors
 
-We use three main extractors
+The extractors do all the heavy lifting.
+They extract all links from a given input file and return them as a stream.
+We want the extractors to be as fast and memory-efficient as possible.
+
+Currently we maintain three main extractors:
 
 - [Pulldown CMark](https://github.com/raphlinus/pulldown-cmark) for Markdown files
 - [html5gum](https://github.com/untitaker/html5gum) for HTML
 - [linkify](https://github.com/robinst/linkify) as a fallback for plaintext files and other unknown formats.
-
-The extractors do all the heavy lifting, so we want them to be as fast and
-memory-efficient as possible.
 
 [stream]: https://docs.rs/futures/latest/futures/stream/trait.Stream.html
 [reqwest]: https://github.com/seanmonstar/reqwest
