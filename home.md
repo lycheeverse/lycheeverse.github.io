@@ -74,8 +74,9 @@ If you have [atool] installed, you can check links inside epub files as well!
 acat -F zip {file.epub} "_.xhtml" "_.html" | lychee -
 ```
 
+> [!ATTENTION]
 > lychee parses other file formats as plaintext and extracts links using
-> [linkify]. This generally works well if there are no format or encoding
+> [linkify]. This generally works well if there are no format- or encoding
 > specifics, but in case you need dedicated support for a new file format, please
 > consider [creating an issue][issue].
 

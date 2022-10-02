@@ -1,5 +1,6 @@
 ## Rate Limits
 
+> [!TIP]
 > If you are checking many links from a single website, chances are you will get
 > rate limited at some point. The result is that lychee will report a lot of broken
 > links with `429` as a status code.

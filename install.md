@@ -1,8 +1,10 @@
 ## Installation
 
-> There are many ways to install lychee and [you can contribute][contribute] to add it to more platforms ❤️.
-
 Please find the installation method for your favorite operating system below.
+
+> [!TIP]
+> Did you know that [you can add support][contribute] for missing platforms? ❤️
+
 
 ### Arch Linux
 

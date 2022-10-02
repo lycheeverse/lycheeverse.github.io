@@ -8,7 +8,8 @@ It reads inputs and extracts links into a [`futures::stream::Stream`][stream].
 Each link gets filtered by an async pipeline and finally gets sent to a pool of
 [reqwest] HTTP clients, which checks all links concurrently.
 
-> Note: As a consequence results get printed in order of response time of each
+> [!NOTE]
+> As a consequence results get printed in order of response time of each
 > individual link and not in order of appearance inside input files.
 
 ## Extractors
