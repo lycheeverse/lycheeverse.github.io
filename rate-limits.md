@@ -1,7 +1,7 @@
 ## Rate Limits
 
 > [!NOTE]
-> If you are checking many links from a single website, chances are you will get
+> When checking many links from a single website, chances are you will get
 > rate limited at some point. The result is that lychee will report a lot of broken
 > links with `429` as a status code.
 > Below you'll find some ideas to mitigate that scenario.
@@ -36,7 +36,7 @@ accept = [429, 200]
 #### GitHub Rate Limiting
 
 GitHub has a quite aggressive rate limiter.
-If you're seeing errors like
+When you come across errors like
 
 ```bash
 GitHub token not specified. To check GitHub links reliably, use `--github-token`
@@ -69,8 +69,9 @@ permissions is enough to be able to check public repos links.
 
 #### Exclude Entire Website When Getting Rate-Limited
 
-If you find a website with a particularly stringent rate-limiting policy, you
-can exclude it from getting checked altogether. Example: `--exclude example.com`.
+Sometimes you encounter a website with a particularly stringent rate-limiting
+policy and none of the suggestions work.
+In that case you can exclude it from getting checked altogether. Example: `--exclude example.com`.
 
 #### Cache the Results
 

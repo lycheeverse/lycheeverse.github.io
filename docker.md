@@ -1,6 +1,7 @@
 # Docker
 
-If you don't want to install lychee locally, **you can use Docker instead** 🐳.
+If you can't or don't want to install lychee locally, **you can use Docker
+instead** 🐳.
 
 We provide a handy official image over at [lycheeverse/lychee][docker-image],
 which gets automatically updated on every release.

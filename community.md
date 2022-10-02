@@ -1,6 +1,6 @@
 # Community
 
-If you have any questions, feature requests or general feedback about lychee,
+For any questions, feature requests or general feedback about lychee,
 feel free to connect with us. Here are some places where you can get in contact.
 Don't be shy. 🤗
 

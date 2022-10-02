@@ -4,7 +4,7 @@ We are proud that some of the biggest projects on Github get checked by lychee.
 Please find a list of users below.
 
 > [!NOTE]
-> If you are using lychee for your project, [please add it here](https://github.com/lycheeverse/lychee/pull/730).
+> Are you using lychee for your project? [Please add it here](https://github.com/lycheeverse/lychee/pull/730).
 
 - [opensearch-project/OpenSearch](https://github.com/opensearch-project/OpenSearch)
 - [ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)

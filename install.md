@@ -3,7 +3,7 @@
 Please find the installation method for your favorite operating system below.
 
 > [!TIP]
-> Did you know that [you can add support][contribute] for missing platforms? ❤️
+> Did you know that [you could add support][contribute] for missing platforms? 😉
 
 
 ### Arch Linux
