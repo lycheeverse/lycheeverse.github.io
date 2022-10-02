@@ -68,4 +68,4 @@ can exclude it from getting checked altogether. Example: `--exclude example.com`
 
 #### Cache the results
 
-If the `--cache` flag is used, this can also help to reduce the amount of calls that are send to a page because only links that exceed the cache age are queried again. This value can be adjusted with `--max-cache-age`, e.g. `12h`. 
+If the `--cache` flag is used, this can also help to reduce the amount of calls that are sent to a page because only links that exceed the cache age are queried again. This value can be adjusted with `--max-cache-age`, e.g. `12h`. 
