@@ -6,6 +6,8 @@
 
 This is the source code for the official documentation page of [lychee].
 
+[![Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml)
+
 ## Contributing
 
 This website is built with [docsify]. You need to install it first in order to contribute.
