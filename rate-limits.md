@@ -1,6 +1,6 @@
 ## Rate Limits
 
-> [!TIP]
+> [!NOTE]
 > If you are checking many links from a single website, chances are you will get
 > rate limited at some point. The result is that lychee will report a lot of broken
 > links with `429` as a status code.
@@ -46,7 +46,12 @@ flag / `GITHUB_TOKEN` env var.
 it means **you're getting rate-limited** 😐. As per the message, you can make lychee
 use a GitHub personal access token to circumvent this.
 
-> When using `GITHUB_TOKEN`, the rate limit is **1,000 requests per hour per repository**. For requests to resources that belong to an enterprise account on GitHub.com, GitHub Enterprise Cloud's rate limit applies, and the limit is 15,000 requests per hour per repository. ([Source](https://docs.github.com/en/developers/apps/building-github-apps/rate-limits-for-github-apps))
+> [!TIP]
+> When using `GITHUB_TOKEN`, the rate limit is **1,000 requests per hour per repository**. 
+> For requests to resources that belong to an enterprise account on GitHub.com,
+> GitHub Enterprise Cloud's rate limit applies, and the limit is 15,000 requests
+> per hour per repository. ([Source](https://docs.github.com/en/developers/apps/building-github-apps/rate-limits-for-github-apps))
+> So using a token can greatly increase the number of requests you can make! 🚀
 
 The token can be generated in your GitHub account settings page. A personal
 token with no extra permissions is enough to be able to check public repos
@@ -67,6 +72,8 @@ permissions is enough to be able to check public repos links.
 If you find a website with a particularly stringent rate-limiting policy, you
 can exclude it from getting checked altogether. Example: `--exclude example.com`.
 
-#### Cache the results
+#### Cache the Results
 
-If the `--cache` flag is used, this can also help to reduce the amount of calls that are sent to a page because only links that exceed the cache age are queried again. This value can be adjusted with `--max-cache-age`, e.g. `12h`. 
+If the `--cache` flag is used, this can also help to reduce the amount of calls
+that are sent to a page because only links that exceed the cache age are queried
+again. This value can be adjusted with `--max-cache-age`, e.g. `12h`.
