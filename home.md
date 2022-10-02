@@ -9,7 +9,7 @@ reStructuredText, **websites** and more!
 
 Let's start with the most simple usage example:
 
-### Check All Files In Directory <!-- {docsify-ignore} -->
+### Check All Links In Current Directory <!-- {docsify-ignore} -->
 
 ```bash
 lychee .
@@ -18,22 +18,22 @@ lychee .
 This _recursively_ checks all links in all supported files inside the current
 directory.
 
+### Check All Links On A Website
+
+```bash
+lychee https://example.com
+```
+
 ## Advanced Usage
 
-You can also specify various types of inputs.
-Below are all the different options you have.
+You can check different file-types and provide multiple inputs.
 
 ### Check Only Specific Files
 
 ```bash
 lychee README.md
 lychee test.html info.txt
-```
-
-### Check Websites
-
-```bash
-lychee https://endler.dev
+lychee test.html info.txt https://example.com
 ```
 
 ### Check Links In Directories, But Block All Network Requests
@@ -46,6 +46,13 @@ lychee --offline path/to/directory
 
 ```bash
 lychee https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
+```
+
+### Check links from `stdin`
+
+```bash
+cat test.md | lychee -
+echo 'https://example.com' | lychee -
 ```
 
 ### Check Links In Local Files Via Shell Glob
@@ -68,7 +75,7 @@ lychee --glob-ignore-case --verbose "~/projects/\*_/[r]eadme._"
 
 ### Check Links From Epub File
 
-If you have [atool] installed, you can check links inside epub files as well!
+If you have [atool] installed, you can check links inside `.epub` files as well!
 
 ```bash
 acat -F zip {file.epub} "_.xhtml" "_.html" | lychee -
