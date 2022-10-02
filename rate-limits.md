@@ -66,3 +66,7 @@ permissions is enough to be able to check public repos links.
 
 If you find a website with a particularly stringent rate-limiting policy, you
 can exclude it from getting checked altogether. Example: `--exclude example.com`.
+
+#### Cache the results
+
+If the `--cache` flag is used, this can also help to reduce the amount of calls that are sent to a page because only links that exceed the cache age are queried again. This value can be adjusted with `--max-cache-age`, e.g. `12h`. 
