@@ -37,7 +37,7 @@ accept = [429, 200]
 GitHub has a quite aggressive rate limiter.
 If you're seeing errors like
 
-```
+```bash
 GitHub token not specified. To check GitHub links reliably, use `--github-token`
 flag / `GITHUB_TOKEN` env var.
 ```

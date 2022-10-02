@@ -11,7 +11,7 @@ Let's start with the most simple usage example:
 
 ### Check All Files In Directory <!-- {docsify-ignore} -->
 
-```
+```bash
 lychee .
 ```
 
@@ -25,44 +25,44 @@ Below are all the different options you have.
 
 ### Check Only Specific Files
 
-```
+```bash
 lychee README.md
 lychee test.html info.txt
 ```
 
 ### Check Websites
 
-```
+```bash
 lychee https://endler.dev
 ```
 
 ### Check Links In Directories, But Block All Network Requests
 
-```
+```bash
 lychee --offline path/to/directory
 ```
 
 ### Check Links In A Remote File
 
-```
+```bash
 lychee https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
 ```
 
 ### Check Links In Local Files Via Shell Glob
 
-```
+```bash
 lychee ~/projects/*/README.md
 ```
 
 ### Advanced Globbing And `~` Expansion
 
-```
+```bash
 lychee "~/projects/big_project/\*_/README._"
 ```
 
 ### Ignore Case When Globbing And Check Result For Each Link
 
-```
+```bash
 lychee --glob-ignore-case --verbose "~/projects/\*_/[r]eadme._"
 ```
 
@@ -70,7 +70,7 @@ lychee --glob-ignore-case --verbose "~/projects/\*_/[r]eadme._"
 
 If you have [atool] installed, you can check links inside epub files as well!
 
-```
+```bash
 acat -F zip {file.epub} "_.xhtml" "_.html" | lychee -
 ```
 

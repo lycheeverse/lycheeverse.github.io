@@ -3,7 +3,7 @@
 We use https://github.com/reacherhq/check-if-email-exists for email checking.
 You can test your mail address with curl:
 
-```
+```bash
  curl -X POST \
   'https://api.reacher.email/v0/check_email' \
   -H 'content-type: application/json' \

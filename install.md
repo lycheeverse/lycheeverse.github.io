@@ -6,31 +6,31 @@ Please find the installation method for your favorite operating system below.
 
 ### Arch Linux
 
-```sh
+```bash
 pacman -S lychee-link-checker
 ```
 
 ### macOS
 
-```sh
+```bash
 brew install lychee
 ```
 
 ### NixOS
 
-```sh
+```bash
 nix-env -iA nixos.lychee
 ```
 
 ### FreeBSD
 
-```sh
+```bash
 pkg install lychee
 ```
 
 ### Termux
 
-```sh
+```bash
 pkg install lychee
 ```
 
@@ -47,14 +47,14 @@ On APT/dpkg-based Linux distros (e.g. Debian, Ubuntu, Linux Mint and Kali Linux)
 the following commands will install all required build dependencies, including
 the Rust toolchain and `cargo`:
 
-```sh
+```bash
 curl -sSf 'https://sh.rustup.rs' | sh
 apt install gcc pkg-config libc6-dev libssl-dev
 ```
 
 #### Compile and install lychee <!-- {docsify-ignore} -->
 
-```sh
+```bash
 cargo install lychee
 ```
 
