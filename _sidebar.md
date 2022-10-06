@@ -29,7 +29,7 @@
 
 - About Us
 
-  - [Sponsoring](/sponsoring.md)
+  - [Sponsors](/sponsors.md)
   - [Credits](/credits.md)
   - [Community](/community.md)
   - [Users](/users.md)
