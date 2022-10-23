@@ -8,7 +8,11 @@
   - [Command Line](/installation/install.md)
   - [Github Action](/installation/github-action.md)
   - [Docker](/installation/docker.md)
-  - [Library Usage](/installation/library.md)
+
+- Usage
+
+  - [Command Line](/usage/cli.md)
+  - [Library Usage](/usage/library.md)
 
 - Troubleshooting Guide
 
