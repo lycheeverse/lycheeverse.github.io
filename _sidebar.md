@@ -11,7 +11,7 @@
 
 - Usage
 
-  - [Command Line](/usage/cli.md)
+  - [Command Line Options](/usage/cli.md)
   - [Library Usage](/usage/library.md)
 
 - Troubleshooting Guide

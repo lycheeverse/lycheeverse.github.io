@@ -1,4 +1,4 @@
-# CLI Usage
+# Command Line Options
 
 lychee supports a lot of command line options.
 You can see all of them by running `lychee --help`.
