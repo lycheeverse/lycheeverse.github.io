@@ -12,7 +12,22 @@ migrating your website from `example.com` to `example.org`:
 lychee --remap 'example.com example.org' -- https://example.com/sitemap.xml 
 ```
 
-Of course you can combine this with other lychee features
+The `--remap` option takes a list of space-separated pairs of strings.
+The first string is the old domain and the second string is the new domain.
+The old domain is replaced with the new domain in all links.
+
+You can use this option multiple times to remap multiple domains and you can use
+regular expressions.
+
+You can also check the migration on a local `dev` version of your website:
+
+```bash
+lychee --remap 'example.com localhost:8000' ...
+```
+
+Of course you can also combine this with other lychee features.  
+In the below example we limit the number of concurrent requests to 4 to not
+overload the server.
 
 ```bash
 lychee --remap 'example.com example.org' \
@@ -23,23 +38,4 @@ lychee --remap 'example.com example.org' \
        --max-concurrency 4 \
        https://example.com/sitemap.xml 
 ```
-
-> [!NOTE]
-> In the above example we limit the number of concurrent requests to 4 
-> to not overload the server.
-
-You can also check the migration on a local `dev` version of your website:
-
-```bash
-lychee --remap 'example.com localhost:8000' ...
-```
-
-## How does it work?
-
-The `--remap` option takes a list of space-separated pairs of strings.
-The first string is the old domain and the second string is the new domain.
-The old domain is replaced with the new domain in all links.
-
-You can use this option multiple times to remap multiple domains and you can use
-regular expressions.
 
