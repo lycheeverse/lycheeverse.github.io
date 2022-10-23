@@ -18,6 +18,9 @@
   - [Too Many Open Files](open-files.md)
   - [Custom Status Codes](status-codes.md)
 
+- Recipes
+
+  - [Migrating Websites](recipes/migration.md)
 - Github Action Recipes
 
   - [Reuse Issue](reuse-issue.md)
