@@ -5,22 +5,23 @@
 
 - Installation
 
-  - [Command Line](install.md)
-  - [Github Action](github-action.md)
-  - [Docker](docker.md)
-  - [Library Usage](library.md)
+  - [Command Line](/installation/install.md)
+  - [Github Action](/installation/github-action.md)
+  - [Docker](/installation/docker.md)
+  - [Library Usage](/installation/library.md)
 
 - Troubleshooting Guide
 
-  - [Rate Limits](rate-limits.md)
-  - [Custom Headers](custom-headers.md)
-  - [Mail Addresses](mail.md)
-  - [Too Many Open Files](open-files.md)
-  - [Custom Status Codes](status-codes.md)
+  - [Rate Limits](/troubleshooting/rate-limits.md)
+  - [Custom Headers](/troubleshooting/custom-headers.md)
+  - [Mail Addresses](/troubleshooting/mail.md)
+  - [Too Many Open Files](/troubleshooting/open-files.md)
+  - [Custom Status Codes](/troubleshooting/status-codes.md)
 
 - Recipes
 
-  - [Migrating Websites](recipes/migration.md)
+  - [Migrating Websites](/recipes/migration.md)
+
 - Github Action Recipes
 
   - [Reuse Issue](reuse-issue.md)
