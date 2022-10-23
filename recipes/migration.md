@@ -39,3 +39,5 @@ lychee --remap 'example.com example.org' \
        https://example.com/sitemap.xml 
 ```
 
+For more information about the `--remap` option, see [#620](https://github.com/lycheeverse/lychee/pull/620) and the [example config file](https://github.com/lycheeverse/lychee/blob/4d31fb777dc6ddb0f870336c0875c218c5014624/lychee.example.toml).
+
