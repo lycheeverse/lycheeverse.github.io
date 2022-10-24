@@ -101,6 +101,6 @@ You can also write this:
 lychee --scheme http file -- https://example.com
 ```
 
-> [!NOTE]
+> [!ATTENTION]
 > If you use the shorthand notation you need to separate the options from the inputs with `--`.  
 > Otherwise, the options will be interpreted as inputs!
