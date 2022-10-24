@@ -28,12 +28,12 @@
 
 - Github Action Recipes
 
-  - [Reuse Issue](reuse-issue.md)
+  - [Reuse Issue](/reuse-issue.md)
 
 - Development
 
-  - [How It Works](how-it-works.md)
-  - [Contributing](contributing.md)
+  - [How It Works](/how-it-works.md)
+  - [Contributing](/contributing.md)
 
 - About Us
 
