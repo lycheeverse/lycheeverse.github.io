@@ -70,3 +70,37 @@ ARGS:
                    input (`-`). NOTE: Use `--` to separate inputs from options that allow multiple arguments
 
 ```
+
+> [!NOTE]
+> Most of the options (like `--scheme` or `--exclude`) are for **links inside inputs**,
+> and **not** for the filtering the inputs themselves.
+
+## Repeating Options
+
+Options marked with `...` can be specified multiple times.
+For example, `--exclude` can be specified multiple times to exclude multiple URLs.
+This is also true for `--headers`, `--include`, `--remap`, `--scheme`, and `--exclude-path`.
+
+Here is an example:
+
+```bash
+lychee --exclude https://example.com --exclude https://example.org
+```
+
+There is a shorthand where you can specify multiple arguments in one go.
+
+Instead of writing this:
+
+```bash
+lychee --scheme http --scheme file https://example.com
+```
+
+You can also write this:
+
+```bash
+lychee --scheme http file -- https://example.com
+```
+
+> [!NOTE]
+> If you use the shorthand notation you need to separate the options from the inputs with `--`.  
+> Otherwise, the options will be interpreted as inputs!
