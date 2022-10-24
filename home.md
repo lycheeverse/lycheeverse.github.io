@@ -1,6 +1,6 @@
 # Welcome to lychee!
 
-#### ...a fast, async, stream-based link checker written in Rust. ✨ <!-- {docsify-ignore} -->
+#### ...a fast, async, stream-based link checker written in Rust. 🦀✨ <!-- {docsify-ignore} -->
 
 lychee finds broken URLs and mail addresses inside **Markdown**, **HTML**,
 reStructuredText, **websites** and more!
