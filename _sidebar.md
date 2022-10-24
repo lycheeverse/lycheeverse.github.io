@@ -12,6 +12,7 @@
 - Usage
 
   - [Command Line Options](/usage/cli.md)
+  - [Configuration File](/usage/config.md)
   - [Library Usage](/usage/library.md)
 
 - Troubleshooting Guide
