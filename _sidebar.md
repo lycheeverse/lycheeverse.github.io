@@ -1,7 +1,7 @@
 - Welcome
 
-  - [Introduction](/home.md)
-  - [Features](/features.md)
+  - [Introduction](/introduction.md)
+  - [Comparison](/comparison.md)
 
 - Installation
 
@@ -9,7 +9,7 @@
   - [Github Action](/installation/github-action.md)
   - [Docker](/installation/docker.md)
 
-- Usage
+- Configuration
 
   - [Command Line Options](/usage/cli.md)
   - [Configuration File](/usage/config.md)

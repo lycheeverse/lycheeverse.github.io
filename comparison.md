@@ -1,7 +1,7 @@
-# Features <!-- {docsify-ignore} -->
+# Comparison <!-- {docsify-ignore} -->
 
-This comparison is made on a best-effort basis. Please create a PR to fix
-outdated information.
+This feature comparison is made on a best-effort basis. Please create a PR to
+fix outdated information.
 
 |                      | lychee  | [awesome_bot] | [muffet] | [broken-link-checker] | [linkinator] | [linkchecker]        | [markdown-link-check] | [fink] |
 | -------------------- | ------- | ------------- | -------- | --------------------- | ------------ | -------------------- | --------------------- | ------ |
