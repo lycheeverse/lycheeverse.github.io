@@ -1034,7 +1034,3 @@ pre:after {
 #docsify-darklight-theme p {
   visibility: hidden;
 }
-
-.alert {
-  border: 1px solid rgba(255, 255, 255, 0.5) !important;
-}
