@@ -21,7 +21,7 @@
   - [Custom Headers](/troubleshooting/custom-headers.md)
   - [Mail Addresses](/troubleshooting/mail.md)
   - [Too Many Open Files](/troubleshooting/open-files.md)
-  - [Custom Status Codes](/troubleshooting/status-codes.md)
+  - [Special Status Codes](/troubleshooting/status-codes.md)
 
 - Recipes
 
@@ -29,7 +29,7 @@
 
 - Github Action Recipes
 
-  - [Reuse Issue](/reuse-issue.md)
+  - [Reuse Github Issue](/reuse-issue.md)
 
 - Development
 

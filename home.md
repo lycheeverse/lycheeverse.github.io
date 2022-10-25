@@ -2,31 +2,24 @@
 
 #### ...a fast, async, stream-based link checker written in Rust. 🦀✨ <!-- {docsify-ignore} -->
 
-lychee finds broken URLs and mail addresses inside **Markdown**, **HTML**,
-reStructuredText, **websites** and more!
-
-## Basic Usage
-
-Let's start with the most simple usage example:
+lychee finds broken URLs and mail addresses inside **Markdown, HTML,
+reStructuredText, websites**, and more!  
+Let's go through some usage examples.
 
 ### Check All Links In Current Directory <!-- {docsify-ignore} -->
+
+The following command _recursively_ checks all links in all supported files
+inside the current directory.
 
 ```bash
 lychee .
 ```
-
-This _recursively_ checks all links in all supported files inside the current
-directory.
 
 ### Check All Links On A Website
 
 ```bash
 lychee https://example.com
 ```
-
-## Advanced Usage
-
-You can check different file-types and provide multiple inputs.
 
 ### Check Only Specific Files
 
