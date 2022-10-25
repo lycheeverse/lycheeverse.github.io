@@ -174,7 +174,7 @@ li input[type="checkbox"] {
 .app-nav li ul {
   background-color: #fff;
   border: 1px solid;
-  border-color: #ddd #ddd #ccc;
+  border-color: var(--borderColor) var(--borderColor) var(--borderColor);
   border-radius: 4px;
   box-sizing: border-box;
   display: none;
@@ -423,7 +423,7 @@ body.sticky .sidebar-toggle {
 
 .markdown-section td,
 .markdown-section th {
-  border: 1px solid #ddd;
+  border: 1px solid var(--borderColor);
   padding: 6px 13px;
 }
 
@@ -818,7 +818,6 @@ body {
 .markdown-section p,
 .markdown-section ul {
   line-height: 1.6rem;
-  word-spacing: 0.05rem;
 }
 
 .markdown-section ol,
@@ -1034,4 +1033,8 @@ pre:after {
 
 #docsify-darklight-theme p {
   visibility: hidden;
+}
+
+.alert {
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
 }
