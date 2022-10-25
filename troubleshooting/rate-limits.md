@@ -1,4 +1,4 @@
-## Rate Limits
+# Rate Limits
 
 > [!NOTE]
 > When checking many links from a single website, chances are you will get
@@ -6,7 +6,7 @@
 > links with `429` as a status code.
 > Below you'll find some ideas to mitigate that scenario.
 
-#### Limit The Number Of Retries
+## Limit The Number Of Retries
 
 If lychee hits a `429`, it will retry the request (after some exponential backoff).
 With many concurrent requests to the same site, this increases the chances of getting rate limited.
@@ -14,14 +14,14 @@ With many concurrent requests to the same site, this increases the chances of ge
 
 To avoid that, set the number of retries to 0: `--max-retries 0`.
 
-#### Reduce The Number Of Concurrent Requests
+## Reduce The Number Of Concurrent Requests
 
 You can limit the total number of concurrent requests with `--max-concurrency`. This
 way you can give the remote server some time to breath in-between requests and
 reduce the risk of getting rate-limited. Note that this will slow down execution
 in general, though, so you should play around with different values.
 
-#### Accept `429` Status Code
+## Accept `429` Status Code
 
 As a last resort, you might want to accept `429` as a valid status code.
 This way, rate limiting issues won't get reported.
@@ -33,7 +33,7 @@ the `lychee.toml`:
 accept = [429, 200]
 ```
 
-#### GitHub Rate Limiting
+## GitHub Rate Limiting
 
 GitHub has a quite aggressive rate limiter.
 When you come across errors like
@@ -47,7 +47,7 @@ it means **you're getting rate-limited** 😐. As per the message, you can make 
 use a GitHub personal access token to circumvent this.
 
 > [!TIP]
-> When using `GITHUB_TOKEN`, the rate limit is **1,000 requests per hour per repository**. 
+> When using `GITHUB_TOKEN`, the rate limit is **1,000 requests per hour per repository**.
 > For requests to resources that belong to an enterprise account on GitHub.com,
 > GitHub Enterprise Cloud's rate limit applies, and the limit is 15,000 requests
 > per hour per repository. ([Source](https://docs.github.com/en/developers/apps/building-github-apps/rate-limits-for-github-apps))
@@ -67,13 +67,13 @@ permissions is enough to be able to check public repos links.
 
 [config-file]: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml
 
-#### Exclude Entire Website When Getting Rate-Limited
+## Exclude Entire Website When Getting Rate-Limited
 
 Sometimes you encounter a website with a particularly stringent rate-limiting
 policy and none of the suggestions work.
 In that case you can exclude it from getting checked altogether. Example: `--exclude example.com`.
 
-#### Cache the Results
+## Cache the Results
 
 If the `--cache` flag is used, this can also help to reduce the amount of calls
 that are sent to a page because only links that exceed the cache age are queried

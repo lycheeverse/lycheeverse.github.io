@@ -1,4 +1,4 @@
-## Website Expects Custom Headers
+# Website Expects Custom Headers
 
 Some sites expect one or more custom headers to return a valid response. \
 For example, crates.io expects a `Accept: text/html` header or else it \

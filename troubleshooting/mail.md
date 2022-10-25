@@ -1,4 +1,4 @@
-## Unreachable Mail Address
+# Unreachable Mail Address
 
 We use https://github.com/reacherhq/check-if-email-exists for email checking.
 You can test your mail address with curl:

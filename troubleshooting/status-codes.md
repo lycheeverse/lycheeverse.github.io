@@ -1,4 +1,4 @@
-## Special Status Codes
+# Special Status Codes
 
 Some websites don't respond with a `200` (OK) status code. \ Instead they might
 send `204` (No Content), `206` (Partial Content), or [something else

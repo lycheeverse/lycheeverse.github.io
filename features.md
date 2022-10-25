@@ -1,4 +1,4 @@
-## Features <!-- {docsify-ignore} -->
+# Features <!-- {docsify-ignore} -->
 
 This comparison is made on a best-effort basis. Please create a PR to fix
 outdated information.
