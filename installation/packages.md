@@ -1,9 +1,12 @@
-# Installation
+# Installation via Package Manager
 
-Please find the installation method for your favorite operating system below.
+## Packaging Status
 
-> [!TIP]
-> Did you know that [you could add support][contribute] for missing platforms? 😉
+<a href="https://repology.org/project/lychee-link-checker/versions">
+    <img src="https://repology.org/badge/vertical-allrepos/lychee-link-checker.svg?header=&columns=5" alt="Packaging status">
+</a>
+
+## Package Managers
 
 ### Arch Linux
 
