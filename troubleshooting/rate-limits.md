@@ -53,10 +53,6 @@ use a GitHub personal access token to circumvent this.
 > per hour per repository. ([Source](https://docs.github.com/en/developers/apps/building-github-apps/rate-limits-for-github-apps))
 > So using a token can greatly increase the number of requests you can make! 🚀
 
-The token can be generated in your GitHub account settings page. A personal
-token with no extra permissions is enough to be able to check public repos
-links.
-
 You can optionally set an environment variable with your Github token like so
 `GITHUB_TOKEN=xxxx`, or use the `--github-token` CLI option. It can also be set
 in the config file. [Here is an example config file][config-file].
