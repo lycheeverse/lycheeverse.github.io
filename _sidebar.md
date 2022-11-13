@@ -26,6 +26,7 @@
 - Recipes
 
   - [Migrating Websites](/recipes/migration.md)
+  - [Excluding Paths](/recipes/excluding-paths.md)
 
 - Github Action Recipes
 

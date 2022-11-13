@@ -1,4 +1,4 @@
-## Too Many Open Files
+# Too Many Open Files
 
 The number of concurrent network requests (`MAX_CONCURRENCY`) is set to 128 by default.
 
