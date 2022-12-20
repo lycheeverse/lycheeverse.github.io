@@ -8,7 +8,3 @@
 
 [GitHub](https://github.com/lycheeverse/lychee/)
 [Get Started](#main)
-
-<!-- background color -->
-
-![color](#fcebf4)
