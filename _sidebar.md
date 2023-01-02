@@ -25,9 +25,10 @@
 
 - Recipes
 
-  - [Migrating Websites](/recipes/migration.md)
+  - [Filtering Links](/recipes/filtering-links.md)
   - [Excluding Paths](/recipes/excluding-paths.md)
   - [Relative Links](/recipes/relative-links.md)
+  - [Migrating Websites](/recipes/migration.md)
 
 - Github Action Recipes
 
