@@ -29,6 +29,7 @@
   - [Excluding Paths](/recipes/excluding-paths.md)
   - [Relative Links](/recipes/relative-links.md)
   - [Migrating Websites](/recipes/migration.md)
+  - [Archived Links](/recipes/archived-links.md)
 
 - Github Action Recipes
 
