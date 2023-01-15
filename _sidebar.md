@@ -29,11 +29,12 @@
   - [Excluding Paths](/recipes/excluding-paths.md)
   - [Relative Links](/recipes/relative-links.md)
   - [Migrating Websites](/recipes/migration.md)
-  - [Archived Links](/recipes/archived-links.md)
 
 - Github Action Recipes
 
-  - [Reuse Github Issue](/reuse-issue.md)
+  - [Replace With Archived Links](/recipes/archived-links.md)
+  - [Reuse Github Issue](/github_action_recipes/reuse-issue.md)
+  - [Add Pull Request Comment](/github_action_recipes/add-pr-comment.md)
 
 - Development
 
