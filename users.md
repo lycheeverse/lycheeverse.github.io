@@ -22,3 +22,7 @@ Please find a list of users below.
 - [mre/idiomatic-rust](https://github.com/mre/idiomatic-rust)
 - [lycheeverse/lychee](https://github.com/lycheeverse/lychee) (yes, the lychee docs are checked with lychee 🤯)
 
+## Blog Posts
+
+- [Link checking with lychee](https://www.stevenmaude.co.uk/posts/link-checking-with-lychee) by Steven Maude
+- [Lychee link checker](https://kishorenl-official.medium.com/lychee-link-checker-4443e9a4fee2) by Kishore Nemalipuri 
