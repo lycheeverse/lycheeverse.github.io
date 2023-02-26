@@ -25,4 +25,5 @@ Please find a list of users below.
 ## Blog Posts
 
 - [Link checking with lychee](https://www.stevenmaude.co.uk/posts/link-checking-with-lychee) by Steven Maude
-- [Lychee link checker](https://kishorenl-official.medium.com/lychee-link-checker-4443e9a4fee2) by Kishore Nemalipuri 
+- [Lychee link checker](https://kishorenl-official.medium.com/lychee-link-checker-4443e9a4fee2) by Kishore Nemalipuri
+- [Check Broken Link on Website with Lychee](https://ariq.nauf.al/blog/check-broken-link-on-website-with-lychee/) by Ariq Naufal
