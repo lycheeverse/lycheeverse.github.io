@@ -32,7 +32,7 @@
 
 - Github Action Recipes
 
-  - [Replace With Archived Links](/recipes/archived-links.md)
+  - [Replace With Archived Links](/github_action_recipes/archived-links.md)
   - [Reuse Github Issue](/github_action_recipes/reuse-issue.md)
   - [Add Pull Request Comment](/github_action_recipes/add-pr-comment.md)
 
