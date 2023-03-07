@@ -17,7 +17,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: lycheeverse/lychee-action@v1.5.4
+      - uses: lycheeverse/lychee-action@v1
       - name: Comment Broken Links
         uses: marocchino/sticky-pull-request-comment@v2
         with:
