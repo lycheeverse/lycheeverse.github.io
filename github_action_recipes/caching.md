@@ -1,0 +1,59 @@
+# Caching
+
+Caching is a great way to speed up your CI/CD pipeline. It can be used
+to reduce the number of requests to the same URL during consecutive runs. For
+example, if you have a lot of links to `https://github.com`, you can cache the
+responses to reduce the load.
+
+Here is an example of how to cache the results of a lychee run.
+
+## Caching in GitHub Actions
+
+```yaml
+name: Check URLs with Lychee
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Run everyday at 3 am UTC
+    - cron: "0 3 * * *"
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      # Cache lychee results (e.g. to avoid hitting rate limits)
+      - name: Restore lychee cache
+        uses: actions/cache@v3
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      # check URLs with Lychee
+      - uses: actions/checkout@v3
+
+      - name: Lychee URL checker
+        uses: lycheeverse/lychee-action@v1
+        with:
+          # arguments with file types to check
+          args: >-
+            --cache
+            --verbose
+            --no-progress
+            './**/*.md'
+            './**/*.html'"
+          # fail the action on broken links
+          fail: true
+        env:
+          # to be used in case rate limits are surpassed
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+This pipeline will automatically cache the results of the lychee run.
+Note that the cache will only be created if the run was successful.
+You can change this behavior by setting `fail: false`.
+
+Also note, that we did not have to store the cache manually. The `actions/cache`
+action will automatically store the cache for us.
