@@ -43,7 +43,7 @@ jobs:
             --verbose
             --no-progress
             './**/*.md'
-            './**/*.html'"
+            './**/*.html'
           # fail the action on broken links
           fail: true
         env:
