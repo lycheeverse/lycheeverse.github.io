@@ -53,7 +53,29 @@ jobs:
 
 This pipeline will automatically cache the results of the lychee run.
 Note that the cache will only be created if the run was successful.
-You can change this behavior by setting `fail: false`.
 
-Also note, that we did not have to store the cache manually. The `actions/cache`
-action will automatically store the cache for us.
+If you need more control over when caches are restored and saved, you can split
+the cache step and e.g. ensure to always save the cache (also when the link
+check step fails):
+
+```yml
+- name: Restore lychee cache
+  id: restore-cache
+  uses: actions/cache/restore@v3
+  with:
+    path: .lycheecache
+    key: cache-lychee-${{ github.sha }}
+    restore-keys: cache-lychee-
+
+- name: Run lychee
+  uses: lycheeverse/lychee-action@v1.6.1
+  with:
+    args: "--cache --max-cache-age 1d"
+
+- name: Save lychee cache
+  uses: actions/cache/save@v3
+  if: always()
+  with:
+    path: .lycheecache
+    key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+```
