@@ -70,7 +70,7 @@ check step fails):
 - name: Run lychee
   uses: lycheeverse/lychee-action@v1.6.1
   with:
-    args: "--cache --max-cache-age 1d"
+    args: "--cache --max-cache-age 1d ."
 
 - name: Save lychee cache
   uses: actions/cache/save@v3
