@@ -68,7 +68,7 @@ check step fails):
     restore-keys: cache-lychee-
 
 - name: Run lychee
-  uses: lycheeverse/lychee-action@v1.6.1
+  uses: lycheeverse/lychee-action@v1
   with:
     args: "--cache --max-cache-age 1d ."
 
