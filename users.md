@@ -27,3 +27,4 @@ Please find a list of users below.
 - [Link checking with lychee](https://www.stevenmaude.co.uk/posts/link-checking-with-lychee) by Steven Maude
 - [Lychee link checker](https://kishorenl-official.medium.com/lychee-link-checker-4443e9a4fee2) by Kishore Nemalipuri
 - [Check Broken Link on Website with Lychee](https://ariq.nauf.al/blog/check-broken-link-on-website-with-lychee/) by Ariq Naufal
+- [Building Better Docs - Automating Jekyll Builds and Link Checking for PRs](https://rmoff.net/2023/04/20/building-better-docs-automating-jekyll-builds-and-link-checking-for-prs/) by Robin Moffatt
