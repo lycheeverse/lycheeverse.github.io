@@ -17,10 +17,10 @@ For example, the default value for the `--timeout` option is `20` seconds. If yo
 timeout = 30
 ```
 
-## Default Configuration File
+## Default Location of the Configuration File
 
-The default configuration file is `./lychee.toml` and is used if no other configuration file is specified.
-Here is an example of the default configuration file.
+`./lychee.toml` (in the current working directory) is used if no other configuration file is specified. 
+Here is an example of a configuration file.
 Please find the [latest version on Github](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
 
 ```toml
