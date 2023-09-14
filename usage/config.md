@@ -19,7 +19,7 @@ timeout = 30
 
 ## Default Location of the Configuration File
 
-`./lychee.toml` (in the current working directory) is used if no other configuration file is specified. 
+`./lychee.toml` (in the current working directory) is used if no other configuration file is specified.
 Here is an example of a configuration file.
 Please find the [latest version on Github](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
 
@@ -77,7 +77,8 @@ accept = [200, 429]
 insecure = false
 
 # Only test links with the given schemes (e.g. https).
-# Omit to check links with any scheme.
+# Omit to check links with any other scheme.
+# At the moment, we support http, https, file, and mailto.
 scheme = [ "https" ]
 
 # When links are available using HTTPS, treat HTTP links as errors.
@@ -91,7 +92,7 @@ headers = []
 
 # Remap URI matching pattern to different URI.
 # This also supports (named) capturing groups.
-remap = [ 
+remap = [
     "https://example.com http://example.invalid",
     "https://example.com/(.*) http://example.org/$1",
     "https://github.com/(?P<org>.*)/(?P<repo>.*) https://gitlab.com/$org/$repo",

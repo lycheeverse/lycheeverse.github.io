@@ -75,6 +75,18 @@ ARGS:
 > Most of the options (like `--scheme` or `--exclude`) are for **links inside inputs**,
 > and **not** for the filtering the inputs themselves.
 
+## On Schemes
+
+lychee supports the following schemes:
+
+* `http`
+* `https`
+* `file`
+* `mailto`
+
+If you don't specify any schemes, lychee will check all links regardless of
+their scheme. Otherwise, it will only check links with the specified schemes.
+
 ## Repeating Options
 
 Options marked with `...` can be specified multiple times.
