@@ -31,8 +31,3 @@ and runs lychee.
 
 The result of this workflow is a comment on the pull request. The comment
 contains the output of lychee.
-
-## Example
-
-Here is an example of a pull request with a comment from lychee:
-https://github.com/lycheeverse/sandbox/pull/1
