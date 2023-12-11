@@ -18,7 +18,7 @@ exclude_path = ["node_modules"]
 Regular expressions are also supported.
 
 ```toml
-exclude_path = ["node_modules", "^./dir/", "*/dev/*"]
+exclude_path = ["node_modules", "^./dir/", ".*/dev/.*"]
 ```
 
 [Here](https://github.com/mre/endler.dev/blob/50d8d5f90dbafa445c9455e420a40f8866f3e1c7/lychee.toml#L28) is an example config file.
