@@ -1,4 +1,4 @@
-<img align="left" width="110" height="110" src="_media/icon.svg"> 
+<img align="left" width="110" height="110" src="./public/icon.svg">
 
 # Documentation
 
@@ -10,14 +10,12 @@ This is the source code for the official documentation page of [lychee].
 
 ## Contributing
 
-This website is built with [docsify]. You need to install it first in order to contribute.
-After that run
-
-```
-docsify serve .
+```shell
+astro dev
 ```
 
 and hack away. Contributions most welcome. 😊
 
-[docsify]: https://docsify.js.org/
 [lychee]: https://github.com/lycheeverse/lychee
+
+[![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
