@@ -3,20 +3,20 @@
 @import "https://unpkg.com/open-props/buttons.min.css"; */
 
 @media (min-width: 50rem) {
-    .hero {
-        grid-template-columns: unset;
+  .hero {
+    grid-template-columns: unset;
 
-        >img {
-            order: unset;
-            margin-inline: unset;
-        }
+    > img {
+      order: unset;
+      margin-inline: unset;
     }
+  }
 }
 
 :where(p) {
-    text-wrap: pretty;
+  text-wrap: pretty;
 }
 
 :where(h1, h2, h3, h4, h5, h6) {
-    text-wrap: balance;
+  text-wrap: balance;
 }
