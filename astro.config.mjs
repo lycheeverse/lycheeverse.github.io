@@ -15,6 +15,7 @@ export default defineConfig({
 			},
 			customCss: [
 				// "./src/styles/custom.css",
+				"./src/styles/index.css",
 			],
 			sidebar: [
 				{
