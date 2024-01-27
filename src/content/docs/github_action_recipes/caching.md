@@ -1,6 +1,5 @@
 ---
 title: Caching
-description: A guide in my new Starlight docs site.
 ---
 
 Caching is a great way to speed up your CI/CD pipeline. It can be used

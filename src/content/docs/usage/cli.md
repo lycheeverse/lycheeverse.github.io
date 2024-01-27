@@ -1,6 +1,5 @@
 ---
 title: Command Line Options
-description: A guide in my new Starlight docs site.
 ---
 
 lychee supports a lot of command line options.

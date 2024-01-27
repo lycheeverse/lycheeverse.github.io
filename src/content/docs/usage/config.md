@@ -1,6 +1,5 @@
 ---
 title: Configuration File
-description: A guide in my new Starlight docs site.
 ---
 
 The configuration file is a [TOML](https://toml.io) file that can be used to specify the options that are also available on the command line.

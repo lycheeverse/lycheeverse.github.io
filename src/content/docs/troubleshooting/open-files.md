@@ -1,6 +1,5 @@
 ---
 title: Too Many Open Files
-description: A guide in my new Starlight docs site.
 ---
 
 The number of concurrent network requests (`MAX_CONCURRENCY`) is set to 128 by default.

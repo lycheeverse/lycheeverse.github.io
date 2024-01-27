@@ -1,6 +1,5 @@
 ---
 title: Contributing
-description: A guide in my new Starlight docs site.
 ---
 
 In case you would like to contribute to lychee,

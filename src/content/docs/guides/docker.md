@@ -1,6 +1,5 @@
 ---
 title: Docker
-description: A guide in my new Starlight docs site.
 ---
 
 If you can't or don't want to install lychee locally, **you can use Docker

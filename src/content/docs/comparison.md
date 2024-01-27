@@ -1,6 +1,5 @@
 ---
 title: Comparison
-description: A guide in my new Starlight docs site.
 ---
 
 This feature comparison is made on a best-effort basis. Please create a PR to

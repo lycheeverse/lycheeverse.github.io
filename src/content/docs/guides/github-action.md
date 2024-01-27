@@ -1,6 +1,5 @@
 ---
 title: Github Action
-description: A guide in my new Starlight docs site.
 ---
 
 lychee is also available as a [Github action](https://github.com/lycheeverse/lychee-action/). This way you can set up a job which

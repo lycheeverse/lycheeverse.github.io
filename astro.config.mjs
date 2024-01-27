@@ -13,9 +13,7 @@ export default defineConfig({
 			social: {
 				github: "https://github.com/lycheeverse/lychee/",
 			},
-			customCss: [
-				"./src/styles/index.css",
-			],
+			customCss: ["./src/styles/index.css"],
 			sidebar: [
 				{
 					label: "Start Here",

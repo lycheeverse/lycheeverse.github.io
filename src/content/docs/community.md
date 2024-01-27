@@ -1,6 +1,5 @@
 ---
 title: Community
-description: A guide in my new Starlight docs site.
 ---
 
 For any questions, feature requests or general feedback about lychee,

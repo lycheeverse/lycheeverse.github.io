@@ -1,6 +1,5 @@
 ---
 title: Rate Limits
-description: A guide in my new Starlight docs site.
 ---
 
 :::note

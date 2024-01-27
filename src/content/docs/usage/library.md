@@ -1,6 +1,5 @@
 ---
 title: Library Usage
-description: A guide in my new Starlight docs site.
 ---
 
 You can use lychee as a library for your own projects!

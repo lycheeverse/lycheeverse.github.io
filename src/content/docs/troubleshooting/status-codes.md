@@ -1,6 +1,5 @@
 ---
 title: Status Codes
-description: A guide in my new Starlight docs site.
 ---
 
 Some websites don't respond with a `200` (OK) status code. Instead they might

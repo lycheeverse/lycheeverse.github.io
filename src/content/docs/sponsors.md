@@ -1,6 +1,5 @@
 ---
 title: Sponsors
-description: A guide in my new Starlight docs site.
 ---
 
 Thanks to the following organizations for sponsoring the development of lychee.

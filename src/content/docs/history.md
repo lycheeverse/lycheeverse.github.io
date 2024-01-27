@@ -1,6 +1,5 @@
 ---
 title: History
-description: A guide in my new Starlight docs site.
 ---
 
 lychee was born out of a personal need. Matthias, the original author, maintains

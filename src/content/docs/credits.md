@@ -1,6 +1,5 @@
 ---
 title: Credits
-description: A guide in my new Starlight docs site.
 ---
 
 lychee would not be possible without the following projects.

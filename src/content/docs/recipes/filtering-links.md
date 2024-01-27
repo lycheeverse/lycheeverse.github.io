@@ -1,6 +1,5 @@
 ---
 title: Filtering Links
-description: A guide in my new Starlight docs site.
 ---
 
 You can tell lychee to only check certain links by using a combination of the

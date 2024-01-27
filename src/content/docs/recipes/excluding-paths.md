@@ -1,6 +1,5 @@
 ---
 title: Excluding Paths
-description: A guide in my new Starlight docs site.
 ---
 
 Sometimes it is necessary to skip paths from being checked.

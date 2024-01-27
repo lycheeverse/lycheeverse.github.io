@@ -1,6 +1,5 @@
 ---
 title: Reuse issue with lychee GitHub Action
-description: A guide in my new Starlight docs site.
 ---
 
 The default workflow in the

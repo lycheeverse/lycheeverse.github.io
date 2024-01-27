@@ -1,6 +1,5 @@
 ---
 title: Mail Addresses
-description: A guide in my new Starlight docs site.
 ---
 
 We use [reacherhq/check-if-email-exists](https://github.com/reacherhq/check-if-email-exists) for email checking.

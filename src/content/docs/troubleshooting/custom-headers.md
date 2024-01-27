@@ -1,6 +1,5 @@
 ---
 title: Custom Headers
-description: A guide in my new Starlight docs site.
 ---
 
 Some sites expect one or more custom headers to return a valid response.

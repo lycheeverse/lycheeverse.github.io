@@ -1,6 +1,5 @@
 ---
 title: Relative Links
-description: A guide in my new Starlight docs site.
 ---
 
 Say you have an index.html with a relative link to another page:

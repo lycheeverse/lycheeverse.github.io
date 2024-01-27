@@ -1,6 +1,5 @@
 ---
 title: Users
-description: A guide in my new Starlight docs site.
 ---
 
 We are proud that some of the biggest projects on Github get checked by lychee.

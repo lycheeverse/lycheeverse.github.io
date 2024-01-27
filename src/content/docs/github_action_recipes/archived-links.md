@@ -1,6 +1,5 @@
 ---
 title: Fixing broken links with archived versions
-description: A guide in my new Starlight docs site.
 ---
 
 [David Gardiner](https://david.gardiner.net.au/) wrote a series of blog posts

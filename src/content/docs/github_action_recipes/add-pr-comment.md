@@ -1,6 +1,5 @@
 ---
 title: Add Comment to Pull Request
-description: A guide in my new Starlight docs site.
 ---
 
 This recipe shows how to add a comment to a pull request. This is useful if you

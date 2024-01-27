@@ -1,6 +1,5 @@
 ---
 title: How Lychee Works
-description: A guide in my new Starlight docs site.
 ---
 
 ## High-Level Overview

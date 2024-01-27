@@ -1,6 +1,5 @@
 ---
 title: Migrating Websites
-description: A guide in my new Starlight docs site.
 ---
 
 Say you move your website from one domain to another.
