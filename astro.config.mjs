@@ -7,6 +7,9 @@ export default defineConfig({
 	integrations: [
 		starlight({
 			title: "Docs",
+			editLink: {
+        			baseUrl: 'https://github.com/lycheeverse/lycheeverse.github.io/edit/master/src/content/docs/',
+  		        },
 			logo: {
 				src: "./public/logo.svg",
 			},
