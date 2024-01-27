@@ -14,7 +14,6 @@ export default defineConfig({
 				github: "https://github.com/lycheeverse/lychee/",
 			},
 			customCss: [
-				// "./src/styles/custom.css",
 				"./src/styles/index.css",
 			],
 			sidebar: [
