@@ -26,6 +26,5 @@ pnpm-debug.log*
 **/*.mjs
 **/*.cjs
 **/*.json
-src/content/docs/installation.mdx
 !package.json
 !tsconfig.json

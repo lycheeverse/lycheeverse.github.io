@@ -3,51 +3,27 @@ title: Installation
 description: A guide in my new Starlight docs site.
 ---
 
-import Tabs from "../../components/Tabs.astro";
-import { TabItem } from "@astrojs/starlight/components";
+import { Tabs, TabItem } from "@astrojs/starlight/components";
+import { Code } from "@astrojs/starlight/components";
 
-<Tabs group="package-managers">
+<Tabs>
   <TabItem label="Arch Linux">
-    <Fragment>
-    ```sh
-     pacman -S lychee
-     ```
-     </Fragment>
+    <Code code="pacman -S lychee" lang="sh" />
   </TabItem>
   <TabItem label="Homebrew">
-    <Fragment>
-    ```sh
-    brew install lychee
-    ```
-    </Fragment>
+    <Code code="brew install lychee" lang="sh" />
   </TabItem>
   <TabItem label="Docker">
-    <Fragment>
-    ```sh
-     docker pull lycheeverse/lychee
-     ```
-     </Fragment>
+    <Code code="docker pull lycheeverse/lychee" lang="sh" />
   </TabItem>
   <TabItem label="NixOS">
-    <Fragment>
-    ```sh
-    nix-env -iA nixos.lychee
-    ```
-    </Fragment>
+    <Code code="nix-env -iA nixos.lychee" lang="sh" />
   </TabItem>
   <TabItem label="FreeBSD/Turmux">
-    <Fragment>
-    ```sh
-    pkg install lychee
-    ```
-    </Fragment>
+    <Code code="pkg install lychee" lang="sh" />
   </TabItem>
   <TabItem label="Scoop">
-    <Fragment>
-    ```sh
-    scoop install lychee
-    ```
-    </Fragment>
+    <Code code="scoop install lychee" lang="sh" />
   </TabItem>
 </Tabs>
 
