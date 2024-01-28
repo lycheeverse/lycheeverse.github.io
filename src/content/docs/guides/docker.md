@@ -14,7 +14,6 @@ instead** 🐳.
 We provide a handy official image over at [lycheeverse/lychee](https://hub.docker.com/r/lycheeverse/lychee),
 which gets automatically updated on every release.
 
-
 To check files on your local machine, you need to mount them into the Docker
 container.
 

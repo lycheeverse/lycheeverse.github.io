@@ -2,16 +2,22 @@
 title: Relative Links
 ---
 
-Say you have an index.html with a relative link to another page:
+import { Code } from "@astrojs/starlight/components";
+export const fileName = "index.html";
+export const fileLang = "html";
 
-```html
-<a href="/about/pages">About</a> <a href="/company">Company</a>
-```
+Say you have a relative link to another page:
+
+<Code
+  code={`<a href="/about/pages">About</a> <a href="/company">Company</a>`}
+  lang={fileLang}
+  title={fileName}
+/>
 
 How do you know that they work? 🤔
 With lychee you can check that!
 
-Here's how to check all the links in your index.html:
+Here's how to check all the links in your `index.html`:
 
 ```bash
 lychee --base https://example.com/ index.html
@@ -20,13 +26,15 @@ lychee --base https://example.com/ index.html
 The `--base` option takes a URL.
 All relative links are resolved against this URL.
 
-So all relative links in `index.html` will be prefixed with
+So all relative links will be prefixed with
 `https://example.com/`:
 
-```html
-<a href="https://example.com/about/pages">About</a>
-<a href="https://example.com/company">Company</a>
-```
+<Code
+  code={`<a href="https://example.com/about/pages">About</a>
+<a href="https://example.com/company">Company</a>`}
+  lang={fileLang}
+  title={fileName}
+/>
 
 You can also check the links on a local `dev` version of your website:
 
