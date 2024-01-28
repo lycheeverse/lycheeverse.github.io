@@ -5,8 +5,8 @@ title: Too Many Open Files
 The number of concurrent network requests (`MAX_CONCURRENCY`) is set to 128 by default.
 
 Every network request maps to an open socket, which is represented as a file on UNIX systems.
-If you see error messages like "error trying to connect: tcp open error: Too
-many open files (os error 24)" then you ran out of file handles.
+If you see error messages like `error trying to connect: tcp open error: Too
+many open files (os error 24)` then you ran out of file handles.
 
 You have two options:
 
