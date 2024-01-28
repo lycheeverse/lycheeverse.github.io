@@ -76,3 +76,5 @@ In that case you can exclude it from getting checked altogether. Example: `--exc
 If the `--cache` flag is used, this can also help to reduce the amount of calls
 that are sent to a page because only links that exceed the cache age are queried
 again. This value can be adjusted with `--max-cache-age`, e.g. `12h`.
+If you run into rate-limiting issues when using the GitHub Action,
+see the [caching configuration here](/github_action_recipes/caching).
