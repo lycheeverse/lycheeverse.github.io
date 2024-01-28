@@ -60,4 +60,3 @@ fix outdated information.
 [config file]: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml
 
 <sup>1</sup> Other machine-readable formats like CSV are supported.
-

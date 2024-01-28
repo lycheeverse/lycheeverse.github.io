@@ -23,7 +23,6 @@ pnpm-debug.log*
 # files
 **/*.js
 **/*.ts
-**/*.mjs
 **/*.cjs
 **/*.json
 !package.json
