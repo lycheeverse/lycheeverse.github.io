@@ -9,7 +9,7 @@ export default defineConfig({
       title: "Docs",
       editLink: {
         baseUrl:
-          "https://github.com/lycheeverse/lycheeverse.github.io/edit/master/src/content/docs/",
+          "https://github.com/lycheeverse/lycheeverse.github.io/edit/master/",
       },
       logo: {
         src: "./public/logo.svg",
