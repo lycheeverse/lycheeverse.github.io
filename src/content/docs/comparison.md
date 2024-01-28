@@ -50,9 +50,9 @@ fix outdated information.
 [linkchecker]: https://github.com/linkchecker/linkchecker
 [markdown-link-check]: https://github.com/tcort/markdown-link-check
 [fink]: https://github.com/dantleech/fink
-[yes]: ./assets/yes.svg
-[no]: ./assets/no.svg
-[maybe]: ./assets/maybe.svg
+[yes]: /yes.svg
+[no]: /no.svg
+[maybe]: /maybe.svg
 [custom headers]: https://github.com/rust-lang/crates.io/issues/788
 [filter status code]: https://github.com/tcort/markdown-link-check/issues/94
 [skip private domains]: https://github.com/appscodelabs/liche/blob/a5102b0bf90203b467a4f3b4597d22cd83d94f99/url_checker.go
