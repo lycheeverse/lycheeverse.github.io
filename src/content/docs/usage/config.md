@@ -29,13 +29,14 @@ Please find the [latest version on Github](https://github.com/lycheeverse/lychee
 #############################  Display  #############################
 
 # Verbose program output
-verbose = false
+# Accepts log level: "error", "warn", "info", "debug", "trace"
+verbose = "info"
 
 # Don't show interactive progress bar while checking links.
 no_progress = false
 
 # Path to summary output file.
-output = "report.md"
+output = ".config.dummy.report.md"
 
 #############################  Cache  ###############################
 
@@ -73,7 +74,13 @@ timeout = 20
 retry_wait_time = 2
 
 # Comma-separated list of accepted status codes for valid links.
-accept = [200, 429]
+# Supported values are:
+#
+# accept = ["200..=204", "429"]
+# accept = "200..=204, 429"
+# accept = ["200", "429"]
+# accept = "200, 429"
+accept = ["200", "429"]
 
 # Proceed for server connections considered insecure (invalid TLS).
 insecure = false
@@ -81,7 +88,7 @@ insecure = false
 # Only test links with the given schemes (e.g. https).
 # Omit to check links with any other scheme.
 # At the moment, we support http, https, file, and mailto.
-scheme = [ "https" ]
+scheme = ["https"]
 
 # When links are available using HTTPS, treat HTTP links as errors.
 require_https = false
@@ -93,12 +100,7 @@ method = "get"
 headers = []
 
 # Remap URI matching pattern to different URI.
-# This also supports (named) capturing groups.
-remap = [
-    "https://example.com http://example.invalid",
-    "https://example.com/(.*) http://example.org/$1",
-    "https://github.com/(?P<org>.*)/(?P<repo>.*) https://gitlab.com/$org/$repo",
-]
+remap = ["https://example.com http://example.invalid"]
 
 # Base URL or website root directory to check relative URLs.
 base = "https://example.com"
@@ -106,7 +108,7 @@ base = "https://example.com"
 # HTTP basic auth support. This will be the username and password passed to the
 # authorization HTTP header. See
 # <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization>
-basic_auth = "user:pwd"
+basic_auth = ["example.com user:pwd"]
 
 #############################  Exclusions  ##########################
 
@@ -121,13 +123,13 @@ include_verbatim = false
 glob_ignore_case = false
 
 # Exclude URLs and mail addresses from checking (supports regex).
-exclude = [ '.*\.github.com\.*' ]
+exclude = ['^https://www\.linkedin\.com', '^https://web\.archive\.org/web/']
 
 # Exclude these filesystem paths from getting checked.
 exclude_path = ["file/path/to/Ignore", "./other/file/path/to/Ignore"]
 
 # URLs to check (supports regex). Has preference over all excludes.
-include = [ 'gist\.github\.com.*' ]
+include = ['gist\.github\.com.*']
 
 # Exclude all private IPs from checking.
 # Equivalent to setting `exclude_private`, `exclude_link_local`, and
@@ -143,6 +145,6 @@ exclude_link_local = false
 # Exclude loopback IP address range and localhost from checking.
 exclude_loopback = false
 
-# Exclude all mail addresses from checking.
-exclude_mail = false
+# Check mail addresses
+include_mail = true
 ```
