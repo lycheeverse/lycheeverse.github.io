@@ -13,7 +13,7 @@ Please head over to our [Open Collective](https://opencollective.com/lychee-coll
   <tr>
     <td>
       <a href="https://suborbital.dev/">
-        <img src="../../assets/sponsors/suborbital.svg" width="200" height="150" />
+        <img src="/sponsors/suborbital.svg" width="200" height="150" />
       </a>
     </td>
     <td>
@@ -25,7 +25,7 @@ Please head over to our [Open Collective](https://opencollective.com/lychee-coll
   <tr>
     <td>
       <a href="https://corrode.dev">
-        <img src="../../assets/sponsors/corrode.svg" width="200" height="150" />
+        <img src="/sponsors/corrode.svg" width="200" height="150" />
       </a>
     </td>
     <td>
