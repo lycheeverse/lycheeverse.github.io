@@ -25,6 +25,8 @@ export default defineConfig({
             // Each item here is one entry in the navigation menu.
             { label: "Introduction", link: "/introduction" },
             { label: "Installation", link: "/installation/" },
+            { label: "GitHub Action", link: "/guides/github-action" },
+            { label: "Docker", link: "/guides/docker" },
             { label: "Comparison", link: "/comparison/" },
           ],
         },
@@ -34,25 +36,6 @@ export default defineConfig({
             { label: "Command Line Options", link: "/usage/cli" },
             { label: "Configuration File", link: "/usage/config" },
             { label: "Library Usage", link: "/usage/library" },
-          ],
-        },
-        {
-          label: "Trouble Shooting Guide",
-          items: [
-            { label: "Rate Limits", link: "/troubleshooting/rate-limits" },
-            {
-              label: "Custom Headers",
-              link: "/troubleshooting/custom-headers",
-            },
-            { label: "Mail Addresses", link: "/troubleshooting/mail" },
-            {
-              label: "Too Many Open Files",
-              link: "/troubleshooting/open-files",
-            },
-            {
-              label: "Special Status Codes",
-              link: "/troubleshooting/status-codes",
-            },
           ],
         },
         {
@@ -82,6 +65,25 @@ export default defineConfig({
             {
               label: "Caching Requests",
               link: "/github_action_recipes/caching",
+            },
+          ],
+        },
+        {
+          label: "Trouble Shooting Guide",
+          items: [
+            { label: "Rate Limits", link: "/troubleshooting/rate-limits" },
+            {
+              label: "Custom Headers",
+              link: "/troubleshooting/custom-headers",
+            },
+            { label: "Mail Addresses", link: "/troubleshooting/mail" },
+            {
+              label: "Too Many Open Files",
+              link: "/troubleshooting/open-files",
+            },
+            {
+              label: "Special Status Codes",
+              link: "/troubleshooting/status-codes",
             },
           ],
         },
@@ -120,19 +122,6 @@ export default defineConfig({
             {
               label: "History",
               link: "/history",
-            },
-          ],
-        },
-        {
-          label: "Guides",
-          items: [
-            {
-              label: "GitHub Action",
-              link: "/guides/github-action",
-            },
-            {
-              label: "Docker",
-              link: "/guides/docker",
             },
           ],
         },
