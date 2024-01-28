@@ -14,7 +14,7 @@
     "lint:fix": "biome lint --apply .",
     "check-format": "prettier --check . && biome check .",
     "check-format:fix": "biome check --apply .",
-    "precommit": "npm run check-format && npm run lint"
+    "precommit": "pnpm run check-format && pnpm run lint"
   },
   "dependencies": {
     "@astrojs/check": "^0.4.1",
