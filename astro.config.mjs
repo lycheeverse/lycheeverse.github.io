@@ -3,7 +3,7 @@ import { defineConfig } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
-  site: "https://lychee.github.io",
+  site: "https://lychee.cli.rs",
   integrations: [
     starlight({
       title: "Docs",
