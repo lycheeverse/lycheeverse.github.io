@@ -1,0 +1,31 @@
+{
+  "name": "lychee.github.io",
+  "type": "module",
+  "version": "2024.01.25",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "format": "prettier -w . --plugin=prettier-plugin-astro && biome format --write .",
+    "lint": "biome lint . && astro check",
+    "lint:fix": "biome lint --apply .",
+    "check-format": "prettier --check . && biome check .",
+    "check-format:fix": "biome check --apply .",
+    "precommit": "pnpm run check-format && pnpm run lint"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.4.1",
+    "@astrojs/starlight": "^0.17.0",
+    "astro": "^4.2.5",
+    "sharp": "^0.33.2",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.5.3",
+    "prettier": "^3.2.4",
+    "prettier-plugin-astro": "^0.13.0"
+  }
+}
