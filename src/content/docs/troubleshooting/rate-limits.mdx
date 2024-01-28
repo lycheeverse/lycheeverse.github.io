@@ -2,6 +2,10 @@
 title: Rate Limits
 ---
 
+import { Code } from "@astrojs/starlight/components";
+export const fileName = "lychee.toml";
+export const fileLang = "toml";
+
 :::note
 When checking many links from a single website, chances are you will get
 rate limited at some point. The result is that lychee will report a lot of broken
@@ -29,12 +33,9 @@ in general, though, so you should play around with different values.
 As a last resort, you might want to accept `429` as a valid status code.
 This way, rate limiting issues won't get reported.
 
-You can either set it as a command-line argument (`--accept 200,429`) or through
-the `lychee.toml`:
+You can either set it as a command-line argument (`--accept 200,429`) or in the config.
 
-```toml
-accept = [429, 200]
-```
+<Code code={`accept = [429, 200]`} lang={fileLang} title={fileName} />
 
 ## GitHub Rate Limiting
 
