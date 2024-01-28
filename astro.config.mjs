@@ -27,6 +27,7 @@ export default defineConfig({
             { label: "Installation", link: "/installation/" },
             { label: "GitHub Action", link: "/guides/github-action" },
             { label: "Docker", link: "/guides/docker" },
+            { label: "Library Usage", link: "/usage/library" },
             { label: "Comparison", link: "/comparison/" },
           ],
         },
@@ -35,7 +36,6 @@ export default defineConfig({
           items: [
             { label: "Command Line Options", link: "/usage/cli" },
             { label: "Configuration File", link: "/usage/config" },
-            { label: "Library Usage", link: "/usage/library" },
           ],
         },
         {
