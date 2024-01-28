@@ -10,5 +10,5 @@ To fix that you can pass additional headers like so: `--headers "accept=text/htm
 You can use that argument multiple times to add more headers.
 Or, you can accept all content/MIME types: `--headers "accept=*/*"`.
 
-See more info about the Accept header
+Learn more about the `Accept` header
 [over at MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept).
