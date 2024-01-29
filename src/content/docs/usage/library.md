@@ -5,7 +5,7 @@ title: Library Usage
 You can use lychee as a library for your own projects!
 Here is a "hello world" example:
 
-```rust
+```rust title="main.rs"
 use lychee_lib::Result;
 
 #[tokio::main]
@@ -18,7 +18,7 @@ async fn main() -> Result<()> {
 
 This is equivalent to the following snippet, in which we build our own client:
 
-```rust
+```rust title="main.rs"
 use lychee_lib::{ClientBuilder, Result, Status};
 
 #[tokio::main]
@@ -32,7 +32,7 @@ async fn main() -> Result<()> {
 
 The client builder is very customizable:
 
-```rust
+```rust title="main.rs"
 let client = lychee_lib::ClientBuilder::builder()
     .includes(includes)
     .excludes(excludes)
