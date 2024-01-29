@@ -11,15 +11,15 @@ The `.lycheeignore` file is only used for excluding URLs, not paths.
 Instead, you can use the `--exclude-path` flag to exclude paths from being checked.
 Example: `--exclude-path node_modules` or `--exclude-path example\.(com|org)`.
 
-Alternatively, you can also use the `exclude_path` key in the `lychee.toml` file:
+Alternatively, you can also use the `exclude_path` key in the configuration file:
 
-```toml
+```toml title="lychee.toml"
 exclude_path = ["node_modules"]
 ```
 
 Regular expressions are also supported.
 
-```toml
+```toml title="lychee.toml"
 exclude_path = ["node_modules", "^./dir/", ".*/dev/.*"]
 ```
 

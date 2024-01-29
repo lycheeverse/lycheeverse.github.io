@@ -15,7 +15,7 @@ The configuration file is also used to specify the default values for the option
 
 For example, the default value for the `--timeout` option is `20` seconds. If you want to change this value, you can do so in the configuration file.
 
-```toml
+```toml title="lychee.toml"
 timeout = 30
 ```
 
@@ -25,7 +25,7 @@ timeout = 30
 Here is an example of a configuration file.
 Please find the [latest version on Github](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
 
-```toml
+```toml title="lychee.toml"
 #############################  Display  #############################
 
 # Verbose program output
