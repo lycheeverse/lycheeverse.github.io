@@ -12,9 +12,15 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
+      - name: Build site
+        uses: withastro/action@v1
+        with:
+          package-manager: pnpm@latest
+
       - name: Link Checker
         uses: lycheeverse/lychee-action@master
         with:
+          args: --base dist --exclude-all-private dist
           fail: True
 
       - name: Create Issue From File
