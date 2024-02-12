@@ -9,7 +9,7 @@ Below is the full list of options with a short description.
 
 ## Options
 
-```
+```bash
 A fast, async link checker
 
 Finds broken URLs and mail addresses inside Markdown, HTML, `reStructuredText`, websites and more!
