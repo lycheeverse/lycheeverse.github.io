@@ -28,5 +28,3 @@ pnpm-debug.log*
 **/*.json
 **/*.yaml
 **/*.yml
-!package.json
-!tsconfig.json
