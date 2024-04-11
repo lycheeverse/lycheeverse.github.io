@@ -6,7 +6,8 @@
 
 This is the source code for the official documentation page of [lychee].
 
-[![Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml)
+[![Check Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/links.yml)
+[![Check code quality](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/pull_request.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/pull_request.yml)
 
 ## Contributing
 
