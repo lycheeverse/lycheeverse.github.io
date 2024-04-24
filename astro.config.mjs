@@ -82,6 +82,10 @@ export default defineConfig({
               link: "/troubleshooting/open-files",
             },
             {
+              label: "Too Many Redirects",
+              link: "/troubleshooting/redirects",
+            },
+            {
               label: "Special Status Codes",
               link: "/troubleshooting/status-codes",
             },
