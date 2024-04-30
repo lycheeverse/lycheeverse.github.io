@@ -10,15 +10,15 @@ jobs:
   linkChecker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Build site
-        uses: withastro/action@v1
+        uses: withastro/action@v2
         with:
           package-manager: pnpm@latest
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@master
+        uses: lycheeverse/lychee-action@1
         with:
           args: --base dist --exclude-all-private dist
           fail: True
