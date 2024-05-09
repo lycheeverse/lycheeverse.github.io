@@ -27,7 +27,7 @@ jobs:
     steps:
       # Cache lychee results (e.g. to avoid hitting rate limits)
       - name: Restore lychee cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .lycheecache
           key: cache-lychee-${{ github.sha }}
