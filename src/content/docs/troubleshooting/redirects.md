@@ -9,7 +9,7 @@ Failed: Too many redirects: error following redirect for url
 ```
 
 This means that the server is sending redirect responses to lychee, but lychee
-is following the redirect too many times. 
+is following the redirect too many times.
 
 ## Narrow down the issue
 
@@ -33,7 +33,7 @@ It might help to open the URLs in a browser to see if you can spot the issue.
 
 If you can see that the URLs are valid and the redirect chain is not too long,
 you can increase the number of maximum redirects by setting
-the `--max-redirects` flag to a higher value. 
+the `--max-redirects` flag to a higher value.
 
 ```bash
 lychee --max-redirects 10 https://example.com
@@ -43,7 +43,7 @@ lychee --max-redirects 10 https://example.com
 
 If you still face issues, it might be that the server is trying to block lychee.
 Maybe the server has bot protection in place and is trying to redirect lychee to
-a CAPTCHA page. 
+a CAPTCHA page.
 
 To bypass this, you can try to set the `--user-agent` flag to a popular user
 agent like curl:
