@@ -17,14 +17,14 @@
     "precommit": "pnpm run check-format && pnpm run lint"
   },
   "dependencies": {
-    "@astrojs/check": "^0.5.10",
-    "@astrojs/starlight": "^0.22.0",
-    "astro": "^4.7.0",
-    "sharp": "^0.33.3",
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/starlight": "^0.23.0",
+    "astro": "^4.8.6",
+    "sharp": "^0.33.4",
     "typescript": "^5.4.5"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.7.2",
+    "@biomejs/biome": "^1.7.3",
     "prettier": "^3.2.5"
   }
 }
