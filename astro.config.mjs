@@ -53,6 +53,7 @@ export default defineConfig({
               link: "/recipes/migration",
             },
             { label: "Relative Links", link: "/recipes/relative-links" },
+            { label: "Pretty URLs", link: "/recipes/pretty-urls" },
           ],
         },
         {
