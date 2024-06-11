@@ -18,7 +18,7 @@ jobs:
           package-manager: pnpm@latest
 
       - name: Link Checker
-        uses: lycheeverse/lychee-action@1
+        uses: lycheeverse/lychee-action@v1
         with:
           args: --base dist --exclude-all-private dist
           fail: True
