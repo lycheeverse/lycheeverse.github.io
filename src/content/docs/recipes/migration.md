@@ -1,11 +1,11 @@
 ---
-title: Migrating Websites
+title: Remapping One URL to Another
 ---
 
 Say you move your website from one domain to another.
 How do you know if you missed to migrate any old links? 🤔
 
-You can check that with lychee!
+You can check that using lychee's `--remap` option!
 
 Here's how to check all the links in your sitemap after
 migrating your website from `example.com` to `example.org`:
