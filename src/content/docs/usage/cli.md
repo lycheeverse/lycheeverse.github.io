@@ -226,7 +226,7 @@ their scheme. Otherwise, it will only check links with the specified schemes.
 
 Options marked with `...` can be specified multiple times.
 For example, `--exclude` can be specified multiple times to exclude multiple URLs.
-This is also true for `--headers`, `--include`, `--remap`, `--scheme`, and `--exclude-path`.
+This is also true for `--header`, `--include`, `--remap`, `--scheme`, and `--exclude-path`.
 
 Here is an example:
 
