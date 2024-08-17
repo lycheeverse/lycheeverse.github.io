@@ -7,6 +7,7 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Docs",
+      credits: true,
       editLink: {
         baseUrl:
           "https://github.com/lycheeverse/lycheeverse.github.io/edit/master/",

@@ -26,7 +26,6 @@ file to re-check the URLs on the next run. It's human-readable and
 editable.
 :::
 
-
 ## Caching in Docker
 
 If you're running lychee inside a Docker container, caching is still possible,
