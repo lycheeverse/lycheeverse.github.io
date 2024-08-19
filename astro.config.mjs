@@ -74,7 +74,7 @@ export default defineConfig({
           ],
         },
         {
-          label: "Trouble Shooting Guide",
+          label: "Troubleshooting Guide",
           items: [
             { label: "Rate Limits", link: "/troubleshooting/rate-limits" },
             {
