@@ -7,7 +7,8 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Docs",
-      description: "Official documentation for lychee - a fast, asynchronous link checker",
+      description:
+        "Official documentation for lychee - a fast, asynchronous link checker",
       editLink: {
         baseUrl:
           "https://github.com/lycheeverse/lycheeverse.github.io/edit/master/",
@@ -84,7 +85,10 @@ export default defineConfig({
               link: "/troubleshooting/custom-headers",
             },
             { label: "Mail Addresses", link: "/troubleshooting/mail" },
-            { label: "Network Errors", link: "/troubleshooting/network-errors" },
+            {
+              label: "Network Errors",
+              link: "/troubleshooting/network-errors",
+            },
             {
               label: "Too Many Open Files",
               link: "/troubleshooting/open-files",
