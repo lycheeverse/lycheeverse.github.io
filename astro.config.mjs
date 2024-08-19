@@ -7,11 +7,14 @@ export default defineConfig({
   integrations: [
     starlight({
       title: "Docs",
+      description: "Official documentation for lychee - a fast, asynchronous link checker",
       editLink: {
         baseUrl:
           "https://github.com/lycheeverse/lycheeverse.github.io/edit/master/",
       },
       logo: {
+        alt: "lychee Logo",
+        replacesTitle: true,
         src: "./public/logo.svg",
       },
       social: {
