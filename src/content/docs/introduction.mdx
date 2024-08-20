@@ -1,15 +1,12 @@
 ---
-title: Introduction
+title: Welcome to lychee!
 ---
 
-### Welcome to Lychee!
-
-#### ....a fast, async, stream-based link checker written in Rust. 🦀✨
-
-lychee finds broken URLs and mail addresses inside **Markdown, HTML,
+lychee is a fast, async, stream-based link checker written in Rust. 🦀✨
+It finds broken URLs and mail addresses inside **Markdown, HTML,
 reStructuredText, websites**, and more!
 
-Let's go through some usage examples.
+Let's take a look at some usage examples.
 
 ### Check All Links In Current Directory
 
@@ -20,11 +17,19 @@ inside the current directory.
 lychee .
 ```
 
+This traverses all subdirectories and checks the links in all files which lychee
+supports, such as `.md`, `.html`, and more.
+
 ### Check All Links On A Website
 
 ```bash
 lychee https://example.com
 ```
+
+This command checks all links on the website `https://example.com`.
+It is not recursive and only checks the links on the given page.
+Recursion is currently not supported. You can however download the
+sitemap of a website and use that as input.
 
 ### Check Only Specific Files
 
@@ -34,17 +39,28 @@ lychee test.html info.txt
 lychee test.html info.txt https://example.com
 ```
 
+This command checks only the links in the given files.
+It also demonstrates how to check multiple inputs, such as files and URLs
+in a single command.
+
 ### Check Links In Directories, But Block All Network Requests
 
 ```bash
 lychee --offline path/to/directory
 ```
 
+This will only check the links in the files in the given directory and not make
+any network requests. It is helpful for a quick local "linting" of files.
+
 ### Check Links In A Remote File
 
 ```bash
 lychee https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
 ```
+
+If a URL is given as input and it ends with a file extension other than `.html`,
+lychee respects the file extension and interprets the file accordingly.
+Here, we interpret the file as Markdown.
 
 ### Check links from `stdin`
 
@@ -53,23 +69,49 @@ cat test.md | lychee -
 echo 'https://example.com' | lychee -
 ```
 
+You don't need to put links into a file first. You can also pipe them into lychee
+directly.
+
 ### Check Links In Local Files Via Shell Glob
 
 ```bash
-lychee ~/projects/*/README.md
+lychee 'public/**/*.html'
 ```
+
+Have many files in the same directory structure you want to check?
+You don't need to list them all. Just use a shell glob!
+
+The above command checks all `.html` files in the `public` directory and its
+subdirectories.
+
+:::note[Glob Expansion Rules]
+Note that we use single quotes to prevent the shell from expanding the input
+before lychee can process it.
+:::
 
 ### Advanced Globbing And `~` Expansion
 
 ```bash
-lychee "~/projects/big_project/\*_/README._"
+lychee '~/projects/big_project/\*_/README._'
 ```
+
+This command checks all `README` files inside the `big_project` directory with
+files ending in any file extension.
+The `~` gets expanded to your home directory.
 
 ### Ignore Case When Globbing And Check Result For Each Link
 
 ```bash
-lychee --glob-ignore-case --verbose "~/projects/\*_/[r]eadme._"
+lychee --glob-ignore-case --verbose '~/projects/\*_/[r]eadme._'
 ```
+
+In this command, we ignore the case when globbing, so it matches
+
+- `~/projects/my_project_/readme.md`
+- `~/projects/cool_app_/README.txt`
+- `~/projects/website_/readme.rst`
+- `~/projects/rust_game_/README`
+- `~/projects/python_script_/Readme.markdown`
 
 ### Check Links From Epub File
 
