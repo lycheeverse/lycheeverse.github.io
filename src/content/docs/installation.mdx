@@ -5,7 +5,7 @@ title: Installation
 import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
 
 <Tabs>
-  <TabItem label="Arch Linux">
+  <TabItem label="Arch">
     <Code code="pacman -S lychee" lang="sh" />
   </TabItem>
   <TabItem label="Homebrew">
@@ -17,11 +17,14 @@ import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
   <TabItem label="NixOS">
     <Code code="nix-env -iA nixos.lychee" lang="sh" />
   </TabItem>
-  <TabItem label="FreeBSD/Turmux">
+  <TabItem label="FreeBSD">
     <Code code="pkg install lychee" lang="sh" />
   </TabItem>
   <TabItem label="Scoop">
     <Code code="scoop install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="OpenSUSE">
+    <Code code="zypper in lychee" lang="sh" />
   </TabItem>
 </Tabs>
 
