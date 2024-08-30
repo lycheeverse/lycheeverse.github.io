@@ -5,7 +5,7 @@ title: Excluding Paths
 Sometimes it is necessary to skip paths from being checked.
 For example, you might want to skip the `node_modules` directory or a `vendor` directory.
 
-You might think that you can just put the path in the `.lycheeignore` file, but that won't work.
+You might think that you can just put the path in the [`.lycheeignore`](/recipes/excluding-links) file, but that won't work.
 The `.lycheeignore` file is only used for excluding URLs, not paths.
 
 Instead, you can use the `--exclude-path` flag to exclude paths from being checked.

@@ -1,10 +1,8 @@
 ---
-title: Filtering Links
+title: Excluding Links
 ---
 
-You can tell lychee to only check certain links by using a combination of the
-`--include` and `--exclude` parameters. Both parameters take a regular
-expression as an argument.
+lychee allows you to selectively check links using `--include` and `--exclude` parameters. Both accept regular expressions.
 
 Here are some examples:
 
@@ -24,4 +22,17 @@ you can use the following command:
 
 ```bash
 lychee --exclude '.*' --include 'twitter\.com'
+```
+
+## Permanently Excluding Links
+
+Do you have a bunch of URLs that you always want to exclude?
+You can add them to a `.lycheeignore` file in the root of your project.
+
+```plaintext title=".lycheeignore"
+https://www.zombo.com/
+# This is a comment, which will be ignored
+https://www.youtube.com/watch?v=dQw4w9WgXcQ
+# Regex is also supported
+https?:\/\/(www\.)?reddit\.com\/r\/(funny||videos)
 ```
