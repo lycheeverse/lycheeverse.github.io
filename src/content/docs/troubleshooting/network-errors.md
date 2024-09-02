@@ -2,7 +2,7 @@
 title: Network Errors
 ---
 
-If you run lychee and some links fail with the following error messages: 
+If you run lychee and some links fail with the following error messages:
 
 ```bash
 Failed: Network error: error sending request for url
