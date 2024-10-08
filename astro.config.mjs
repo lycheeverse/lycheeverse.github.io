@@ -45,6 +45,7 @@ export default defineConfig({
         {
           label: "Recipes",
           items: [
+            { label: "Anchor Links", link: "/recipes/anchors" },
             { label: "Caching", link: "/recipes/caching" },
             { label: "Excluding Links", link: "/recipes/excluding-links" },
             { label: "Excluding Paths", link: "/recipes/excluding-paths" },
