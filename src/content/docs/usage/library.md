@@ -3,6 +3,8 @@ title: Library Usage
 ---
 
 You can use lychee as a library for your own projects!
+The documentation for the library can be found [here](https://docs.rs/lychee-lib).
+
 Here is a "hello world" example:
 
 ```rust title="main.rs"
