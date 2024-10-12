@@ -1,8 +1,8 @@
 https://api.reacher.email/v0/check_email
 file:///home/user/website/
-# Exclude links from this line in `config.md`:
-# exclude = ['^https://www\.linkedin\.com', '^https://web\.archive\.org/web/']
 ^https://www/$
 ^https://web/$
 # 404 page returns a 404, d'oh
 https://lychee.cli.rs/404/
+# Errors with "Too Many Requests"
+https://www.nongnu.org/atool
