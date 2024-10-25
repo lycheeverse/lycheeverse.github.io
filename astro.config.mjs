@@ -62,6 +62,10 @@ export default defineConfig({
           label: "GitHub Action Recipes",
           items: [
             {
+              label: "Check Links in Pull Requests",
+              link: "/github_action_recipes/pull-requests",
+            },
+            {
               label: "Replace with Archived Links",
               link: "/github_action_recipes/archived-links",
             },
