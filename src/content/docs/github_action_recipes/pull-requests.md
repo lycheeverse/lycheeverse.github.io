@@ -8,7 +8,7 @@ existing broken links.
 
 ## Usage
 
-Add this workflow to `.github/workflows/check-links.yml` in your repository.
+Add this workflow to `.github/workflows/check-pr-links.yml` in your repository.
 
 ## Workflow
 
