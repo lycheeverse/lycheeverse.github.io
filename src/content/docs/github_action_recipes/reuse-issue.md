@@ -22,7 +22,7 @@ action to update the issue with the results of the lychee link checker.
     labels: |
       link-checker
 - name: Update Issue
-  if: steps.lychee.outputs.exit_code != 0 && steps.known-issue.outputs.has-found == 'false'
+  if: steps.lychee.outputs.exit_code != 0 && steps.link-checker-issue.outputs.has-found == 'false'
   uses: peter-evans/create-issue-from-file@v5
   with:
     title: Broken links detected in docs 🔗
