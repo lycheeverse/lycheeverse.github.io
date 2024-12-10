@@ -16,11 +16,13 @@ action to update the issue with the results of the lychee link checker.
 ```yaml
 - name: Find Link Checker Issue
   uses: micalevisk/last-issue-action@v2
+  id: link-checker-issue
   with:
     state: open
     labels: |
       link-checker
 - name: Update Issue
+  if: steps.lychee.outputs.exit_code != 0 && steps.known-issue.outputs.has-found == 'false'
   uses: peter-evans/create-issue-from-file@v5
   with:
     title: Broken links detected in docs 🔗
