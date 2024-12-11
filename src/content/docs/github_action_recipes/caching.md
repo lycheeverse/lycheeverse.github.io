@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Lychee URL checker
-        uses: lycheeverse/lychee-action@v1
+        uses: lycheeverse/lychee-action@v2
         with:
           # arguments with file types to check
           args: >-
@@ -70,7 +70,7 @@ check step fails):
     restore-keys: cache-lychee-
 
 - name: Run lychee
-  uses: lycheeverse/lychee-action@v1
+  uses: lycheeverse/lychee-action@v2
   with:
     args: "--cache --max-cache-age 1d ."
 
