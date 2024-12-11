@@ -17,13 +17,13 @@ name: Check Links In Pull Requests
 
 on:
   pull_request:
-    branches: 
+    branches:
       - main
     # Optionally limit the check to certain file types
     # paths:
     #   - '**/*.md'
     #   - '**/*.html'
-    
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -31,7 +31,7 @@ concurrency:
 jobs:
   check-links:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Clone repository
         uses: actions/checkout@v4
@@ -51,7 +51,7 @@ jobs:
             --include-fragments
             .
           output: ./existing-links.txt
-        continue-on-error: true  # Don't fail if base branch check has issues
+        continue-on-error: true # Don't fail if base branch check has issues
 
       - name: Stash untracked files
         run: git stash push --include-untracked

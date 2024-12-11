@@ -7,9 +7,9 @@ You can specify the output format using the `--mode` flag.
 
 At the moment, lychee supports the following output modes:
 
-* `color`: Color, indented formatting (default)
-* `plain`: No color, basic formatting
-* `emoji`: Fancy mode with emoji icons
+- `color`: Color, indented formatting (default)
+- `plain`: No color, basic formatting
+- `emoji`: Fancy mode with emoji icons
 
 Let's take a closer look at each one.
 
@@ -36,6 +36,3 @@ Plain mode displays the results in a simple, easy-to-read format. It is useful f
 Emoji mode displays the results using emojis. It is a fun and engaging way to view the results of a check.
 
 ![Emoji Mode](./img/emoji.png)
-
-
-

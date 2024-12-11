@@ -14,16 +14,16 @@ lychee --include-fragments 'https://example.com/docs'
 
 ## Supported Formats Overview
 
-| Feature                    | Markdown | HTML | Inline HTML in Markdown |
-|----------------------------|----------|------|-------------------------|
-| Heading-based fragments    | ✅        | ✅    | ✅                       |
-| Custom ID fragments        | ✅        | ✅    | ✅                       |
-| Unicode in fragments       | ✅        | ✅    | ✅                       |
-| Inline code in headings    | ✅        | N/A  | N/A                     |
+| Feature                 | Markdown | HTML | Inline HTML in Markdown |
+| ----------------------- | -------- | ---- | ----------------------- |
+| Heading-based fragments | ✅       | ✅   | ✅                      |
+| Custom ID fragments     | ✅       | ✅   | ✅                      |
+| Unicode in fragments    | ✅       | ✅   | ✅                      |
+| Inline code in headings | ✅       | N/A  | N/A                     |
 
 ## Detailed Information
 
-### Supported Formats 
+### Supported Formats
 
 - Markdown (.md) files
 - HTML (.html) files
@@ -38,6 +38,7 @@ lychee --include-fragments 'https://example.com/docs'
 ### How does lychee generate fragments for comparison?
 
 lychee uses two main methods:
+
 1. Heading Attributes: For explicit IDs specified in Markdown (e.g., `## My Heading {#custom-id}`)
 2. Unique Kebab Case: For standard headings, similar to GitHub's auto-generated anchors
 

@@ -50,7 +50,7 @@ lychee --exclude 'example\.com/blog/\d{4}/'
    ```bash
    # This will work:
    lychee --exclude '^https://www\.linkedin\.com'
-   
+
    # This might not work as expected:
    lychee --exclude 'linkedin\.com'
    ```
