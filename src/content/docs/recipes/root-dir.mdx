@@ -1,0 +1,146 @@
+---
+title: Local File Checking with --root-dir 
+description: Understanding how to use lychee's --root-dir parameter for local file checking
+---
+
+import { Code } from "@astrojs/starlight/components";
+export const fileName = "index.html";
+export const fileLang = "html";
+
+## What Does --root-dir Do?
+
+The `--root-dir` parameter tells lychee where to look for files that start with `/`. Let's see an example:
+
+<Code
+  code={`<!-- index.html -->
+<a href="/about.html">About</a>
+<a href="/docs/guide.html">Guide</a>`}
+  lang={fileLang}
+  title={fileName}
+/>
+
+These links start with `/`, meaning they're absolute paths.
+
+If the site is built in a `public` directory, the files will be in `public/about.html` and `public/docs/guide.html`. To check these links, you'd run:
+
+```bash
+lychee --root-dir ./public/ "**/*.html"
+```
+
+lychee will look for:
+- `./public/about.html`
+- `./public/docs/guide.html`
+
+## When Do You Need --root-dir?
+
+You need `--root-dir` when:
+1. Your HTML contains links starting with `/`
+2. You want to check these links against files on your computer
+
+Common scenarios:
+- Static site builds in a `public` or `dist` directory
+- Documentation sites with absolute links
+- Any project where links start with `/`
+
+:::note
+`--root-dir` must be an absolute path. If you provide a relative path, lychee will error.
+```bash
+# ✅ Good
+lychee --root-dir /home/user/project/public/
+
+# ❌ Bad: will fail
+lychee --root-dir ./public/
+```
+
+This is a conservative solution to prevent edge cases.
+If you have a use case for allowing relative root directories, please [open an issue](https://github.com/lycheeverse/lychee/issues).
+:::
+
+## Examples
+
+### Static Site Builder
+If you use Hugo, Jekyll, or similar tools, they often generate sites in a `public` directory:
+
+```bash
+my-site/
+├── public/           # Generated files live here
+│   ├── about.html
+│   └── docs/
+│       └── guide.html
+└── content/          # Source files
+    └── index.md
+```
+
+To check the links:
+```bash
+# Convert relative path to absolute first
+lychee --root-dir "$(pwd)/public" "public/**/*.html"
+```
+
+### Documentation Site
+Many documentation sites use absolute paths for links:
+
+<Code
+  code={`<!-- docs/index.html -->
+<a href="/api/v1.html">API</a>
+<a href="/guide/start.html">Get Started</a>`}
+  lang={fileLang}
+  title="docs/index.html"
+/>
+
+To check these links:
+```bash
+# Assuming you're in the project root
+lychee --root-dir "$(pwd)" "docs/**/*.html"
+```
+
+## The Difference Between --root-dir and --base
+
+These parameters serve different purposes:
+
+- `--root-dir` is for finding files on your computer
+  - Only affects links that start with `/`
+  - Must be an absolute filesystem path
+  - Used when checking local files
+
+- [`--base`](base-url) is for resolving URLs
+  - Must be a URL (like `https://example.com/docs/`)
+  - Used when checking how links will work once deployed
+  - Affects relative links (like `./guide.html`)
+
+### Using Both Together
+
+Sometimes you need both:
+```bash
+lychee \
+  --root-dir "$(pwd)/public" \
+  --base https://example.com/ \
+  "public/**/*.html"
+```
+
+This tells lychee:
+1. Look for `/`-prefixed files in `./public/`
+2. Resolve relative links against `https://example.com/`
+
+## Troubleshooting
+
+If your links aren't being found:
+
+1. Make sure you're using an absolute path:
+```bash
+# Get absolute path in bash
+full_path="$(pwd)/public"
+lychee --root-dir "$full_path" "**/*.html"
+```
+
+2. Check that the files exist in the location you expect:
+```bash
+# Example debugging steps
+ls -la ./public/about.html
+ls -la ./public/docs/guide.html
+```
+
+3. Use `--verbose` to see how lychee is resolving paths:
+```bash
+lychee --root-dir "$(pwd)/public" --verbose "**/*.html"
+```
