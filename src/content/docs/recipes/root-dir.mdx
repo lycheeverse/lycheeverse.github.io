@@ -24,7 +24,7 @@ These links start with `/`, meaning they're absolute paths.
 If the site is built in a `public` directory, the files will be in `public/about.html` and `public/docs/guide.html`. To check these links, you'd run:
 
 ```bash
-lychee --root-dir ./public/ "**/*.html"
+lychee --root-dir "$(pwd)/public" "**/*.html"
 ```
 
 lychee will look for:
