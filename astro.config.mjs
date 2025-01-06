@@ -54,8 +54,14 @@ export default defineConfig({
               label: "Remapping One URL to Another",
               link: "/recipes/migration",
             },
-            { label: "Testing Sites Not Served from Root with --base", link: "/recipes/base-url" },
-            { label: "Local File Checking with --root-dir", link: "/recipes/root-dir" },
+            {
+              label: "Testing Sites Not Served from Root with --base",
+              link: "/recipes/base-url",
+            },
+            {
+              label: "Local File Checking with --root-dir",
+              link: "/recipes/root-dir",
+            },
             { label: "Pretty URLs", link: "/recipes/pretty-urls" },
           ],
         },

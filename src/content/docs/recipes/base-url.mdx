@@ -131,7 +131,7 @@ This is helpful when you want to verify links exist on your filesystem.
 
 Let me explain the technical necessity of the trailing slash:
 
-### Add A Trailing Slash If It's A Directory 
+### Add A Trailing Slash If It's A Directory
 
 When in doubt about whether to include the trailing slash, include it. It's almost always what you want when working with static sites and documentation.
 
@@ -140,13 +140,14 @@ When in doubt about whether to include the trailing slash, include it. It's almo
 lychee --base https://example.com/docs/
 # ❌ Bad - links will break
 lychee --base https://example.com/docs`}
-lang="bash"
-title="Trailing Slash Example"
+  lang="bash"
+  title="Trailing Slash Example"
 />
 
 The trailing slash is crucial because it tells lychee whether `/docs` is a file or a directory. This follows standard URL resolution rules:
 
 - `https://example.com/docs/` (with slash) means "docs" is a directory
+
   - `./guide.html` resolves to `/docs/guide.html`
   - `../about.html` resolves to `/about.html`
 

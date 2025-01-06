@@ -1,5 +1,5 @@
 ---
-title: Local File Checking with --root-dir 
+title: Local File Checking with --root-dir
 description: Understanding how to use lychee's --root-dir parameter for local file checking
 ---
 
@@ -28,22 +28,26 @@ lychee --root-dir ./public/ "**/*.html"
 ```
 
 lychee will look for:
+
 - `./public/about.html`
 - `./public/docs/guide.html`
 
 ## When Do You Need --root-dir?
 
 You need `--root-dir` when:
+
 1. Your HTML contains links starting with `/`
 2. You want to check these links against files on your computer
 
 Common scenarios:
+
 - Static site builds in a `public` or `dist` directory
 - Documentation sites with absolute links
 - Any project where links start with `/`
 
 :::note
 `--root-dir` must be an absolute path. If you provide a relative path, lychee will error.
+
 ```bash
 # ✅ Good
 lychee --root-dir /home/user/project/public/
@@ -59,6 +63,7 @@ If you have a use case for allowing relative root directories, please [open an i
 ## Examples
 
 ### Static Site Builder
+
 If you use Hugo, Jekyll, or similar tools, they often generate sites in a `public` directory:
 
 ```bash
@@ -72,12 +77,14 @@ my-site/
 ```
 
 To check the links:
+
 ```bash
 # Convert relative path to absolute first
 lychee --root-dir "$(pwd)/public" "public/**/*.html"
 ```
 
 ### Documentation Site
+
 Many documentation sites use absolute paths for links:
 
 <Code
@@ -89,6 +96,7 @@ Many documentation sites use absolute paths for links:
 />
 
 To check these links:
+
 ```bash
 # Assuming you're in the project root
 lychee --root-dir "$(pwd)" "docs/**/*.html"
@@ -99,6 +107,7 @@ lychee --root-dir "$(pwd)" "docs/**/*.html"
 These parameters serve different purposes:
 
 - `--root-dir` is for finding files on your computer
+
   - Only affects links that start with `/`
   - Must be an absolute filesystem path
   - Used when checking local files
@@ -111,6 +120,7 @@ These parameters serve different purposes:
 ### Using Both Together
 
 Sometimes you need both:
+
 ```bash
 lychee \
   --root-dir "$(pwd)/public" \
@@ -119,6 +129,7 @@ lychee \
 ```
 
 This tells lychee:
+
 1. Look for `/`-prefixed files in `./public/`
 2. Resolve relative links against `https://example.com/`
 
@@ -127,6 +138,7 @@ This tells lychee:
 If your links aren't being found:
 
 1. Make sure you're using an absolute path:
+
 ```bash
 # Get absolute path in bash
 full_path="$(pwd)/public"
@@ -134,6 +146,7 @@ lychee --root-dir "$full_path" "**/*.html"
 ```
 
 2. Check that the files exist in the location you expect:
+
 ```bash
 # Example debugging steps
 ls -la ./public/about.html
@@ -141,6 +154,7 @@ ls -la ./public/docs/guide.html
 ```
 
 3. Use `--verbose` to see how lychee is resolving paths:
+
 ```bash
 lychee --root-dir "$(pwd)/public" --verbose "**/*.html"
 ```
