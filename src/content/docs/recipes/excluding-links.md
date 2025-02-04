@@ -19,6 +19,18 @@ lychee --exclude example\.(com|org)
 lychee --exclude '.*' --include 'twitter\.com'
 ```
 
+:::tip
+
+A common use-case is to exclude all "local" links, i.e. localhost, 127.0.0.1,
+private IP addresses, etc.:
+
+```bash
+# Exclude all local links
+lychee --exclude-all-private
+```
+
+:::
+
 ## Advanced Examples
 
 Let's look at some more advanced, real-world scenarios:
