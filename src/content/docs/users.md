@@ -12,6 +12,7 @@ Are you using lychee for your project? [Please add it here](https://github.com/l
 - [opensearch-project/OpenSearch](https://github.com/opensearch-project/OpenSearch)
 - [ramitsurana/awesome-kubernetes](https://github.com/ramitsurana/awesome-kubernetes)
 - [papers-we-love/papers-we-love](https://github.com/papers-we-love/papers-we-love)
+- [GitLab](https://docs.gitlab.com/development/documentation/testing/links/)
 - [pingcap/docs](https://github.com/pingcap/docs)
 - [microsoft/WhatTheHack](https://github.com/microsoft/WhatTheHack)
 - [Azure/ResourceModules](https://github.com/Azure/ResourceModules)
@@ -33,3 +34,5 @@ Are you using lychee for your project? [Please add it here](https://github.com/l
 - [Lychee link checker](https://kishorenl-official.medium.com/lychee-link-checker-4443e9a4fee2) by Kishore Nemalipuri
 - [Check Broken Link on Website with Lychee](https://ariq.nauf.al/blog/check-broken-link-on-website-with-lychee/) by Ariq Naufal
 - [Building Better Docs - Automating Jekyll Builds and Link Checking for PRs](https://rmoff.net/2023/04/20/building-better-docs-automating-jekyll-builds-and-link-checking-for-prs/) by Robin Moffatt
+- [A Fast Link Checker](https://newsletter.bphogan.com/archive/issue-37-pitching-with-the-minto-pyramid-and-a/) by Brian P. Hogan
+- [Evitando links quebrados com lychee](https://www.josehisse.dev/blog/evitando-links-quebrados-com-lychee/) by José Hisse (in Portuguese)
