@@ -63,6 +63,15 @@ that it doesn't recognize. There's little you can do in this case, except to
 contact the website administrator and ask them to whitelist lychee or keep the
 user agent as `curl`, which is a popular user agent.
 
+If you'd like to emulate your local `curl` user agent, you can run:
+
+```bash
+curl -s https://httpbin.org/user-agent
+```
+
+This will show you the user agent that curl uses on your system.
+
+
 ### Update the CA certificates
 
 To resolve certificate-related issues, you can update the CA certificates on
