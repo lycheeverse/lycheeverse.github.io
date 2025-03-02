@@ -36,7 +36,7 @@ If this works, then the issue is with lychee and not the website.
 In that case, please open an issue on the lychee GitHub repository.
 
 If it doesn't work, then the issue is with the website or your system.
-It might be related to the certificate or the user agent. Read on to find out more.
+It might be related to the certificate or the user agent. The site might also use a bot detection such as Cloudflare Bot Management. Read on to find out more.
 
 ### Use the `--insecure` flag
 
@@ -70,6 +70,21 @@ curl -s https://httpbin.org/user-agent
 ```
 
 This will show you the user agent that curl uses on your system.
+
+### Cloudflare Bot Management and other bot detection
+
+Some websites use bot detection services like Cloudflare Bot Management to
+prevent automated tools from accessing their content.
+Unfortunately, this includes lychee, even though it does not scrape the website.
+
+To check if the website is using Cloudflare Bot Management, you can
+use a service like [BuiltWith](https://builtwith.com/). Just enter the website
+URL and check if it uses any bot detection services like Cloudflare Bot Management or
+Cloudflare Challenge.
+
+If the website uses a bot detection service, which is blocking lychee, there's
+little you can do. You can try contacting the website administrator and ask them
+to whitelist lychee. 
 
 
 ### Update the CA certificates
