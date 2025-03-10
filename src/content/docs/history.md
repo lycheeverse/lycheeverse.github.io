@@ -22,8 +22,8 @@ link checker written in Go (which has since been deprecated).
 
 ### Original Motivation
 
-Matthias live-coded the first version of lychee in an episode of [Hello Rust](https://hello-rust.show/).
-You can watch it below or go [here](https://hello-rust.show/10/).
+Matthias live-coded the first version of lychee in an episode of Hello Rust.
+You can watch it below.
 
 <div style=" position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; margin-bottom: 40px;">
 <iframe
