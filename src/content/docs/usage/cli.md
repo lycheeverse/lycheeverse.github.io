@@ -23,7 +23,7 @@ Arguments:
 Options:
   -c, --config <CONFIG_FILE>
           Configuration file to use
-          
+
           [default: lychee.toml]
 
   -v, --verbose...
@@ -36,28 +36,37 @@ Options:
           Do not show progress bar.
           This is recommended for non-interactive shells (e.g. for continuous integration)
 
+      --extensions <EXTENSIONS>
+          Test the specified file extensions for URIs when checking files locally.
+
+          Multiple extensions can be separated by commas. Note that if you want to check filetypes,
+          which have multiple extensions, e.g. HTML files with both .html and .htm extensions, you need to
+          specify both extensions explicitly.
+
+          [default: md,mkd,mdx,mdown,mdwn,mkdn,mkdown,markdown,html,htm,txt]
+
       --cache
           Use request cache stored on disk at `.lycheecache`
 
       --max-cache-age <MAX_CACHE_AGE>
           Discard all cached requests older than this duration
-          
+
           [default: 1d]
 
       --cache-exclude-status <CACHE_EXCLUDE_STATUS>
           A list of status codes that will be ignored from the cache
-          
+
           The following accept range syntax is supported: [start]..[=]end|code. Some valid
           examples are:
-          
+
           - 429
           - 500..=599
           - 500..
-          
+
           Use "lychee --cache-exclude-status '429, 500..502' <inputs>..." to provide a comma- separated
           list of excluded status codes. This example will not cache results with a status code of 429, 500,
           501 and 502.
-          
+
           [default: ]
 
       --dump
@@ -68,7 +77,7 @@ Options:
 
       --archive <ARCHIVE>
           Specify the use of a specific web archive. Can be used in combination with `--suggest`
-          
+
           [possible values: wayback]
 
       --suggest
@@ -76,17 +85,17 @@ Options:
 
   -m, --max-redirects <MAX_REDIRECTS>
           Maximum number of allowed redirects
-          
+
           [default: 5]
 
       --max-retries <MAX_RETRIES>
           Maximum number of retries per request
-          
+
           [default: 3]
 
       --max-concurrency <MAX_CONCURRENCY>
           Maximum number of concurrent network requests
-          
+
           [default: 128]
 
   -T, --threads <THREADS>
@@ -94,8 +103,8 @@ Options:
 
   -u, --user-agent <USER_AGENT>
           User agent
-          
-          [default: lychee/0.18.0]
+
+          [default: lychee/x.y.z]
 
   -i, --insecure
           Proceed for server connections considered insecure (invalid TLS)
@@ -144,7 +153,7 @@ Options:
           Test the specified file extensions for URIs when checking files locally.
           Multiple extensions can be separated by commas. Extensions will be checked in
           order of appearance.
-          
+
           Example: --fallback-extensions html,htm,php,asp,aspx,jsp,cgi
 
       --header <HEADER>
@@ -152,20 +161,20 @@ Options:
 
   -a, --accept <ACCEPT>
           A List of accepted status codes for valid links
-          
+
           The following accept range syntax is supported: [start]..[=]end|code. Some valid
           examples are:
-          
+
           - 200..=204
           - 200..204
           - ..=204
           - ..204
           - 200
-          
+
           Use "lychee --accept '200..=204, 429, 500' <inputs>..." to provide a comma-
           separated list of accepted status codes. This example will accept 200, 201,
           202, 203, 204, 429, and 500 as valid status codes.
-          
+
           [default: 100..=103,200..=299]
 
       --include-fragments
@@ -173,21 +182,24 @@ Options:
 
   -t, --timeout <TIMEOUT>
           Website timeout in seconds from connect to response finished
-          
+
           [default: 20]
 
   -r, --retry-wait-time <RETRY_WAIT_TIME>
           Minimum wait time in seconds between retries of failed requests
-          
+
           [default: 1]
 
   -X, --method <METHOD>
           Request method
-          
+
           [default: get]
 
-  -b, --base <BASE>
-          Base URL or website root directory to check relative URLs e.g. <https://example.com> or `/path/to/public`
+      --base <BASE>
+          Deprecated; use `--base-url` instead
+
+  -b, --base-url <BASE_URL>
+          Base URL used to resolve relative URLs during link checking Example: <https://example.com>
 
       --root-dir <ROOT_DIR>
           Root path to use when checking absolute local links, must be an absolute path
@@ -197,7 +209,7 @@ Options:
 
       --github-token <GITHUB_TOKEN>
           GitHub API token to use when checking github.com links, to avoid rate limiting
-          
+
           [env: GITHUB_TOKEN]
 
       --skip-missing
@@ -220,13 +232,13 @@ Options:
 
       --mode <MODE>
           Set the output display mode. Determines how results are presented in the terminal
-          
+
           [default: color]
-          [possible values: plain, color, emoji]
+          [possible values: plain, color, emoji, task]
 
   -f, --format <FORMAT>
           Output format of final status report
-          
+
           [default: compact]
           [possible values: compact, detailed, json, markdown, raw]
 
