@@ -20,7 +20,7 @@ jobs:
       - name: Link Checker
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --base dist --exclude-all-private dist
+          args: --base-url dist --exclude-all-private dist
           fail: True
 
       - name: Create Issue From File
