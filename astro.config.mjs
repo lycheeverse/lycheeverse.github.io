@@ -55,7 +55,7 @@ export default defineConfig({
               link: "/recipes/migration",
             },
             {
-              label: "Testing Sites Not Served from Root with --base",
+              label: "Testing Sites Not Served from Root with --base-url",
               link: "/recipes/base-url",
             },
             {
