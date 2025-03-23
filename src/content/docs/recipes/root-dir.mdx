@@ -102,7 +102,7 @@ To check these links:
 lychee --root-dir "$(pwd)" "docs/**/*.html"
 ```
 
-## The Difference Between --root-dir and --base
+## The Difference Between --root-dir and --base-url
 
 These parameters serve different purposes:
 
@@ -112,7 +112,7 @@ These parameters serve different purposes:
   - Must be an absolute filesystem path
   - Used when checking local files
 
-- [`--base`](base-url) is for resolving URLs
+- [`--base-url`](base-url) is for resolving URLs
   - Must be a URL (like `https://example.com/docs/`)
   - Used when checking how links will work once deployed
   - Affects relative links (like `./guide.html`)
@@ -124,7 +124,7 @@ Sometimes you need both:
 ```bash
 lychee \
   --root-dir "$(pwd)/public" \
-  --base https://example.com/ \
+  --base-url https://example.com/ \
   "public/**/*.html"
 ```
 
