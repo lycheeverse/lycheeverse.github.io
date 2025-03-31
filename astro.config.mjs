@@ -69,6 +69,10 @@ export default defineConfig({
           label: "GitHub Action Recipes",
           items: [
             {
+              label: "Check Links in Repository",
+              link: "/github_action_recipes/check-repository",
+            },
+            {
               label: "Check Links in Pull Requests",
               link: "/github_action_recipes/pull-requests",
             },
