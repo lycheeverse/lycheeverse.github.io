@@ -63,6 +63,7 @@ export default defineConfig({
               link: "/recipes/root-dir",
             },
             { label: "Pretty URLs", link: "/recipes/pretty-urls" },
+            { label: "Wikilinks", link: "/recipes/wikilinks" },
           ],
         },
         {
