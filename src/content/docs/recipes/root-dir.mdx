@@ -7,7 +7,7 @@ import { Code } from "@astrojs/starlight/components";
 export const fileName = "index.html";
 export const fileLang = "html";
 
-## What Does --root-dir Do?
+## What Does `--root-dir` Do?
 
 The `--root-dir` parameter tells lychee where to look for files that start with `/`. Let's see an example:
 
@@ -32,7 +32,7 @@ lychee will look for:
 - `./public/about.html`
 - `./public/docs/guide.html`
 
-## When Do You Need --root-dir?
+## When Do You Need `--root-dir`?
 
 You need `--root-dir` when:
 
@@ -83,6 +83,23 @@ To check the links:
 lychee --root-dir "$(pwd)/public" "public/**/*.html"
 ```
 
+For GitHub Actions, please replace `$(pwd)` with [`${{ github.workspace }}`](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs#github-context):
+
+```yaml '${{ github.workspace }}'
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --verbose
+            --no-progress
+            --root-dir "${{ github.workspace }}/public"
+            "public/**/*.html"
+```
+
 ### Documentation Site
 
 Many documentation sites use absolute paths for links:
@@ -102,7 +119,7 @@ To check these links:
 lychee --root-dir "$(pwd)" "docs/**/*.html"
 ```
 
-## The Difference Between --root-dir and --base-url
+## The Difference Between `--root-dir` and `--base-url`
 
 These parameters serve different purposes:
 
@@ -112,7 +129,7 @@ These parameters serve different purposes:
   - Must be an absolute filesystem path
   - Used when checking local files
 
-- [`--base-url`](base-url) is for resolving URLs
+- [`--base-url`](/recipes/base-url) is for resolving URLs
   - Must be a URL (like `https://example.com/docs/`)
   - Used when checking how links will work once deployed
   - Affects relative links (like `./guide.html`)
