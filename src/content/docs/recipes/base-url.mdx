@@ -157,7 +157,7 @@ The trailing slash is crucial because it tells lychee whether `/docs` is a file 
 
 lychee can't automatically add the slash because both forms are valid - they just mean different things. For example, `https://example.com/docs` might be a single page, while `https://example.com/docs/` is its directory version. This distinction is part of how URLs work on the web.
 
-## --base-url vs --root-dir
+## `--base-url` vs `--root-dir`
 
 These solve different problems:
 
@@ -166,14 +166,14 @@ These solve different problems:
   - Use it when you care about your site's final URL structure
   - Helps validate relative links
 
-- [`--root-dir`](root-dir) is for file paths (like `./public/`)
+- [`--root-dir`](/recipes/root-dir) is for file paths (like `./public/`)
   - Use it to find files on your computer
   - Helps validate absolute paths
 
 You can use both together:
 
 ```bash
-lychee --base-url https://example.com/docs/ --root-dir ./public/ "public/**/*.html"
+lychee --base-url https://example.com/docs/ --root-dir $(pwd)/public/ "public/**/*.html"
 ```
 
 ## Troubleshooting
