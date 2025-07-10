@@ -15,7 +15,7 @@ First, install the dependencies
 
 ```shell
 npm i
-npm -g install astro@4
+npm -g install astro@5
 ```
 
 Then you can run

@@ -97,18 +97,28 @@ require_https = false
 method = "get"
 
 # Custom request headers
-headers = []
+header = { "accept" = "text/html", "x-custom-header" = "value" }
 
 # Remap URI matching pattern to different URI.
 remap = ["https://example.com http://example.invalid"]
 
+# Fallback extensions to apply when a URL does not specify one.
+# This is common in documentation tools that cross-reference files without extensions.
+fallback_extensions = ["md", "html"]
+
 # Base URL or website root directory to check relative URLs.
-base = "https://example.com"
+base_url = "https://example.com"
+
+# Root path to use when checking absolute local links, must be an absolute path
+root_dir = "/dist"
 
 # HTTP basic auth support. This will be the username and password passed to the
 # authorization HTTP header. See
 # <https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Authorization>
 basic_auth = ["example.com user:pwd"]
+
+# Enable the checking of fragments in links.
+include_fragments = true
 
 #############################  Exclusions  ##########################
 
