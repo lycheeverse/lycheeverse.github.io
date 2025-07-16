@@ -147,7 +147,6 @@ lychee --base-url https://example.com/docs`}
 The trailing slash is crucial because it tells lychee whether `/docs` is a file or a directory. This follows standard URL resolution rules:
 
 - `https://example.com/docs/` (with slash) means "docs" is a directory
-
   - `./guide.html` resolves to `/docs/guide.html`
   - `../about.html` resolves to `/about.html`
 
@@ -162,7 +161,6 @@ lychee can't automatically add the slash because both forms are valid - they jus
 These solve different problems:
 
 - `--base-url` is for URLs (like `https://example.com/docs/`)
-
   - Use it when you care about your site's final URL structure
   - Helps validate relative links
 

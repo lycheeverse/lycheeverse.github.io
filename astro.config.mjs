@@ -18,9 +18,13 @@ export default defineConfig({
         replacesTitle: true,
         src: "./public/logo.svg",
       },
-      social: {
-        github: "https://github.com/lycheeverse/lychee/",
-      },
+      social: [
+        {
+          icon: "github",
+          label: "GitHub",
+          href: "https://github.com/lycheeverse/lychee/",
+        },
+      ],
       customCss: ["./src/styles/index.css"],
       sidebar: [
         {

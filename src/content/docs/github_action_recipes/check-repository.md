@@ -45,11 +45,13 @@ jobs:
 ## Explanation
 
 The workflow is triggered in three scenarios:
+
 1. Manual trigger via `workflow_dispatch`
 2. Repository dispatch events
 3. Automated schedule (runs daily at 18:00 UTC)
 
 The workflow executes the following steps:
+
 1. Checks out the repository using `actions/checkout@v4`
 2. Runs the Lychee link checker (`lycheeverse/lychee-action@v2`) with `fail: false` to prevent workflow failure
 3. If any broken links are detected (exit code != 0), creates a new GitHub issue using `peter-evans/create-issue-from-file@v5`

@@ -84,8 +84,7 @@ Cloudflare Challenge.
 
 If the website uses a bot detection service, which is blocking lychee, there's
 little you can do. You can try contacting the website administrator and ask them
-to whitelist lychee. 
-
+to whitelist lychee.
 
 ### Update the CA certificates
 
