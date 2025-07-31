@@ -9,7 +9,7 @@ You might think that you can just put the path in the [`.lycheeignore`](/recipes
 The `.lycheeignore` file is only used for excluding URLs, not paths.
 
 Instead, you can use the `--exclude-path` flag to exclude paths from being checked.
-Example: `--exclude-path node_modules`
+Example: `--exclude-path node_modules` or `--exclude-path example\.(com|org)`.
 
 Alternatively, you can also use the `exclude_path` key in the configuration file:
 
@@ -57,6 +57,7 @@ Exclude version control directories.
 ```bash
 lychee --exclude-path .git
 lychee --exclude-path .svn
+lychee --exclude-path "\.git|\.svn"
 ```
 
 ### Documentation and Non-Code Assets
@@ -65,6 +66,14 @@ Skip documentation and non-code related directories.
 
 ```bash
 lychee --exclude-path docs --exclude-path assets/images
+```
+
+### Backup Files
+
+Avoid checking backup files created by editors or tools.
+
+```bash
+lychee --exclude-path "*.bak"
 ```
 
 ### Logs and Databases
