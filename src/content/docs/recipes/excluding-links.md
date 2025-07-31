@@ -87,8 +87,8 @@ https?:\/\/(www\.)?reddit\.com\/r\/(funny|videos)
 ^mailto:  # Ignore all mailto links
 ```
 
-This way, you don't have to specify them every time you run lychee and
-you can check them into version control.
+This way, you don't have to specify them with `--exclude` every time you run lychee
+and you can check them into version control.
 
 ## Tips for Effective Link Exclusion
 
