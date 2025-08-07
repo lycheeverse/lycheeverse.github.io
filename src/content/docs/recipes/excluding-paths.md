@@ -10,7 +10,7 @@ To traverse hidden directories and check hidden files use `--hidden`.
 
 Sometimes it is necessary to skip specific paths from being checked.
 You might think that you can just put the path in the [`.lycheeignore`](/recipes/excluding-links) file, but that won't work.
-The `.lycheeignore` file is used for excluding URLs, not paths. (as the `--exclude` option)
+The `.lycheeignore` file is used for excluding URLs, not paths (same as the `--exclude` option).
 
 Instead, you can use the `--exclude-path` flag to exclude paths from being checked.
 The values are treated as regular expressions.
