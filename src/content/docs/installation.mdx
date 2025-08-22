@@ -2,6 +2,13 @@
 title: Installation
 ---
 
+## Package Managers 
+
+You can install Lychee using various package managers.
+Just click on the tab for your preferred package manager to see the installation command.
+In case your favorite package manager is not listed yet, please
+[consider adding support](https://github.com/lycheeverse/lychee/issues/59) for it.
+
 import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
 
 <Tabs>
@@ -22,6 +29,9 @@ import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
   </TabItem>
   <TabItem label="Scoop">
     <Code code="scoop install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="Snap">
+    <Code code="sudo snap install lychee" lang="sh" />
   </TabItem>
   <TabItem label="OpenSUSE">
     <Code code="zypper in lychee" lang="sh" />
