@@ -25,7 +25,7 @@ handle this process itself.
 Static site generators such as Hugo can be told to generate [pretty
 URLs](https://gohugo.io/configuration/ugly-urls/) that omit the `.html` file
 extension. Many hosting services, such as GitHub Pages and GitLab Pages, will
-[automatically resolve][gitlab] these pretty URLs to the underlying .html file
+[automatically resolve][gitlab] these pretty URLs to the underlying `.html` file
 when serving the content.
 
 [gitlab]: https://docs.gitlab.com/user/project/pages/introduction/#resolving-ambiguous-urls
