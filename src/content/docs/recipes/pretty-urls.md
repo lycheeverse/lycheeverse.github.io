@@ -1,5 +1,9 @@
 ---
 title: Pretty URLs
+description: >
+  Pretty URLs omit certain parts of the link to make it shorter and more
+  memorable. Lychee's "fallback extensions" and "index files" features help to
+  check pretty URLs in local files.
 ---
 
 In the modern web, URLs are often made "pretty" in a number of ways. This makes
