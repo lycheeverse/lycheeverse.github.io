@@ -1,10 +1,10 @@
 ---
 title: Pretty URLs
 description: >
-  A pretty URL omits certain parts of the link to make it shorter and more
-  memorable, for instance by leaving out the file extension or file name.
-  lychee's "fallback extensions" and "index files" features help to
-  check pretty URLs in local files.
+  A pretty URL leaves out certain parts of the link to make it shorter and more
+  memorable. Currently, lychee understands two kinds of pretty URLs: links to
+  files which omit the file extension, and links to directories which omit the
+  "/index.html" filename.
 ---
 
 In the modern web, URLs are often made "pretty" in a number of ways. This makes
