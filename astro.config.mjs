@@ -1,10 +1,14 @@
 import starlight from "@astrojs/starlight";
-import { defineConfig } from "astro/config";
-import { CodeMarkerAnchorPlugin } from "./src/CodeMarkerAnchorPlugin";
+import { defineConfig, envField } from "astro/config";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://lychee.cli.rs",
+  env: {
+    schema: {
+      LYCHEE_VERSION: envField.string({ context: "server", access: "public", default: "master" }),
+    },
+  },
   integrations: [
     starlight({
       title: "Docs",

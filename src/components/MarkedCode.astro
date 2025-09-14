@@ -1,0 +1,19 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+interface Props extends Parameters<Code> {
+  /**
+   * Function applied to (possibly) produce a marker for each line
+   * in the code block.
+   */
+  markerFn?: (line: string) => string | null
+}
+
+const { markerFn = () => null, code } = Astro.props;
+
+const markers = code.split('\n').flatMap((line, i) => {
+  const x = markerFn(line);
+  return !!x ? [{ range: `${i+1}`, label: '#' + x }] : [];
+});
+---
+<Code code={code} mark={markers}></Code>
