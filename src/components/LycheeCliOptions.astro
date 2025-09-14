@@ -1,0 +1,65 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+const { commit } = Astro.props;
+
+const url = `https://raw.githubusercontent.com/lycheeverse/lychee/${commit}/README.md`
+const readme =
+  await fetch(url).then(r => {
+    if (!r.ok) throw new Error(`${r.status} when fetching ${url}`);
+    return r.text();
+  });
+
+function extractHelpFromReadme(readme: string): string {
+  const [, section] = readme.split(/### Commandline Parameters/, 2);
+  if (!section) throw new Error("LycheeCliOptions: commandline parameters section not found in readme");
+
+  const [, text] = section.split('\n```text\n', 2)
+  if (!text) throw new Error("LycheeCliOptions: ```text marker not found in commandline parameters section");
+
+  const [helpText, ] = text.split('\n```\n', 2)
+  if (!helpText) throw new Error("LycheeCliOptions: closing ``` marker not found after ```text");
+
+  return helpText;
+}
+
+/**
+ * Splits the given text into lines and identifies lines which look like the beginning
+ * of an option description in clap's `--help` output.
+ *
+ * For example, in this text, it will match the `--files-from` line:
+ * ```
+ * Options:
+ *       --files-from <PATH>
+ *           Read input filenames from the given file or stdin (if path is '-').
+ * ```
+ * This is done by skipping 2-6 characters of spaces and short options, then
+ * searching for `--` or `[` followed by an option name. The option name is
+ * returned in the `key` field.
+ *
+ * Lines which do not match this flag format are returned with `null` as the key.
+ */
+function sliceHelpSections(helpText: string): {key: string | null, line: string}[] {
+  const optionRegex = /^[- ,a-zA-Z]{2,6}(--|\[)([a-z-]+)/;
+
+  const result = helpText.split("\n").map(line => {
+    const matches = optionRegex.exec(line);
+    if (!matches) return { key: null, line };
+
+    let [,prefix,key] = matches;
+    key = prefix == '--' ? '--' + key : 'option-' + key;
+    return { key, line };
+  });
+
+  return result;
+}
+
+const helpText = extractHelpFromReadme(readme);
+const keyedLines = sliceHelpSections(helpText);
+const markers = keyedLines.flatMap((x, i) => {
+  if (!x.key) return [];
+  return {range: `${i+1}`, label: '#' + x.key};
+});
+const body = keyedLines.map(x => x.line).join('\n');
+---
+<Code code={body} mark={markers}></Code>

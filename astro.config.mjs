@@ -1,5 +1,6 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import { CodeMarkerAnchorPlugin } from "./src/CodeMarkerAnchorPlugin";
 
 // https://astro.build/config
 export default defineConfig({
