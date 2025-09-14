@@ -66,7 +66,10 @@ export default defineConfig({
               label: "Local File Checking with --root-dir",
               link: "/recipes/root-dir",
             },
-            { label: "Pretty URLs", link: "/recipes/pretty-urls" },
+            {
+              label: "Pretty URLs (Fallback Extensions and Index Files)",
+              link: "/recipes/pretty-urls",
+            },
             { label: "Wikilinks", link: "/recipes/wikilinks" },
           ],
         },
