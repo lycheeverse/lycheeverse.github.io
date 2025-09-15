@@ -9,21 +9,20 @@
  * [Expressive code plugin]: https://expressive-code.com/reference/plugin-hooks/
  */
 export function pluginCodeMarkerAnchors() {
-
   /** @type {import('astro-expressive-code').ExpressiveCodePlugin} */
   const plugin = {
-    name: 'CodeMarkerAnchorPlugin',
+    name: "CodeMarkerAnchorPlugin",
     hooks: {
       // first, markers beginning with `#` are identified. the anchor ID is
       // stored, then the text is replaced with just `#`.
-      postprocessAnnotations: async x => {
+      postprocessAnnotations: async (x) => {
         for (const line of x.codeBlock.getLines()) {
           for (const annot of line.getAnnotations()) {
-            if (annot.markerType !== 'mark') continue;
-            if (annot.label?.startsWith('#')) {
+            if (annot.markerType !== "mark") continue;
+            if (annot.label?.startsWith("#")) {
               // NOTE: this is kind of hacky, it's adding a new field into the
               // TextMarkerAnnotation class.
-              annot.anchor = annot.label.replace('#', '');
+              annot.anchor = annot.label.replace("#", "");
               annot.label = "#";
             }
           }
@@ -32,20 +31,18 @@ export function pluginCodeMarkerAnchors() {
 
       // secondly, rendered markers with recorded anchors are turned into
       // hyperlinks with id attributes.
-      postprocessRenderedLine: async x => {
-        const annot = x.line.getAnnotations()
-          .find(x => x.markerType === 'mark' && !!x.anchor);
+      postprocessRenderedLine: async (x) => {
+        const annot = x.line.getAnnotations().find((x) => !!x.anchor);
         if (!annot) return;
 
         const lineAst = x.renderData.lineAst;
 
-        lineAst.tagName = 'a';
-        lineAst.properties['id'] = annot.anchor;
-        lineAst.properties['href'] = '#' + annot.anchor;
-        lineAst.properties['style'] =
-          'text-decoration-line: none;' + (lineAst.properties['style'] ?? '');
+        lineAst.tagName = "a";
+        lineAst.properties.id = annot.anchor;
+        lineAst.properties.href = `#${annot.anchor}`;
+        lineAst.properties.style = `text-decoration-line: none;${lineAst.properties.style ?? ""}`;
       },
-    }
+    },
   };
 
   return plugin;

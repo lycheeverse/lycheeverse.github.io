@@ -6,7 +6,11 @@ export default defineConfig({
   site: "https://lychee.cli.rs",
   env: {
     schema: {
-      LYCHEE_VERSION: envField.string({ context: "server", access: "public", default: "master" }),
+      LYCHEE_VERSION: envField.string({
+        context: "server",
+        access: "public",
+        default: "master",
+      }),
     },
   },
   integrations: [
