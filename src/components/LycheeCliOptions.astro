@@ -53,7 +53,7 @@ function markCliOptions(line: string) {
   return prefix === "--" ? `#--${key}` : `#option-${key}`;
 }
 
-export const helpText = extractHelpFromReadme(readme);
+const helpText = extractHelpFromReadme(readme);
 ---
 <MarkedCode code={helpText} markerFn={markCliOptions} />
 
