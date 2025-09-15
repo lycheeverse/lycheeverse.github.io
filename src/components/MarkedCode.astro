@@ -1,8 +1,7 @@
 ---
 import { Code } from "@astrojs/starlight/components";
-import type { CodeProps } from "astro-expressive-code/components/types";
 
-export type Props = AstroExpressiveCodeOptions & {
+export type Props = Parameters<typeof Code>[0] & {
   /**
    * Function applied to (possibly) produce a marker for each line
    * in the code block.
