@@ -13,18 +13,18 @@
     "lint": "biome lint . && astro check",
     "lint:fix": "biome lint --apply .",
     "check-format": "prettier --check . && biome check .",
-    "check-format:fix": "biome check --apply .",
+    "check-format:fix": "biome check --fix .",
     "precommit": "pnpm run check-format && pnpm run lint"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",
-    "@astrojs/starlight": "^0.35.0",
-    "astro": "^5.11.1",
-    "sharp": "^0.34.3",
-    "typescript": "^5.8.3"
+    "@astrojs/starlight": "^0.36.0",
+    "astro": "^5.14.1",
+    "sharp": "^0.34.4",
+    "typescript": "^5.9.3"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.1.1",
+    "@biomejs/biome": "^2.2.5",
     "prettier": "^3.6.2"
   }
 }
