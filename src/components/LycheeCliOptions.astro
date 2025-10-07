@@ -1,0 +1,59 @@
+---
+import { LYCHEE_VERSION } from "astro:env/server";
+import MarkedCode from "./MarkedCode.astro";
+
+const url = `https://raw.githubusercontent.com/lycheeverse/lychee/${LYCHEE_VERSION}/README.md`;
+const readme = await fetch(url).then((r) => {
+  if (!r.ok) throw new Error(`${r.status} when fetching ${url}`);
+  return r.text();
+});
+
+function extractHelpFromReadme(readme: string) {
+  const [, section] = readme.split(/### Commandline Parameters/, 2);
+  if (!section)
+    throw new Error(
+      "LycheeCliOptions: commandline parameters section not found in readme",
+    );
+
+  const [, text] = section.split("\n```text\n", 2);
+  if (!text)
+    throw new Error(
+      "LycheeCliOptions: ```text marker not found in commandline parameters section",
+    );
+
+  const [helpText] = text.split("\n```\n", 2);
+  if (!helpText)
+    throw new Error(
+      "LycheeCliOptions: closing ``` marker not found after ```text",
+    );
+
+  return helpText;
+}
+
+const optionRegex = /^[- ,a-zA-Z]{2,6}(--|\[)([a-z-]+)/;
+
+/**
+ * Identifies lines which are the beginning of a Clap option description.
+ *
+ * For example, in the text below, it will match the `--files-from` line:
+ * ```
+ * Options:
+ *       --files-from <PATH>
+ *           Read input filenames from the given file or stdin (if path is '-').
+ * ```
+ * This is done by skipping 2-6 characters of spaces and short options, then
+ * searching for `--` or `[` followed by an option name. The marker key is
+ * derived from the long name of the flag.
+ */
+function markCliOptions(line: string) {
+  const matches = optionRegex.exec(line);
+  if (!matches) return null;
+
+  const [, prefix, key] = matches;
+  return prefix === "--" ? `#--${key}` : `#option-${key}`;
+}
+
+const helpText = extractHelpFromReadme(readme);
+---
+<MarkedCode code={helpText} markerFn={markCliOptions} />
+
