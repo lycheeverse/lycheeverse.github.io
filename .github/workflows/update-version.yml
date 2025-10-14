@@ -1,0 +1,58 @@
+name: Update Package Version to Date
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  update-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+        with:
+          persist-credentials: false  # Disable to use a custom token if needed
+
+      - name: Update version if outdated
+        id: version-check
+        run: |
+          # Get current version from package.json (assumes YYYY.MM.DD format)
+          CURRENT_VERSION=$(jq -r .version package.json)
+          echo "Current version: $CURRENT_VERSION"
+
+          # Today's date in YYYY.MM.DD
+          TODAY=$(date +%Y.%m.%d)
+          echo "Today's date: $TODAY"
+
+          # Parse current version to date components
+          IFS='.' read -r YEAR MONTH DAY <<< "$CURRENT_VERSION"
+          if [[ "$YEAR" =~ ^[0-9]{4}$ && "$MONTH" =~ ^[0-9]{2}$ && "$DAY" =~ ^[0-9]{2}$ ]]; then
+            PKG_DATE=$(date -d "$YEAR-$MONTH-$DAY" '+%s')  # Unix timestamp
+            TODAY_DASH=$(echo "$TODAY" | tr '.' '-')
+            TODAY_TS=$(date -d "$TODAY_DASH" '+%s')
+
+            if [ "$PKG_DATE" != "$TODAY_TS" ]; then
+              echo "Version outdated—updating to $TODAY"
+              # Update JSON with jq (safe, preserves formatting)
+              jq ".version = \"$TODAY\"" package.json > package.json.tmp && mv package.json.tmp package.json
+              echo "version_updated=true" >> $GITHUB_OUTPUT
+            else
+              echo "Version is current—no update needed"
+              echo "version_updated=false" >> $GITHUB_OUTPUT
+            fi
+          else
+            echo "Invalid version format—exiting"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Commit and push if changed
+        if: |
+          github.event_name == 'push' &&
+          steps.version-check.outputs.version_updated == 'true'
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+          git add package.json
+          git commit -m "chore: update version to $(date +%Y.%m.%d)"
+          git push
