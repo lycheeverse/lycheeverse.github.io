@@ -11,7 +11,7 @@ Manual trigger via workflow_dispatch
 Repository dispatch events
 Automated schedule (runs daily at 18:00 UTC)
 The workflow executes the following steps:
-Checks out the repository using actions/checkout@v4
+Checks out the repository using actions/checkout@v5
 Runs the Lychee link checker (lycheeverse/lychee-action@v2) with fail: false to prevent workflow failure
 If any broken links are detected (exit code != 0), creates a new GitHub issue using peter-evans/create-issue-from-file@v5
 The issue contains the detailed report from ./lychee/out.md

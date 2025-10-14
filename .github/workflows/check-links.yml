@@ -10,10 +10,10 @@ jobs:
   linkChecker:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Build site
-        uses: withastro/action@v3
+        uses: withastro/action@v4
         with:
           package-manager: pnpm@latest
 

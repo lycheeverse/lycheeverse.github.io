@@ -32,7 +32,7 @@ jobs:
           restore-keys: cache-lychee-
 
       # check URLs with Lychee
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Lychee URL checker
         uses: lycheeverse/lychee-action@v2

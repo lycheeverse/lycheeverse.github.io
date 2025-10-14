@@ -21,13 +21,13 @@ jobs:
           version: latest
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version: 20
           cache: 'pnpm'
 
       - name: Clone repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
           ref: ${{github.event.pull_request.head.ref}}
@@ -37,7 +37,7 @@ jobs:
         run: git checkout ${{github.event.pull_request.base.ref}}
 
       - name: Build site (base branch)
-        uses: withastro/action@v3
+        uses: withastro/action@v4
         with:
           package-manager: pnpm@latest
 
@@ -63,7 +63,7 @@ jobs:
         run: git stash pop || true
 
       - name: Build site (feature branch)
-        uses: withastro/action@v3
+        uses: withastro/action@v4
         with:
           package-manager: pnpm@latest
 
@@ -91,7 +91,7 @@ jobs:
 
       - name: Create PR comment on failure
         if: steps.lychee.exit_code != 0
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             const fs = require('fs');
