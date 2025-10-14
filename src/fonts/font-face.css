@@ -1,0 +1,17 @@
+@font-face {
+	font-family: "Geist";
+	/* Use a relative path to the local font file in `url()`. */
+	src: url("./webfonts/geist/Geist[wght].woff2") format("woff2");
+	/*font-weight: normal;
+  font-style: normal;
+  font-display: swap;*/
+}
+
+@font-face {
+	font-family: "Geist Mono";
+	/* Use a relative path to the local font file in `url()`. */
+	src: url("./webfonts/geistMono/GeistMono[wght].woff2") format("woff2");
+	/*font-weight: normal;
+  font-style: normal;
+  font-display: swap;*/
+}

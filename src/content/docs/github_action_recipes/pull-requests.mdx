@@ -1,0 +1,19 @@
+---
+title: Check Links in Pull Requests
+---
+
+import CodeBlock from "../../../components/code.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+This recipe shows how to check for broken links in pull requests. It only checks
+newly added links by comparing against the base branch, reducing noise from
+existing broken links.
+
+The workflow is triggered on pull request events against the main branch. It clones the repository and checks out the main branch to dump all links. It then stashes untracked files and checks out the feature branch. The stashed changes are applied and the links from the main branch are appended to the .lycheeignore file. Finally, the links in the feature branch are checked and suggestions are provided if the check fails.
+
+<Aside>
+  [Discussion on
+  GitHub](https://github.com/lycheeverse/lychee-action/issues/238)
+</Aside>
+
+<CodeBlock file=".github/workflows/check-pr-links.yml" />

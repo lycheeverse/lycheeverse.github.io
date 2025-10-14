@@ -1,0 +1,63 @@
+---
+title: Too Many Open Files
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+The number of concurrent network requests (`MAX_CONCURRENCY`) is set to 128 by default.
+
+Every network request maps to an open socket, which is represented as a file on UNIX systems.
+If you see error messages like `error trying to connect: tcp open error: Too
+many open files (os error 24)` then you ran out of file handles.
+
+You can either reduce the number of concurrent requests with the `--max-concurrency` option or increase the number of allowed open files on your system.
+For example, to reduce the number of concurrent requests to 50:
+
+```bash
+lychee --max-concurrency 50 https://example.com
+```
+
+<Aside type="caution">Comes with a performance penalty</Aside>
+
+## UNIX
+
+To increase the number of allowed open files, you can use the `ulimit` command on UNIX systems.
+For example, to increase the limit to 4096:
+
+```bash
+ulimit -n 4096
+```
+
+<Aside>The `ulimit` command only affects the current shell session.</Aside>
+
+For permanent increases (e.g., across reboots), use `launchctl` to set system limits:
+
+```bash
+sudo launchctl limit maxfiles 4096 unlimited
+```
+
+Then apply per-session with `ulimit -n 4096`. This sets a soft limit of 4096 and removes the hard cap.
+
+<Aside>
+  You might need to restart your terminal or system for the changes to take
+  effect.
+</Aside>
+
+For system-wide boot changes, create `/Library/LaunchDaemons/limit.maxfiles.plist` with XML keys for `<key>LimitLoadToSessionType</key><string>System</string>` and limits—see Apple docs.
+
+## Windows
+
+On Windows, you can increase the limit by modifying the registry.
+
+1. Open the Registry Editor (`regedit`).
+2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip
+\Parameters`.
+3. Create a new `DWORD` value named `MaxUserPort` and set it to `65534`.
+4. Create another `DWORD` value named `TcpTimedWaitDelay` and set it to `30`.
+5. Restart your computer for the changes to take effect.
+
+<Aside type="caution">
+  This addresses port exhaustion (common for socket errors); for raw file
+  handles, check app-specific limits. Modifying the registry can have unintended
+  consequences. Always back up your registry before making changes.
+</Aside>

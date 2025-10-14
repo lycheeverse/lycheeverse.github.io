@@ -2,25 +2,25 @@
 title: Network Errors
 ---
 
-If you run lychee and some links fail with the following error messages:
+import { Aside } from "@astrojs/starlight/components";
 
-```bash
-Failed: Network error: error sending request for url
-```
-
-or
-
-```bash
-Network error: Forbidden
-```
-
-then it could be certificate-related issue.
+If you run lychee and some links fail then it could be certificate-related issue.
 Certificates are used to verify the identity of a website and to establish a secure connection.
 Different operating systems and tools have different ways to handle certificates.
 
 If lychee is unable to verify the certificate of a website, it will show a
 network error. This could be due to an expired certificate, an invalid
 certificate, or a certificate from an unknown authority.
+
+Examples of network errors that could be certificate-related:
+
+```bash
+Failed: Network error: error sending request for url
+```
+
+```bash
+Network error: Forbidden
+```
 
 ## What now?
 
@@ -89,14 +89,17 @@ to whitelist lychee.
 ### Update the CA certificates
 
 To resolve certificate-related issues, you can update the CA certificates on
-your system. (CA stands for Certificate Authority and is an entity that issues
-digital certificates. It's what your browser uses to verify the identity of a
-website.)
+your system.
+
+<Aside>
+  CA stands for Certificate Authority and is an entity that issues digital
+  certificates. It's what your browser uses to verify the identity of a website.
+</Aside>
 
 If you're on a Debian-based system (including Ubuntu), you can update the
 certificates by running:
 
-```
+```bash
 sudo apt-get install ca-certificates
 ```
 
@@ -110,17 +113,4 @@ Also, see this [Stack Overflow
 discussion](https://stackoverflow.com/a/24618403/270334) for additional
 information.
 
-After that, try running lychee again.
-
-### Related lychee issues
-
-If all of the above steps don't work, it might be a known issue with lychee.
-To find more information about this issue, check out the following issues:
-
-- [lychee shows network error: forbidden for valid links](https://github.com/lycheeverse/lychee/issues/733)
-- [Failed: Network error: error sending request for url](https://github.com/lycheeverse/lychee/issues/1487)
-
-or search for similar issues on the lychee GitHub repository.
-
-If you can't find an issue that matches your problem, you can open a new issue
-on the lychee GitHub repository.
+After that, try running lychee again and see if the issue is resolved. If not, please open an issue on the lychee GitHub repository.

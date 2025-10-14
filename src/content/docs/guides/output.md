@@ -19,20 +19,20 @@ Color mode is the default output mode. It displays the results in a color-coded 
 
 ### `--mode color`
 
-![Color Mode](./img/color.png)
+![Color Mode](./images/color.avif)
 
 ### `--mode color -vv` (verbose debug output)
 
-![Color Mode](./img/color-debug.png)
+![Color Mode](./images/color-debug.avif)
 
 ## Plain Mode
 
 Plain mode displays the results in a simple, easy-to-read format. It is useful for automated scripts or when you want to save the output to a file.
 
-![Plain Mode](./img/plain.png)
+![Plain Mode](./images/plain.avif)
 
 ## Emoji Mode
 
 Emoji mode displays the results using emojis. It is a fun and engaging way to view the results of a check.
 
-![Emoji Mode](./img/emoji.png)
+![Emoji Mode](./images/emoji.avif)
