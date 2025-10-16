@@ -1,4 +1,4 @@
-name: Check CLI Version
+name: CLI Version
 
 on:
   schedule:

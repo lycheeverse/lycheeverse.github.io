@@ -1,4 +1,4 @@
-name: Check Links In Pull Requests
+name: Pull Request Links
 on:
   pull_request:
     branches:
@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-node@v6
         with:
           node-version: 20
-          cache: 'pnpm'
+          cache: "pnpm"
 
       - name: Clone repository
         uses: actions/checkout@v5
