@@ -1,0 +1,230 @@
+---
+title: Getting Started
+---
+
+import { Aside } from "@astrojs/starlight/components";
+import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
+
+You can install Lychee using various package managers.
+
+<Aside>
+  In case your favorite package manager is not listed yet, please [consider
+  adding support](https://github.com/lycheeverse/lychee/issues/59) for it.
+</Aside>
+
+<Tabs>
+  <TabItem label="Arch">
+    <Code code="pacman -S lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="Homebrew">
+    <Code code="brew install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="Docker">
+    <Code code="docker pull lycheeverse/lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="NixOS">
+    <Code code="nix-env -iA nixos.lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="FreeBSD">
+    <Code code="pkg install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="Scoop">
+    <Code code="scoop install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="Snap">
+    <Code code="sudo snap install lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="OpenSUSE">
+    <Code code="zypper in lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="WinGet">
+    <Code code="winget install lycheeverse.lychee" lang="sh" />
+  </TabItem>
+  <TabItem label="chocolatey">
+    <Code code="choco install lychee" lang="sh" />
+  </TabItem>
+</Tabs>
+
+## Pre-built binaries
+
+Lychee provides binaries for Linux, macOS, and Windows for every release.
+You can download them from the [releases page](https://github.com/lycheeverse/lychee/releases).
+
+## Docker
+
+Lychee provides a handy official image over at [lycheeverse/lychee](https://hub.docker.com/r/lycheeverse/lychee),
+which is updated on every release.
+
+To check files on your local machine, you need to mount them into the Docker
+container.
+
+Here's how to do that:
+
+```bash
+docker run --init -it -v `pwd`:/input lycheeverse/lychee /input/README.md
+```
+
+The `--init` parameter is passed so that lychee can be stopped
+from the terminal. We also pass `-it` to start an interactive terminal, which
+is required to show the progress bar.
+
+## Cargo
+
+### Build dependencies
+
+On APT/dpkg-based Linux distros (e.g. Debian, Ubuntu, Linux Mint and Kali Linux) the following commands will install all required build dependencies, including the Rust toolchain and `cargo`:
+
+```sh
+curl -sSf '<https://sh.rustup.rs>' | sh
+apt install gcc pkg-config libc6-dev libssl-dev
+```
+
+### Compile and install lychee
+
+```sh
+cargo install lychee
+```
+
+### Feature flags
+
+Lychee supports several feature flags:
+
+- `native-tls` enables the platform-native TLS crate [native-tls](https://crates.io/crates/native-tls).
+- `vendored-openssl` compiles and statically links a copy of OpenSSL. See the corresponding feature of the [openssl](https://crates.io/crates/openssl) crate.
+- `rustls-tls` enables the alternative TLS crate [rustls](https://crates.io/crates/rustls).
+- `email-check` enables checking email addresses using the [check-if-email-exists](https://crates.io/crates/check-if-email-exists) crate. This feature requires the native-tls feature.
+- `check_example_domains` allows checking example domains such as `example.com.` This feature is useful for testing.
+
+By default, `native-tls` and `email-check` are enabled.
+
+## Usage
+
+Lets get a quick overview of how to use Lychee in your project.
+
+### Check All Links In Current Directory
+
+The following command _recursively_ checks all links in all supported files
+inside the current directory.
+
+```bash
+lychee .
+```
+
+This traverses all subdirectories and checks the links in all files which lychee
+supports, such as `.md`, `.html`, and more.
+
+### Check All Links On A Website
+
+```bash
+lychee https://example.com
+```
+
+This command checks all links on the website `https://example.com`.
+It is not recursive and only checks the links on the given page.
+Recursion is currently not supported. You can however download the
+sitemap of a website and use that as input.
+
+### Check Only Specific Files
+
+```bash
+lychee README.md
+lychee test.html info.txt
+lychee test.html info.txt https://example.com
+```
+
+This command checks only the links in the given files.
+It also demonstrates how to check multiple inputs, such as files and URLs
+in a single command.
+
+### Check Links In Directories, But Block All Network Requests
+
+```bash
+lychee --offline path/to/directory
+```
+
+This will only check the links in the files in the given directory and not make
+any network requests. It is helpful for a quick local "linting" of files.
+
+### Check Links In A Remote File
+
+```bash
+lychee https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
+```
+
+If a URL is given as input and it ends with a file extension other than `.html`,
+lychee respects the file extension and interprets the file accordingly.
+Here, we interpret the file as Markdown.
+
+### Check links from `stdin`
+
+```bash
+cat test.md | lychee -
+echo 'https://example.com' | lychee -
+```
+
+You don't need to put links into a file first. You can also pipe them into lychee
+directly.
+
+### Check Links In Local Files Via Shell Glob
+
+```bash
+lychee 'public/**/*.html'
+```
+
+Have many files in the same directory structure you want to check?
+You don't need to list them all. Just use a shell glob!
+
+The above command checks all `.html` files in the `public` directory and its
+subdirectories.
+
+:::note[Glob Expansion Rules]
+Note that we use single quotes to prevent the shell from expanding the input
+before lychee can process it.
+:::
+
+### Advanced Globbing And `~` Expansion
+
+```bash
+lychee '~/projects/big_project/\*_/README._'
+```
+
+This command checks all `README` files inside the `big_project` directory with
+files ending in any file extension.
+The `~` gets expanded to your home directory.
+
+### Ignore Case When Globbing And Check Result For Each Link
+
+```bash
+lychee --glob-ignore-case --verbose '~/projects/\*_/[r]eadme._'
+```
+
+In this command, we ignore the case when globbing, so it matches
+
+- `~/projects/my_project_/readme.md`
+- `~/projects/cool_app_/README.txt`
+- `~/projects/website_/readme.rst`
+- `~/projects/rust_game_/README`
+- `~/projects/python_script_/Readme.markdown`
+
+### Check Links From Epub File
+
+If you have [atool](https://www.nongnu.org/atool) installed, you can check links inside `.epub` files as well!
+
+```bash
+acat -F zip {file.epub} "_.xhtml" "_.html" | lychee -
+```
+
+:::caution[Attention]
+lychee parses other file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
+This generally works well if there are no format- or encoding
+specifics, but in case you need dedicated support for a new file format, please
+consider [creating an issue](https://github.com/lycheeverse/lychee/issues).
+:::
+
+[atool]: https://www.nongnu.org/atool
+[linkify]: https://github.com/robinst/linkify
+[issue]: https://github.com/lycheeverse/lychee/issues
+
+## GitHub Action
+
+Lychee is also available as a [GitHub Action](https://github.com/lycheeverse/lychee-action/).

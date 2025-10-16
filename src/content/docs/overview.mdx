@@ -1,0 +1,61 @@
+---
+title: Overview
+---
+
+<video autoplay loop muted playsinline width="800" height="600">
+  <source
+    src="src/assets/animation.av1.mp4"
+    type="video/mp4; codecs=av01.0.05M.08"
+  />
+  <source src="src/assets/animation.h264.mp4" type="video/mp4" />
+</video>
+
+## What is lychee?
+
+Lychee is a fast, async link checker written in Rust. It finds broken hyperlinks and mail addresses in your Markdown and HTML files, codebases, and websites. It's simple, lightweight, and easy to use.
+It is perfect for checking documentation, blogs, and static sites, and can be easily integrated into CI/CD pipelines.
+
+## Why was lychee created?
+
+lychee was born out of a personal need. Matthias, the original author, maintains
+a [repository for static code analysis tools on Github](https://github.com/analysis-tools-dev/static-analysis). The links to the
+tools regularly broke, so he decided to add a link checker to the repo, to get
+notified. Unfortunately the existing solutions were either too slow, deprecated,
+or were lacking functionality. So he decided to write a link checker himself
+&mdash; how hard could it be?
+
+A few _years_ later, he reached a point where 10% of the functionality works
+most of the time and the result is called lychee.
+
+## Trivia
+
+### Project Name
+
+The name lychee is a play on _link checker_. Originally we wanted to call it
+[liche](https://github.com/raviqqe/liche), but that name was already used by a
+link checker written in Go (which has since been deprecated).
+
+### Original Motivation
+
+Matthias live-coded the first version of lychee in an episode of Hello Rust.
+You can watch it below.
+
+<div style=" position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; margin-bottom: 40px;">
+  <iframe
+    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+    src="https://www.youtube.com/embed/DArJCR0HDL8"
+    webkitallowfullscreen
+    mozallowfullscreen
+    allowfullscreen
+  ></iframe>
+</div>
+
+### Why should I use lychee?
+
+- **Speed**: lychee is built with Rust and designed for speed, making it perfect for large projects.
+- **Markdown & HTML Support**: lychee natively supports Markdown and HTML files, making it ideal for documentation and websites.
+- **Static Binary**: lychee is distributed as a single static binary, making installation and updates a breeze.
+- **JSON Output**: Easily integrate lychee into your CI/CD pipelines with structured JSON output.
+- **Asynchronous**: lychee uses asynchronous requests to check links, making it faster and more efficient than traditional link checkers.
+- **Customizable**: lychee offers a wide range of configuration options to tailor the link checking process to your needs.
+- **Open Source**: lychee is open source and welcomes contributions from the community.

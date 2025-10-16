@@ -1,30 +1,29 @@
 {
-  "name": "lychee.github.io",
-  "type": "module",
-  "version": "2025.07.16",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro check && astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "format": "prettier -w . && biome format --write .",
-    "lint": "biome lint . && astro check",
-    "lint:fix": "biome lint --write .",
-    "check-format": "prettier --check . && biome check .",
-    "check-format:fix": "biome check --write .",
-    "precommit": "pnpm run check-format && pnpm run lint"
-  },
-  "dependencies": {
-    "@astrojs/check": "^0.9.4",
-    "@astrojs/starlight": "^0.36.0",
-    "astro": "^5.14.1",
-    "sharp": "^0.34.4",
-    "typescript": "^5.9.3"
-  },
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.5",
-    "prettier": "^3.6.2"
-  }
+	"name": "lychee.github.io",
+	"type": "module",
+	"version": "2025.07.16",
+	"private": true,
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro",
+		"format": "biome format --write .",
+		"lint": "biome lint . && astro check",
+		"lint:fix": "biome lint --write .",
+		"check-format": "biome check .",
+		"check-format:fix": "biome check --write .",
+		"precommit": "npm run check-format && npm run lint"
+	},
+	"dependencies": {
+		"@astrojs/check": "^0.9.4",
+		"@astrojs/starlight": "^0.36.0",
+		"astro": "^5.14.1",
+		"sharp": "^0.34.4",
+		"typescript": "^5.9.3"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^2.2.5"
+	}
 }

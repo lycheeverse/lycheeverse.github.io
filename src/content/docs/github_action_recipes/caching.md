@@ -7,9 +7,7 @@ to reduce the number of requests to the same URL during consecutive runs. For
 example, if you have a lot of links to `https://github.com`, you can cache the
 responses to reduce the load.
 
-Here is an example of how to cache the results of a lychee run.
-
-## Caching in GitHub Actions
+Here is an example GitHub Actions workflow that caches lychee results:
 
 ```yaml
 name: Check URLs with Lychee
@@ -34,7 +32,7 @@ jobs:
           restore-keys: cache-lychee-
 
       # check URLs with Lychee
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Lychee URL checker
         uses: lycheeverse/lychee-action@v2
