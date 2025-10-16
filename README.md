@@ -1,6 +1,6 @@
 # lychee Documentation
 
-This is the source code for the official documentation page of [lychee].
+This is the source code for the official documentation page of [lychee](https://github.com/lycheeverse/lychee/).
 
 [![Check Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml)
 [![Check code quality](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml)
