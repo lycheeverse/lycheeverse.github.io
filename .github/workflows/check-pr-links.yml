@@ -3,6 +3,7 @@ name: PR Links
 on:
   pull_request:
     branches: [master]
+  workflow_dispatch:
 
 jobs:
   linkChecker:
@@ -12,8 +13,6 @@ jobs:
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{ github.event.pull_request.head.ref }}
-          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Check out master branch
         run: git checkout master
@@ -34,7 +33,12 @@ jobs:
         run: git stash push --include-untracked
 
       - name: Check out feature branch
-        run: git checkout ${{ github.head_ref }}
+        run: |
+          if [ "${{ github.event_name }}" = "pull_request" ]; then
+            git checkout ${{ github.head_ref }}
+          else
+            git checkout ${{ github.ref_name }}
+          fi
 
       - name: Apply stashed changes
         run: git stash pop || true
