@@ -12,18 +12,6 @@ Please head over to our [Open Collective](https://opencollective.com/lychee-coll
 <table>
   <tr>
     <td>
-      <a href="https://suborbital.dev/">
-        <img src="/sponsors/suborbital.svg" width="200" height="150" />
-      </a>
-    </td>
-    <td>
-        suborbital is is a plugin system for SaaS that allows end-user
-        developers to write integrations and customizations that run inside your
-        application without compromising your dev roadmap.
-    </td>
-  </tr>
-  <tr>
-    <td>
       <a href="https://corrode.dev">
         <img src="/sponsors/corrode.svg" width="200" height="150" />
       </a>
