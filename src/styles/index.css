@@ -20,7 +20,7 @@ a:is(.primary) {
 
 /* 2. Remove default margin */
 /** {
-  margin: 0;
+	margin: 0;
 }*/
 
 /* 3. Enable keyword animations */
@@ -41,8 +41,7 @@ body {
 img,
 picture,
 video,
-canvas,
-svg {
+canvas {
 	display: block;
 	max-width: 100%;
 }
