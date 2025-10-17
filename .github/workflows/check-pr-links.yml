@@ -1,126 +1,62 @@
-name: Pull Request Links
+name: PR Links
+
 on:
   pull_request:
-    branches:
-      - main
-    # Optionally limit the check to certain file types in the source
-    # paths:
-    #   - '**/*.md'
-    #   - '**/*.astro'
-    #   - '**/*.html'
-concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
-  cancel-in-progress: true
+    branches: [master]
+
 jobs:
-  check-links:
+  linkChecker:
     runs-on: ubuntu-latest
     steps:
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: 20
-          cache: "pnpm"
-
       - name: Clone repository
         uses: actions/checkout@v5
         with:
           fetch-depth: 0
-          ref: ${{github.event.pull_request.head.ref}}
-          repository: ${{github.event.pull_request.head.repo.full_name}}
+          ref: ${{ github.event.pull_request.head.ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
-      - name: Check out base branch
-        run: git checkout ${{github.event.pull_request.base.ref}}
+      - name: Check out master branch
+        run: git checkout master
 
-      - name: Build site (base branch)
+      - name: Build site from master
         uses: withastro/action@v4
         with:
           package-manager: pnpm@latest
 
-      - name: Dump all links from base branch dist
+      - name: Dump all links from master
+        id: dump_links_from_master
         uses: lycheeverse/lychee-action@v2
         with:
-          args: |
-            --dump
-            --include-fragments
-            --base-url dist
-            --exclude-all-private
-            dist
-          output: ./existing-links.txt
-        continue-on-error: true # Don't fail if base branch check has issues
+          args: --dump --base-url dist --exclude-all-private dist
+          output: ./links-master.txt
 
-      - name: Stash untracked files (if any)
-        run: git stash push --include-untracked || true
+      - name: Stash untracked files
+        run: git stash push --include-untracked
 
       - name: Check out feature branch
         run: git checkout ${{ github.head_ref }}
 
-      - name: Apply stashed changes (if any)
+      - name: Apply stashed changes
         run: git stash pop || true
 
-      - name: Build site (feature branch)
+      - name: Build site from feature branch
         uses: withastro/action@v4
         with:
           package-manager: pnpm@latest
 
-      - name: Update ignore file with base links
-        run: |
-          if [ -f "existing-links.txt" ]; then
-            cat existing-links.txt >> .lycheeignore
-          fi
+      - name: Append links-master.txt to .lycheeignore
+        run: cat links-master.txt >> .lycheeignore
 
-      - name: Check new links in feature branch
-        id: lychee
+      - name: Check links in PR changes
         uses: lycheeverse/lychee-action@v2
         with:
-          args: |
-            --no-progress
-            --include-fragments
-            --base-url dist
-            --exclude-all-private
-            dist
+          args: --base-url dist --exclude-all-private dist
           fail: true
-        continue-on-error: true # Allow to run the next step even if fails
 
-      - name: Set output for exit code
-        run: echo "lychee_exit_code=${{ steps.lychee.exit_code }}" >> $GITHUB_OUTPUT
-
-      - name: Create PR comment on failure
-        if: steps.lychee.exit_code != 0
-        uses: actions/github-script@v8
-        with:
-          script: |
-            const fs = require('fs');
-            const outMd = fs.readFileSync('./lychee/out.md', 'utf8');
-            github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: '### Link Checker Report\n\n' + outMd
-            });
-
-      - name: Provide helpful failure message
-        if: steps.lychee.exit_code != 0
+      - name: Suggestions
+        if: failure()
         run: |
-          echo "::error::Link check failed! Please review the broken links reported above (and in the PR comment)."
-          echo ""
-          echo "If certain links are valid but fail due to:"
-          echo "- CAPTCHA challenges"
-          echo "- IP blocking"
-          echo "- Authentication requirements"
-          echo "- Rate limiting"
-          echo ""
-          echo "Consider adding them to .lycheeignore to bypass future checks."
-          echo "Format: Add one URL pattern per line (e.g., https://example.com/problem-link)"
+          echo -e "\nPlease review the links reported in the 'Check links in PR changes' step above."
+          echo -e "If a link is valid but fails due to a CAPTCHA challenge, IP blocking, login requirements, etc.,"
+          echo -e "consider adding such links to .lycheeignore file to bypass future checks.\n"
           exit 1
-
-      - name: Cleanup ignore file
-        if: always()
-        run: |
-          if [ -f ".lycheeignore" ]; then
-            sed -i '/^http/d' .lycheeignore || true
-          fi
