@@ -4,7 +4,7 @@ This is the source code for the official documentation page of [lychee](https://
 
 [![Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml)
 [![Code Quality](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml)
-[![CLI Version](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-cli-version.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-cli-version.yml)
+[![PR Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-pr-links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-pr-links.yml)
 [![Deploy](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml)
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
