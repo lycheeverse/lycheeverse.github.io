@@ -271,22 +271,6 @@ https?://.*\.local
   or are intentionally broken (like examples).
 </Aside>
 
-## Configuration Precedence
-
-When lychee runs, configuration is determined in this order (highest to lowest priority):
-
-1. **Command-line arguments** - Override everything
-2. **Configuration file** (`lychee.toml`)
-3. **Default values**
-
-Example:
-
-```bash
-# Config file has timeout = 20
-# This command uses timeout = 30 instead
-lychee --timeout 30 --config lychee.toml .
-```
-
 ## Tips and Best Practices
 
 ### Use Caching
@@ -335,30 +319,4 @@ When checking a built site locally:
 ```toml
 base_url = "https://your-site.com"
 root_dir = "/dist"
-```
-
-## Troubleshooting
-
-### Config File Not Found
-
-Make sure `lychee.toml` is in your current directory, or specify the path:
-
-```bash
-lychee --config /path/to/lychee.toml
-```
-
-### Invalid TOML Syntax
-
-Use a [TOML validator](https://www.toml-lint.com/) to check your config file syntax.
-
-### Options Not Taking Effect
-
-Remember that CLI arguments override config file settings. Remove CLI flags to use config values.
-
-### Caching Issues
-
-If cached results seem stale, clear the cache:
-
-```bash
-rm -rf .lycheecache
 ```
