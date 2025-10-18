@@ -1,5 +1,6 @@
 ---
 title: Library Usage
+description: Use lychee as a library in your Rust projects to integrate link checking into your applications.
 ---
 
 You can use lychee as a library for your own projects!
