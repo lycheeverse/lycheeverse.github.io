@@ -1,0 +1,364 @@
+---
+title: Configure lychee
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Lychee can be configured using a [TOML](https://toml.io) configuration file. This is useful when you have many options to specify or when using lychee in CI/CD pipelines as part of your repository.
+
+## Configuration File
+
+### Location
+
+By default, lychee looks for `lychee.toml` in the current working directory. You can specify a different config file with the `--config` option:
+
+```bash
+lychee --config ./path/to/config.toml
+```
+
+<Aside type="tip">
+  CLI options take precedence over configuration file settings. This allows you
+  to override config values on a per-run basis.
+</Aside>
+
+### Full Example
+
+The complete example configuration is available on [GitHub](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
+
+Here's a comprehensive example:
+
+```toml title="lychee.toml"
+#############################  Display  #############################
+
+# Verbose program output
+# Accepts log level: "error", "warn", "info", "debug", "trace"
+verbose = "info"
+
+# Don't show interactive progress bar while checking links.
+no_progress = false
+
+# Path to summary output file.
+output = "lychee-report.md"
+
+#############################  Cache  ###############################
+
+# Enable link caching. This can be helpful to avoid checking the same links on
+# multiple runs.
+cache = true
+
+# Discard all cached requests older than this duration.
+max_cache_age = "2d"
+
+#############################  Runtime  #############################
+
+# Number of threads to utilize.
+# Defaults to number of cores available to the system if omitted.
+threads = 2
+
+# Maximum number of allowed redirects.
+max_redirects = 10
+
+# Maximum number of allowed retries before a link is declared dead.
+max_retries = 2
+
+# Maximum number of concurrent link checks.
+max_concurrency = 14
+
+#############################  Requests  ############################
+
+# User agent to send with each request.
+user_agent = "curl/7.83.1"
+
+# Website timeout from connect to response finished.
+timeout = 20
+
+# Minimum wait time in seconds between retries of failed requests.
+retry_wait_time = 2
+
+# Comma-separated list of accepted status codes for valid links.
+# Supported values are:
+#
+# accept = ["200..=204", "429"]
+# accept = "200..=204, 429"
+# accept = ["200", "429"]
+# accept = "200, 429"
+accept = ["200", "429"]
+
+# Proceed for server connections considered insecure (invalid TLS).
+insecure = false
+
+# Only test links with the given schemes (e.g. https).
+# Omit to check links with any other scheme.
+# At the moment, we support http, https, file, and mailto.
+scheme = ["https"]
+
+# When links are available using HTTPS, treat HTTP links as errors.
+require_https = false
+
+# Request method
+method = "get"
+
+# Custom request headers
+headers = ["accept=text/html", "x-custom-header=value"]
+
+# Remap URI matching pattern to different URI.
+remap = ["https://example.com http://example.invalid"]
+
+# Fallback extensions to apply when a URL does not specify one.
+# This is common in documentation tools that cross-reference files without extensions.
+fallback_extensions = ["md", "html"]
+
+# Base URL or website root directory to check relative URLs.
+base_url = "https://example.com"
+
+# Root path to use when checking absolute local links, must be an absolute path
+root_dir = "/dist"
+
+# HTTP basic auth support. This will be the username and password passed to the
+# authorization HTTP header.
+basic_auth = ["example.com user:pwd"]
+
+# Enable the checking of fragments in links.
+include_fragments = true
+
+#############################  Exclusions  ##########################
+
+# Skip missing input files (default is to error if they don't exist).
+skip_missing = false
+
+# Check links inside `<code>` and `<pre>` blocks as well as Markdown code
+# blocks.
+include_verbatim = false
+
+# Ignore case of paths when matching glob patterns.
+glob_ignore_case = false
+
+# Exclude URLs and mail addresses from checking (supports regex).
+exclude = ['^https://www\.linkedin\.com', '^https://web\.archive\.org/web/']
+
+# Exclude these filesystem paths from getting checked.
+exclude_path = ["file/path/to/Ignore", "./other/file/path/to/Ignore"]
+
+# URLs to check (supports regex). Has preference over all excludes.
+include = ['gist\.github\.com.*']
+
+# Exclude all private IPs from checking.
+# Equivalent to setting `exclude_private`, `exclude_link_local`, and
+# `exclude_loopback` to true.
+exclude_all_private = false
+
+# Exclude private IP address ranges from checking.
+exclude_private = false
+
+# Exclude link-local IP address range from checking.
+exclude_link_local = false
+
+# Exclude loopback IP address range and localhost from checking.
+exclude_loopback = false
+
+# Check mail addresses
+include_mail = true
+```
+
+## Common Configuration Examples
+
+### Basic Documentation Site
+
+A simple config for checking documentation:
+
+```toml title="lychee.toml"
+# Use cache to speed up repeated runs
+cache = true
+max_cache_age = "1d"
+
+# Check fragments (anchors) in links
+include_fragments = true
+
+# Exclude common false positives
+exclude = [
+  '^https://www\.linkedin\.com',
+  '^https://twitter\.com'
+]
+
+# Treat HTTP as errors when HTTPS is available
+require_https = true
+```
+
+### CI/CD Pipeline
+
+Configuration optimized for continuous integration:
+
+```toml title="lychee.toml"
+# No progress bar in CI
+no_progress = true
+
+# Output to file for artifact upload
+output = "lychee-report.md"
+
+# Faster timeouts for CI
+timeout = 15
+max_retries = 1
+
+# Use cache between runs
+cache = true
+max_cache_age = "7d"
+
+# Higher concurrency on CI servers
+max_concurrency = 32
+```
+
+### Strict Mode
+
+Strict configuration that catches more issues:
+
+```toml title="lychee.toml"
+# Require HTTPS
+require_https = true
+
+# Check fragments
+include_fragments = true
+
+# Check links in code blocks
+include_verbatim = true
+
+# No insecure connections
+insecure = false
+
+# Only accept successful status codes
+accept = ["200..=299"]
+```
+
+### Local Development
+
+Relaxed settings for local development:
+
+```toml title="lychee.toml"
+# Allow insecure for local development
+insecure = true
+
+# Check local files only
+scheme = ["file", "http", "https"]
+
+# Skip private IPs (for local servers)
+exclude_all_private = true
+
+# Accept more status codes
+accept = ["200..=299", "429"]
+```
+
+## Excluding Links with `.lycheeignore`
+
+In addition to the TOML config file, you can create a `.lycheeignore` file to exclude specific links. This file uses one pattern per line:
+
+```text title=".lycheeignore"
+# Exclude LinkedIn (often blocks bots)
+https://linkedin.com
+
+# Exclude local development URLs
+http://localhost
+http://127.0.0.1
+
+# Exclude example domains
+https://example.com
+https://example.org
+
+# Regex patterns work too
+https?://.*\.local
+```
+
+<Aside type="note">
+  The `.lycheeignore` file is useful for excluding links that frequently change
+  or are intentionally broken (like examples).
+</Aside>
+
+## Configuration Precedence
+
+When lychee runs, configuration is determined in this order (highest to lowest priority):
+
+1. **Command-line arguments** - Override everything
+2. **Configuration file** (`lychee.toml`)
+3. **Default values**
+
+Example:
+
+```bash
+# Config file has timeout = 20
+# This command uses timeout = 30 instead
+lychee --timeout 30 --config lychee.toml .
+```
+
+## Tips and Best Practices
+
+### Use Caching
+
+Enable caching to speed up repeated runs:
+
+```toml
+cache = true
+max_cache_age = "1d"
+```
+
+### Set Reasonable Timeouts
+
+Balance thoroughness with speed:
+
+```toml
+timeout = 20          # 20 seconds per request
+max_retries = 2       # Try twice before giving up
+retry_wait_time = 2   # Wait 2 seconds between retries
+```
+
+### Exclude Known Issues
+
+Don't let known problematic sites block your workflow:
+
+```toml
+exclude = [
+  '^https://www\.linkedin\.com',  # Often blocks automated checks
+  '^https://twitter\.com',         # Rate limits aggressively
+  '^https://medium\.com'           # Requires cookies
+]
+```
+
+### Check Fragments
+
+Enable fragment checking to catch broken anchors:
+
+```toml
+include_fragments = true
+```
+
+### Use Base URL for Local Builds
+
+When checking a built site locally:
+
+```toml
+base_url = "https://your-site.com"
+root_dir = "/dist"
+```
+
+## Troubleshooting
+
+### Config File Not Found
+
+Make sure `lychee.toml` is in your current directory, or specify the path:
+
+```bash
+lychee --config /path/to/lychee.toml
+```
+
+### Invalid TOML Syntax
+
+Use a [TOML validator](https://www.toml-lint.com/) to check your config file syntax.
+
+### Options Not Taking Effect
+
+Remember that CLI arguments override config file settings. Remove CLI flags to use config values.
+
+### Caching Issues
+
+If cached results seem stale, clear the cache:
+
+```bash
+rm -rf .lycheecache
+```

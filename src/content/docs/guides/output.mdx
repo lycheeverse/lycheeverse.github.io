@@ -1,0 +1,214 @@
+---
+title: Output Modes
+---
+
+import { Aside } from "@astrojs/starlight/components";
+
+Lychee provides flexible output options to suit different needs. You can customize how results are displayed in the terminal and how reports are saved to files.
+
+## Display Modes (`--mode`)
+
+Display modes control how lychee presents results in your terminal. You can set the mode using the `--mode` flag.
+
+```bash
+lychee --mode <MODE> <inputs>...
+```
+
+Available modes: `color`, `plain`, `emoji`, `task`
+
+### Color Mode (Default)
+
+Color mode displays results with color-coded output, making it easy to distinguish between different link statuses.
+
+```bash
+lychee --mode color README.md
+```
+
+![Color Mode](./images/color.avif)
+
+<Aside type="tip">
+  Color mode is the default, so you don't need to specify it explicitly.
+</Aside>
+
+#### Verbose Debug Output
+
+For detailed debugging information, combine color mode with verbose flags:
+
+```bash
+lychee --mode color -vv README.md
+```
+
+![Color Mode Debug](./images/color-debug.avif)
+
+### Plain Mode
+
+Plain mode displays results without colors or formatting. This is useful for:
+
+- Automated scripts
+- Piping output to other commands
+- Environments that don't support colors
+- Saving output to text files
+
+```bash
+lychee --mode plain README.md
+```
+
+![Plain Mode](./images/plain.avif)
+
+**Example use case:**
+
+```bash
+# Pipe plain output to grep
+lychee --mode plain . | grep "FAILED"
+```
+
+### Emoji Mode
+
+Emoji mode displays results using emoji icons for a more visual and engaging experience.
+
+```bash
+lychee --mode emoji README.md
+```
+
+![Emoji Mode](./images/emoji.avif)
+
+**When to use:**
+
+- Presentations or demos
+- Making output more user-friendly
+- Terminal environments with good emoji support
+
+### Task Mode
+
+Task mode provides a minimal progress indicator suitable for task runners and CI environments.
+
+```bash
+lychee --mode task README.md
+```
+
+## Output Formats (`--format`)
+
+Output formats control how lychee writes the final report when using the `--output` option. You can specify the format using the `--format` flag.
+
+```bash
+lychee --format <FORMAT> --output <FILE> <inputs>...
+```
+
+Available formats: `compact`, `detailed`, `json`, `markdown`, `raw`
+
+### Compact Format (Default)
+
+The compact format provides a concise summary of results.
+
+```bash
+lychee --format compact --output report.txt README.md
+```
+
+### Detailed Format
+
+The detailed format includes comprehensive information about each checked link.
+
+```bash
+lychee --format detailed --output report.txt README.md
+```
+
+### JSON Format
+
+JSON format provides machine-readable output, perfect for integrations and automation.
+
+```bash
+lychee --format json --output report.json README.md
+```
+
+**Use cases:**
+
+- CI/CD pipelines
+- Custom reporting tools
+- Integrations with other systems
+- Data analysis
+
+### Markdown Format
+
+Markdown format generates a formatted report suitable for documentation or GitHub issues.
+
+```bash
+lychee --format markdown --output report.md README.md
+```
+
+**Use cases:**
+
+- Creating GitHub issues automatically
+- Documentation reports
+- Pull request comments
+
+### Raw Format
+
+Raw format outputs the results in a simple, unformatted style.
+
+```bash
+lychee --format raw --output report.txt README.md
+```
+
+## Combining Options
+
+You can combine display modes and output formats:
+
+```bash
+# Show emoji in terminal, save JSON report
+lychee --mode emoji --format json --output report.json README.md
+
+# Use plain mode with detailed format
+lychee --mode plain --format detailed --output report.txt README.md
+```
+
+## Common Use Cases
+
+### CI/CD Pipeline
+
+For continuous integration, use no-progress mode with JSON output:
+
+```bash
+lychee --no-progress --format json --output report.json .
+```
+
+### GitHub Actions
+
+Combine with GitHub Actions to create issues from failures:
+
+```yaml
+- name: Link Checker
+  uses: lycheeverse/lychee-action@v2
+  with:
+    format: markdown
+    output: lychee-report.md
+```
+
+### Local Development
+
+Use color mode with detailed output for debugging:
+
+```bash
+lychee --mode color -vv --format detailed --output debug.log .
+```
+
+### Quick Check
+
+Just check without saving:
+
+```bash
+lychee --mode emoji .
+```
+
+## Output to stdout
+
+By default, results are printed to stdout. To suppress terminal output and only write to a file:
+
+```bash
+lychee --format json --output report.json . > /dev/null
+```
+
+Or use the `--quiet` flag:
+
+```bash
+lychee --quiet --format json --output report.json .
+```
