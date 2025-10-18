@@ -51,12 +51,12 @@ You can install lychee using various package managers.
 
 ## Pre-built binaries
 
-Lychee provides binaries for Linux, macOS, and Windows for every release.
+lychee provides binaries for Linux, macOS, and Windows for every release.
 You can download them from the [releases page](https://github.com/lycheeverse/lychee/releases).
 
 ## Docker
 
-Lychee provides an official Docker image at [lycheeverse/lychee](https://hub.docker.com/r/lycheeverse/lychee),
+lychee provides an official Docker image at [lycheeverse/lychee](https://hub.docker.com/r/lycheeverse/lychee),
 which is updated on every release.
 
 To check files on your local machine, mount them into the Docker container:
@@ -118,7 +118,7 @@ cargo install lychee
 
 ### Feature flags
 
-Lychee supports several optional features:
+lychee supports several optional features:
 
 - `native-tls` - Platform-native TLS via [native-tls](https://crates.io/crates/native-tls) (default)
 - `vendored-openssl` - Statically link OpenSSL
@@ -204,13 +204,13 @@ acat -F zip file.epub "*.xhtml" "*.html" | lychee -
 ```
 
 :::caution
-Lychee parses other file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
+lychee parses other file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
 This works well for most cases, but if you need dedicated support for a specific format, [create an issue](https://github.com/lycheeverse/lychee/issues).
 :::
 
 ## GitHub Action
 
-Lychee is available as a [GitHub Action](https://github.com/lycheeverse/lychee-action/):
+lychee is available as a [GitHub Action](https://github.com/lycheeverse/lychee-action/):
 
 ```yaml
 - name: Link Checker
