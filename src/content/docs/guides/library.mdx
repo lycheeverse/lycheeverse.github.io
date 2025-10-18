@@ -2,15 +2,10 @@
 title: Library Usage
 ---
 
-import { Aside } from "@astrojs/starlight/components";
+You can use lychee as a library for your own projects!
+The documentation for the library can be found at [docs.rs/lychee-lib](https://docs.rs/lychee-lib).
 
-Lychee can be used as a library in your own Rust projects! This allows you to integrate link checking directly into your applications, scripts, or tools.
-
-The full API documentation is available at [docs.rs/lychee-lib](https://docs.rs/lychee-lib).
-
-## Getting Started
-
-### Add lychee-lib to your project
+## Setup
 
 Add `lychee-lib` to your `Cargo.toml`:
 
@@ -20,14 +15,7 @@ lychee-lib = "0.16"
 tokio = { version = "1", features = ["full"] }
 ```
 
-<Aside type="note">
-  Lychee is an async library built on [tokio](https://tokio.rs/). You'll need an
-  async runtime like tokio to use it.
-</Aside>
-
-### Basic Example
-
-Here's a simple "hello world" example that checks a single URL:
+## Basic Example
 
 ```rust title="main.rs"
 use lychee_lib::Result;
@@ -40,11 +28,7 @@ async fn main() -> Result<()> {
 }
 ```
 
-This checks the URL and prints the response status.
-
 ## Using the Client
-
-For more control over the link checking process, you can build your own client:
 
 ```rust title="main.rs"
 use lychee_lib::{ClientBuilder, Result, Status};
@@ -53,20 +37,18 @@ use lychee_lib::{ClientBuilder, Result, Status};
 async fn main() -> Result<()> {
     let client = ClientBuilder::default().client()?;
     let response = client.check("https://github.com/lycheeverse/lychee").await?;
-
+    
     if response.status().is_success() {
         println!("✓ Link is valid!");
     } else {
         println!("✗ Link is broken: {:?}", response.status());
     }
-
+    
     Ok(())
 }
 ```
 
 ## Customizing the Client
-
-The client builder provides many configuration options:
 
 ```rust title="main.rs"
 use lychee_lib::ClientBuilder;
@@ -84,7 +66,7 @@ let client = ClientBuilder::builder()
 ### Available Options
 
 - `includes()` - Include only URLs matching patterns
-- `excludes()` - Exclude URLs matching patterns
+- `excludes()` - Exclude URLs matching patterns  
 - `max_redirects()` - Maximum number of redirects to follow
 - `user_agent()` - Custom user agent string
 - `allow_insecure()` - Allow invalid SSL certificates
@@ -97,7 +79,7 @@ let client = ClientBuilder::builder()
 
 See the [ClientBuilder documentation](https://docs.rs/lychee-lib/latest/lychee_lib/struct.ClientBuilder.html) for all available options.
 
-## Common Use Cases
+## Examples
 
 ### Checking Multiple URLs
 
@@ -107,18 +89,18 @@ use lychee_lib::{ClientBuilder, Result};
 #[tokio::main]
 async fn main() -> Result<()> {
     let client = ClientBuilder::default().client()?;
-
+    
     let urls = vec![
         "https://github.com/lycheeverse/lychee",
         "https://docs.rs/lychee-lib",
         "https://lychee.cli.rs",
     ];
-
+    
     for url in urls {
         let response = client.check(url).await?;
         println!("{}: {:?}", url, response.status());
     }
-
+    
     Ok(())
 }
 ```
@@ -132,65 +114,20 @@ use lychee_lib::{ClientBuilder, Result, Status};
 async fn main() -> Result<()> {
     let client = ClientBuilder::default().client()?;
     let response = client.check("https://example.com").await?;
-
+    
     match response.status() {
-        Status::Ok(_) => {
-            println!("✓ Link is valid");
-        }
-        Status::Redirected(code) => {
-            println!("→ Link redirects with status {}", code);
-        }
-        Status::UnknownStatusCode(code) => {
-            println!("? Unknown status code: {}", code);
-        }
-        Status::Timeout(_) => {
-            println!("⏱ Request timed out");
-        }
-        Status::Excluded => {
-            println!("− Link was excluded by filters");
-        }
-        _ => {
-            println!("✗ Link check failed: {:?}", response.status());
-        }
+        Status::Ok(_) => println!("✓ Link is valid"),
+        Status::Redirected(code) => println!("→ Link redirects with status {}", code),
+        Status::Timeout(_) => println!("⏱ Request timed out"),
+        Status::Excluded => println!("− Link was excluded by filters"),
+        _ => println!("✗ Link check failed: {:?}", response.status()),
     }
-
+    
     Ok(())
 }
 ```
 
-### Filtering with Include/Exclude Patterns
-
-```rust title="main.rs"
-use lychee_lib::{ClientBuilder, Result};
-use regex::RegexSet;
-
-#[tokio::main]
-async fn main() -> Result<()> {
-    // Only check GitHub URLs
-    let includes = RegexSet::new(&[r"github\.com"])?;
-
-    // Exclude example domains
-    let excludes = RegexSet::new(&[r"example\.(com|org)"])?;
-
-    let client = ClientBuilder::builder()
-        .includes(includes)
-        .excludes(excludes)
-        .build()
-        .client()?;
-
-    // This will be checked (matches include pattern)
-    let response1 = client.check("https://github.com/lycheeverse/lychee").await?;
-    println!("GitHub: {:?}", response1.status());
-
-    // This will be excluded (matches exclude pattern)
-    let response2 = client.check("https://example.com").await?;
-    println!("Example.com: {:?}", response2.status());
-
-    Ok(())
-}
-```
-
-### Using GitHub Token for API Requests
+### Using GitHub Token
 
 ```rust title="main.rs"
 use lychee_lib::{ClientBuilder, Result};
@@ -199,49 +136,21 @@ use std::env;
 #[tokio::main]
 async fn main() -> Result<()> {
     let github_token = env::var("GITHUB_TOKEN").ok();
-
+    
     let client = ClientBuilder::builder()
         .github_token(github_token)
         .build()
         .client()?;
-
-    // Check GitHub API URL (won't hit rate limits with token)
+    
     let response = client
         .check("https://api.github.com/repos/lycheeverse/lychee")
         .await?;
-
+    
     println!("GitHub API: {:?}", response.status());
-
-    Ok(())
-}
-```
-
-### Custom Headers for Authentication
-
-```rust title="main.rs"
-use lychee_lib::{ClientBuilder, Result};
-use reqwest::header::{HeaderMap, HeaderValue, AUTHORIZATION};
-
-#[tokio::main]
-async fn main() -> Result<()> {
-    let mut headers = HeaderMap::new();
-    headers.insert(
-        AUTHORIZATION,
-        HeaderValue::from_static("Bearer YOUR_TOKEN_HERE")
-    );
-
-    let client = ClientBuilder::builder()
-        .custom_headers(headers)
-        .build()
-        .client()?;
-
-    let response = client.check("https://api.example.com/protected").await?;
-    println!("Protected endpoint: {:?}", response.status());
-
     Ok(())
 }
 ```
 
 ## More Examples
 
-For more complete examples, check out the [examples folder](https://github.com/lycheeverse/lychee/tree/master/examples) in the lychee repository.
+For more examples, check out the [examples folder](https://github.com/lycheeverse/lychee/tree/master/examples) in the lychee repository.

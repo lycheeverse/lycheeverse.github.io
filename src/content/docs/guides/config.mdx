@@ -4,28 +4,23 @@ title: Configure lychee
 
 import { Aside } from "@astrojs/starlight/components";
 
-Lychee can be configured using a [TOML](https://toml.io) configuration file. This is useful when you have many options to specify or when using lychee in CI/CD pipelines as part of your repository.
+The configuration file is a [TOML](https://toml.io) file that specifies options also available on the command line.
 
-## Configuration File
+## Location
 
-### Location
-
-By default, lychee looks for `lychee.toml` in the current working directory. You can specify a different config file with the `--config` option:
+By default, lychee looks for `lychee.toml` in the current working directory:
 
 ```bash
 lychee --config ./path/to/config.toml
 ```
 
 <Aside type="tip">
-  CLI options take precedence over configuration file settings. This allows you
-  to override config values on a per-run basis.
+  CLI options take precedence over configuration file settings.
 </Aside>
 
-### Full Example
+## Example Configuration
 
 The complete example configuration is available on [GitHub](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
-
-Here's a comprehensive example:
 
 ```toml title="lychee.toml"
 #############################  Display  #############################
@@ -76,20 +71,12 @@ timeout = 20
 retry_wait_time = 2
 
 # Comma-separated list of accepted status codes for valid links.
-# Supported values are:
-#
-# accept = ["200..=204", "429"]
-# accept = "200..=204, 429"
-# accept = ["200", "429"]
-# accept = "200, 429"
 accept = ["200", "429"]
 
 # Proceed for server connections considered insecure (invalid TLS).
 insecure = false
 
 # Only test links with the given schemes (e.g. https).
-# Omit to check links with any other scheme.
-# At the moment, we support http, https, file, and mailto.
 scheme = ["https"]
 
 # When links are available using HTTPS, treat HTTP links as errors.
@@ -105,17 +92,15 @@ headers = ["accept=text/html", "x-custom-header=value"]
 remap = ["https://example.com http://example.invalid"]
 
 # Fallback extensions to apply when a URL does not specify one.
-# This is common in documentation tools that cross-reference files without extensions.
 fallback_extensions = ["md", "html"]
 
 # Base URL or website root directory to check relative URLs.
 base_url = "https://example.com"
 
-# Root path to use when checking absolute local links, must be an absolute path
+# Root path to use when checking absolute local links.
 root_dir = "/dist"
 
-# HTTP basic auth support. This will be the username and password passed to the
-# authorization HTTP header.
+# HTTP basic auth support.
 basic_auth = ["example.com user:pwd"]
 
 # Enable the checking of fragments in links.
@@ -126,8 +111,7 @@ include_fragments = true
 # Skip missing input files (default is to error if they don't exist).
 skip_missing = false
 
-# Check links inside `<code>` and `<pre>` blocks as well as Markdown code
-# blocks.
+# Check links inside `<code>` and `<pre>` blocks as well as Markdown code blocks.
 include_verbatim = false
 
 # Ignore case of paths when matching glob patterns.
@@ -137,118 +121,21 @@ glob_ignore_case = false
 exclude = ['^https://www\.linkedin\.com', '^https://web\.archive\.org/web/']
 
 # Exclude these filesystem paths from getting checked.
-exclude_path = ["file/path/to/Ignore", "./other/file/path/to/Ignore"]
+exclude_path = ["file/path/to/Ignore"]
 
 # URLs to check (supports regex). Has preference over all excludes.
 include = ['gist\.github\.com.*']
 
 # Exclude all private IPs from checking.
-# Equivalent to setting `exclude_private`, `exclude_link_local`, and
-# `exclude_loopback` to true.
 exclude_all_private = false
-
-# Exclude private IP address ranges from checking.
-exclude_private = false
-
-# Exclude link-local IP address range from checking.
-exclude_link_local = false
-
-# Exclude loopback IP address range and localhost from checking.
-exclude_loopback = false
 
 # Check mail addresses
 include_mail = true
 ```
 
-## Common Configuration Examples
+## `.lycheeignore` File
 
-### Basic Documentation Site
-
-A simple config for checking documentation:
-
-```toml title="lychee.toml"
-# Use cache to speed up repeated runs
-cache = true
-max_cache_age = "1d"
-
-# Check fragments (anchors) in links
-include_fragments = true
-
-# Exclude common false positives
-exclude = [
-  '^https://www\.linkedin\.com',
-  '^https://twitter\.com'
-]
-
-# Treat HTTP as errors when HTTPS is available
-require_https = true
-```
-
-### CI/CD Pipeline
-
-Configuration optimized for continuous integration:
-
-```toml title="lychee.toml"
-# No progress bar in CI
-no_progress = true
-
-# Output to file for artifact upload
-output = "lychee-report.md"
-
-# Faster timeouts for CI
-timeout = 15
-max_retries = 1
-
-# Use cache between runs
-cache = true
-max_cache_age = "7d"
-
-# Higher concurrency on CI servers
-max_concurrency = 32
-```
-
-### Strict Mode
-
-Strict configuration that catches more issues:
-
-```toml title="lychee.toml"
-# Require HTTPS
-require_https = true
-
-# Check fragments
-include_fragments = true
-
-# Check links in code blocks
-include_verbatim = true
-
-# No insecure connections
-insecure = false
-
-# Only accept successful status codes
-accept = ["200..=299"]
-```
-
-### Local Development
-
-Relaxed settings for local development:
-
-```toml title="lychee.toml"
-# Allow insecure for local development
-insecure = true
-
-# Check local files only
-scheme = ["file", "http", "https"]
-
-# Skip private IPs (for local servers)
-exclude_all_private = true
-
-# Accept more status codes
-accept = ["200..=299", "429"]
-```
-
-## Excluding Links with `.lycheeignore`
-
-In addition to the TOML config file, you can create a `.lycheeignore` file to exclude specific links. This file uses one pattern per line:
+You can create a `.lycheeignore` file to exclude specific links:
 
 ```text title=".lycheeignore"
 # Exclude LinkedIn (often blocks bots)
@@ -258,65 +145,10 @@ https://linkedin.com
 http://localhost
 http://127.0.0.1
 
-# Exclude example domains
-https://example.com
-https://example.org
-
 # Regex patterns work too
 https?://.*\.local
 ```
 
 <Aside type="note">
-  The `.lycheeignore` file is useful for excluding links that frequently change
-  or are intentionally broken (like examples).
+  The `.lycheeignore` file is useful for excluding links that frequently change or are intentionally broken (like examples).
 </Aside>
-
-## Tips and Best Practices
-
-### Use Caching
-
-Enable caching to speed up repeated runs:
-
-```toml
-cache = true
-max_cache_age = "1d"
-```
-
-### Set Reasonable Timeouts
-
-Balance thoroughness with speed:
-
-```toml
-timeout = 20          # 20 seconds per request
-max_retries = 2       # Try twice before giving up
-retry_wait_time = 2   # Wait 2 seconds between retries
-```
-
-### Exclude Known Issues
-
-Don't let known problematic sites block your workflow:
-
-```toml
-exclude = [
-  '^https://www\.linkedin\.com',  # Often blocks automated checks
-  '^https://twitter\.com',         # Rate limits aggressively
-  '^https://medium\.com'           # Requires cookies
-]
-```
-
-### Check Fragments
-
-Enable fragment checking to catch broken anchors:
-
-```toml
-include_fragments = true
-```
-
-### Use Base URL for Local Builds
-
-When checking a built site locally:
-
-```toml
-base_url = "https://your-site.com"
-root_dir = "/dist"
-```

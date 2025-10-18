@@ -5,10 +5,6 @@ title: Getting Started
 import { Aside } from "@astrojs/starlight/components";
 import { Tabs, TabItem, Code } from "@astrojs/starlight/components";
 
-**Lychee is a fast, async link checker for websites, documentation, and codebases.** This guide will help you install and start using lychee in minutes.
-
-## Installation
-
 You can install lychee using various package managers.
 
 <Aside>
@@ -52,12 +48,12 @@ You can install lychee using various package managers.
   </TabItem>
 </Tabs>
 
-### Pre-built binaries
+## Pre-built binaries
 
 Lychee provides binaries for Linux, macOS, and Windows for every release.
 You can download them from the [releases page](https://github.com/lycheeverse/lychee/releases).
 
-### Docker
+## Docker
 
 Lychee provides an official Docker image at [lycheeverse/lychee](https://hub.docker.com/r/lycheeverse/lychee),
 which is updated on every release.
@@ -88,17 +84,15 @@ To check files on your local machine, mount them into the Docker container:
 The `--init` parameter allows lychee to be stopped from the terminal.
 The `-it` flags start an interactive terminal, which is required to show the progress bar.
 
-### Building from source with Cargo
+## Building from source
 
-#### Prerequisites
-
-First, install Rust if you haven't already:
+Install Rust if you haven't already:
 
 ```bash
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
-For Linux users, you'll also need some system dependencies:
+On Linux, install build dependencies:
 
 <Tabs>
   <TabItem label="Debian/Ubuntu">
@@ -115,48 +109,35 @@ For Linux users, you'll also need some system dependencies:
   </TabItem>
 </Tabs>
 
-#### Install lychee
+Then install lychee:
 
 ```bash
 cargo install lychee
 ```
 
-#### Feature flags
+### Feature flags
 
-Lychee supports several optional features you can enable during compilation:
+Lychee supports several optional features:
 
-- `native-tls` - Platform-native TLS via [native-tls](https://crates.io/crates/native-tls) (enabled by default)
-- `vendored-openssl` - Statically link OpenSSL (useful for portable binaries)
+- `native-tls` - Platform-native TLS via [native-tls](https://crates.io/crates/native-tls) (default)
+- `vendored-openssl` - Statically link OpenSSL
 - `rustls-tls` - Pure Rust TLS via [rustls](https://crates.io/crates/rustls)
-- `email-check` - Validate email addresses via [check-if-email-exists](https://crates.io/crates/check-if-email-exists) (enabled by default)
-- `check_example_domains` - Allow checking example domains like `example.com` (useful for testing)
+- `email-check` - Validate email addresses (default)
+- `check_example_domains` - Allow checking example domains
 
-To install with specific features:
+Install with specific features:
 
 ```bash
-# Install with rustls instead of native-tls
 cargo install lychee --no-default-features --features rustls-tls
-
-# Install with vendored OpenSSL for portability
 cargo install lychee --features vendored-openssl
 ```
 
-## Quick Start
+## Usage
 
-Let's get you started with the most common use cases.
-
-### Check all links in your project
+### Check all links in the current directory
 
 ```bash
 lychee .
-```
-
-This recursively checks all links in supported files (Markdown, HTML, text, etc.) in the current directory.
-
-### Check a single file
-
-```bash
-lychee README.md
 ```
 
 ### Check a website
@@ -165,92 +146,55 @@ lychee README.md
 lychee https://example.com
 ```
 
-<Aside type="note">
-  This checks only the links **on** the given page. To check an entire website,
-  you can download the sitemap and pass it as input.
-</Aside>
+:::note
+This checks links on the given page only. For entire sites, download the sitemap and pass it as input.
+:::
 
-### Check multiple inputs
+### Check specific files
 
 ```bash
-lychee README.md docs/ https://example.com
+lychee README.md
+lychee test.html info.txt
+lychee test.html info.txt https://example.com
 ```
 
-Mix and match files, directories, and URLs in a single command!
-
-## Usage Examples
-
-### Check links offline (no network requests)
+### Check links offline
 
 ```bash
 lychee --offline path/to/directory
 ```
 
-This only validates local links without making any network requests. Great for quick local linting!
-
-### Check links in a remote file
+### Check a remote file
 
 ```bash
 lychee https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
 ```
 
-Lychee respects file extensions in URLs and parses them accordingly.
-
-### Check links from stdin
+### Check from stdin
 
 ```bash
 cat test.md | lychee -
 echo 'https://example.com' | lychee -
 ```
 
-Pipe content directly to lychee without creating a file.
-
-### Check links using glob patterns
+### Use glob patterns
 
 ```bash
 lychee 'docs/**/*.md'
 ```
 
 :::note[Glob Expansion Rules]
-Use single quotes to prevent your shell from expanding the glob pattern before lychee processes it.
+Use single quotes to prevent shell expansion.
 :::
 
-Check multiple patterns:
-
-```bash
-lychee 'src/**/*.rs' 'docs/**/*.md'
-```
-
-### Advanced globbing with home directory expansion
+### Advanced globbing
 
 ```bash
 lychee '~/projects/*/README.md'
-```
-
-This checks all `README.md` files in your projects directory.
-
-### Ignore case when globbing
-
-```bash
 lychee --glob-ignore-case '~/projects/*/[r]eadme.*'
 ```
 
-This matches:
-
-- `readme.md`
-- `README.txt`
-- `Readme.markdown`
-- And more!
-
-### Check with verbose output
-
-```bash
-lychee --verbose README.md
-```
-
-See the result for each link checked, not just failures.
-
-### Check links in EPUB files
+### Check EPUB files
 
 If you have [atool](https://www.nongnu.org/atool) installed:
 
@@ -258,14 +202,12 @@ If you have [atool](https://www.nongnu.org/atool) installed:
 acat -F zip file.epub "*.xhtml" "*.html" | lychee -
 ```
 
-:::caution[Other file formats]
-Lychee parses unsupported file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
-This works well for most cases, but if you need dedicated support for a specific format, please [create an issue](https://github.com/lycheeverse/lychee/issues).
+:::caution
+Lychee parses other file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
+This works well for most cases, but if you need dedicated support for a specific format, [create an issue](https://github.com/lycheeverse/lychee/issues).
 :::
 
-## Using lychee in CI/CD
-
-### GitHub Actions
+## GitHub Action
 
 Lychee is available as a [GitHub Action](https://github.com/lycheeverse/lychee-action/):
 
@@ -277,15 +219,3 @@ Lychee is available as a [GitHub Action](https://github.com/lycheeverse/lychee-a
 ```
 
 See our [GitHub Action recipes](/github_action_recipes/check-repository) for more examples.
-
-### Other CI systems
-
-Use lychee with any CI system via Docker:
-
-```bash
-docker run --rm -v $(pwd):/input lycheeverse/lychee /input
-```
-
-<Aside type="tip">
-  **Tip:** Run `lychee --help` anytime to see all available options and flags.
-</Aside>
