@@ -4,33 +4,15 @@ title: Checking Anchor Links (Fragment Identifiers)
 
 import { Aside } from "@astrojs/starlight/components";
 
-Lychee can check anchor links (also called fragments or hash links) in both HTML and Markdown files. This feature helps ensure that internal links to specific sections of a page are valid.
+lychee can check anchor links (also called fragments) in both HTML and Markdown files.
 
-## What are Anchor Links?
-
-Anchor links are URLs that point to a specific section within a page using the `#` symbol:
-
-```markdown
-[Jump to introduction](#introduction)
-[See the API section](#api-reference)
-[Custom ID example](#my-custom-id)
-```
-
-These links are commonly used in documentation to:
-
-- Create table of contents
-- Link between sections in the same document
-- Reference specific headings in other documents
-
-## Quick Start
-
-To enable anchor link checking, use the `--include-fragments` flag:
+## Enable Fragment Checking
 
 ```bash
 lychee --include-fragments docs/
 ```
 
-Or add it to your configuration file:
+Or in your config:
 
 ```toml title="lychee.toml"
 include_fragments = true
@@ -38,20 +20,9 @@ include_fragments = true
 
 ## How It Works
 
-When you enable fragment checking, lychee:
+lychee generates fragments using two methods:
 
-1. **Extracts anchor links** from your files (e.g., `#introduction`)
-2. **Generates valid fragments** from headings and IDs in the target file
-3. **Compares** the link fragment against the generated list
-4. **Reports** any fragments that don't match
-
-### Fragment Generation
-
-Lychee generates fragments using two methods:
-
-#### 1. Explicit IDs
-
-IDs specified directly in your markup:
+**1. Explicit IDs:**
 
 ```markdown
 ## My Heading {#custom-id}
@@ -61,23 +32,13 @@ IDs specified directly in your markup:
 <h2 id="custom-id">My Heading</h2>
 ```
 
-Fragment: `#custom-id`
-
-#### 2. Auto-Generated from Headings
-
-For standard headings, lychee generates kebab-case fragments similar to GitHub:
+**2. Auto-Generated from Headings:**
 
 ```markdown
 ## Getting Started
 ```
 
 Fragment: `#getting-started`
-
-```markdown
-## API Reference Guide
-```
-
-Fragment: `#api-reference-guide`
 
 <Aside type="note">
   Auto-generated fragments use lowercase and replace spaces with hyphens, following GitHub's anchor generation rules.
@@ -92,242 +53,55 @@ Fragment: `#api-reference-guide`
 | Unicode in fragments    | ✅       | ✅   | ✅                      |
 | Inline code in headings | ✅       | N/A  | N/A                     |
 
-### Supported File Types
-
-- Markdown (`.md`, `.markdown`) files
-- HTML (`.html`, `.htm`) files
-- Inline HTML within Markdown files
-
-### Supported Anchor Types
-
-**Standard headings:**
-
-```markdown
-## Introduction
-
-[Link](#introduction) ✓ Valid
-```
-
-**Custom IDs:**
-
-```markdown
-## My Section {#custom}
-
-[Link](#custom) ✓ Valid
-```
-
-**Unicode characters:**
-
-```markdown
-## Résumé
-
-[Link](#résumé) ✓ Valid
-```
-
-**Inline code:**
-
-```markdown
-## Using `npm install`
-
-[Link](#using-npm-install) ✓ Valid
-```
-
-**Underscores preserved:**
-
-```markdown
-## my_function
-
-[Link](#my_function) ✓ Valid
-```
-
 ## Examples
 
-### Valid Anchor Links
+**Valid:**
 
 ```markdown
 # Documentation
 
 ## Getting Started {#start}
-
-Welcome to our docs!
-
 ## API Reference
 
-Details about the API.
-
----
-
-[Jump to start](#start) ✓ Valid (custom ID)
-[See API](#api-reference) ✓ Valid (auto-generated)
-[Back to top](#documentation) ✓ Valid (auto-generated)
+[Jump to start](#start)              ✓ Valid
+[See API](#api-reference)            ✓ Valid
 ```
 
-### Invalid Anchor Links
+**Invalid:**
 
 ```markdown
 # Documentation
 
 ## Getting Started
 
----
-
-[Wrong link](#getting_started) ✗ Invalid (uses underscore instead of hyphen)
-[Wrong link](#getting-starting) ✗ Invalid (typo)
-[Wrong link](#nonexistent) ✗ Invalid (heading doesn't exist)
-```
-
-## Configuration
-
-### Command Line
-
-```bash
-# Check fragments in local files
-lychee --include-fragments docs/
-
-# Check fragments on a website
-lychee --include-fragments https://example.com
-
-# Combine with other options
-lychee --include-fragments --verbose docs/
-```
-
-### Configuration File
-
-```toml title="lychee.toml"
-# Enable fragment checking
-include_fragments = true
-
-# Recommended: use caching to speed up repeated checks
-cache = true
-max_cache_age = "1d"
-```
-
-## Common Use Cases
-
-### Checking Documentation
-
-Ensure your documentation's table of contents is accurate:
-
-```bash
-lychee --include-fragments docs/**/*.md
-```
-
-### CI/CD Integration
-
-Catch broken anchors before deployment:
-
-```yaml
-- name: Check Links
-  uses: lycheeverse/lychee-action@v2
-  with:
-    args: --include-fragments docs/
-```
-
-### Checking Built Sites
-
-Verify anchors in your built static site:
-
-```bash
-lychee --include-fragments --base-url dist dist/
+[Wrong link](#getting_started)       ✗ Invalid (underscore instead of hyphen)
+[Wrong link](#nonexistent)           ✗ Invalid (heading doesn't exist)
 ```
 
 ## Limitations
 
-### What Lychee Can't Check
-
-- **JavaScript-generated anchors** - Elements created dynamically by JavaScript aren't visible to lychee
-- **Complex nested HTML** - Very complex or non-standard HTML structures might not be fully parsed
-- **Framework-specific features** - Some static site generators use custom anchor generation that may differ
+- **JavaScript-generated anchors** - Elements created dynamically aren't visible to lychee
+- **Complex nested HTML** - Very complex HTML structures might not be fully parsed
+- **Framework-specific features** - Some static site generators use custom anchor generation
 
 <Aside type="caution">
-  Fragment checking requires parsing the content of target files, which can be slower than just checking if a URL is reachable. Use caching to improve performance.
+  Fragment checking requires parsing file content, which can be slower. Use caching to improve performance.
 </Aside>
-
-### Known Issues
-
-- **Processor-specific anchors** - Different Markdown processors may generate anchors differently
-- **Special characters** - Some special characters in headings might not be handled identically to all processors
-
-If you encounter issues, please [create an issue](https://github.com/lycheeverse/lychee/issues) with examples.
 
 ## Troubleshooting
 
-### Fragments Not Being Checked
+### Use Explicit IDs
 
-Make sure you've enabled the feature:
-
-```bash
-lychee --include-fragments docs/
-```
-
-Or in your config:
-
-```toml
-include_fragments = true
-```
-
-### False Positives
-
-If lychee reports valid anchors as broken:
-
-1. **Check the fragment format** - Lychee uses GitHub-style kebab-case. If your site uses different formatting, consider using explicit IDs:
+If lychee reports valid anchors as broken, use explicit IDs:
 
 ```markdown
 ## My Section {#my-section}
 ```
 
-2. **Use explicit IDs for complex headings** - If a heading contains special characters or complex formatting:
+### Check Fragment Format
+
+lychee uses GitHub-style kebab-case. For complex headings with special characters:
 
 ```markdown
-## Complex Heading: With "Quotes" & Special! Characters {#complex-heading}
-```
-
-### False Negatives
-
-If lychee doesn't catch broken anchors:
-
-1. **Verify fragment checking is enabled** - Use `--verbose` to see what's being checked
-2. **Check file extensions** - Make sure lychee is processing the right file types
-3. **Look for JavaScript-generated content** - These can't be checked by lychee
-
-### Performance Issues
-
-Fragment checking can be slower. To improve performance:
-
-```toml title="lychee.toml"
-# Enable caching
-cache = true
-max_cache_age = "1d"
-
-# Increase concurrency
-max_concurrency = 32
-```
-
-## Best Practices
-
-### Use Explicit IDs for Stability
-
-For important sections that shouldn't change:
-
-```markdown
-## Introduction {#intro}
-```
-
-This ensures the anchor remains stable even if you change the heading text.
-
-### Keep Headings Simple
-
-Simple headings are easier to link to:
-
-```markdown
-✓ ## Getting Started
-✗ ## Getting Started: A Comprehensive Guide to Everything You Need!
-```
-
-### Test Locally Before Pushing
-
-Run lychee with fragment checking before committing:
-
-```bash
-lychee --include-fragments docs/
+## Complex Heading: With "Quotes" {#complex-heading}
 ```

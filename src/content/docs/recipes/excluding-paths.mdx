@@ -1,0 +1,50 @@
+---
+title: Excluding Paths
+description: Exclude specific filesystem paths from being checked using regular expressions and gitignore patterns.
+lychee---
+
+lychee respects `.gitignore` and `.ignore` files by default, so you typically don't need to manually exclude directories like `.git`, `node_modules`, or `vendor`.
+
+Hidden files are also ignored by default. Use `--hidden` to check hidden files and `--no-ignore` to disable `.gitignore` parsing.
+
+## Exclude Specific Paths
+
+Use `--exclude-path` to skip specific paths from being checked:
+
+```bash
+# Exclude all files named test.md
+lychee --exclude-path '(^|/)test\.md$' docs/
+
+# Exclude test directories
+lychee --exclude-path '(^|/)test/' docs/
+```
+
+The values are treated as regular expressions.
+
+:::caution
+The `.lycheeignore` file is for excluding URLs, not paths. Use `--exclude-path` for filesystem paths.
+:::
+
+## Configuration File
+
+```toml title="lychee.toml"
+exclude_path = [
+    "\\.txt$",      # skip .txt extensions
+    "(^|/)test/",   # skip directories named "test"
+]
+```
+
+See [this example config](https://github.com/mre/endler.dev/blob/50d8d5f90dbafa445c9455e420a40f8866f3e1c7/lychee.toml#L28) for more patterns.
+
+## Examples
+
+```bash
+# Skip specific file extensions
+lychee --exclude-path '\.(txt|log)$' docs/
+
+# Skip directories by name
+lychee --exclude-path '(^|/)(tmp|cache)/' docs/
+
+# Multiple exclusions
+lychee --exclude-path 'test' --exclude-path 'vendor' docs/
+```

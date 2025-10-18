@@ -1,0 +1,96 @@
+---
+title: Caching
+description: Speed up repeated link checks by caching results between runs to reduce redundant network requests.
+---
+
+Caching speeds up repeated checks by storing results of previous requests.
+
+## Enable Caching
+
+```bash
+lychee --cache docs/
+```
+
+This creates a `.lycheecache` file in the current directory.
+
+## Set Cache Age
+
+```bash
+# Cache for 1 day (default)
+lychee --cache --max-cache-age 1d docs/
+
+# Cache for 7 days
+lychee --cache --max-cache-age 7d docs/
+```
+
+Valid time units: `s` (seconds), `m` (minutes), `h` (hours), `d` (days)
+
+## Configuration File
+
+```toml title="lychee.toml"
+cache = true
+max_cache_age = "7d"
+```
+
+## Cache File Format
+
+The cache file is human-readable plaintext:
+
+```bash
+cat .lycheecache
+```
+
+```text
+https://github.com/lycheeverse/lychee 200 1704067200
+https://docs.rs/lychee-lib 200 1704067205
+```
+
+Format: `URL STATUS_CODE UNIX_TIMESTAMP`
+
+You can manually edit or remove entries:
+
+```bash
+# Remove GitHub URLs from cache
+grep -v "github.com" .lycheecache > .lycheecache.tmp
+mv .lycheecache.tmp .lycheecache
+
+# Clear entire cache
+rm .lycheecache
+```
+
+## Docker
+
+When using Docker, mount the cache file as a volume:
+
+```bash
+touch .lycheecache
+docker run -it \
+  -v $(pwd)/.lycheecache:/.lycheecache \
+  lycheeverse/lychee --cache https://lychee.cli.rs
+```
+
+## GitHub Actions
+
+```yaml
+- name: Restore cache
+  uses: actions/cache@v4
+  with:
+    path: .lycheecache
+    key: cache-lychee-${{ github.sha }}
+    restore-keys: cache-lychee-
+
+- name: Link Checker
+  uses: lycheeverse/lychee-action@v2
+  with:
+    args: --cache --max-cache-age 7d .
+```
+
+For more details, see the [GitHub Actions Caching recipe](/github_action_recipes/caching).
+
+## Best Practices
+
+Don't commit the cache file to version control:
+
+```gitignore title=".gitignore"
+.lycheecache
+```

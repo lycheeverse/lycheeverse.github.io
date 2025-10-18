@@ -1,172 +1,87 @@
 ---
 title: Testing Sites Not Served from Root with --base-url
-description: Understanding how to use the --base-url parameter in lychee
+description: Use --base-url to check links for sites deployed to subdirectories instead of root domains.
 ---
 
-import { Code } from "@astrojs/starlight/components";
-export const fileName = "docs/guide.html";
-export const fileLang = "html";
+The `--base-url` parameter lets you check links for sites that aren't served from the root domain. This is useful when your site lives in a subdirectory, like `example.com/docs/`.
 
-## What Is The Base URL?
+## When to Use
 
-The `--base-url` parameter in lychee lets you check links for sites that aren't
-served from the root domain. This is useful when your site lives in a
-subdirectory, like `example.com/docs/`.
+You need `--base-url` when your site is deployed to a subdirectory:
 
-## Do You Need To Set A Base URL?
+```html title="docs/guide.html"
+<a href="./getting-started.html">Get Started</a>
+<a href="../about.html">About Us</a>
+```
 
-Most of the time, you don't! Skip `--base-url` if:
-
-- Your site runs at a root domain (like `example.com`)
-- You're only checking absolute URLs
-- Your links should resolve relative to their files
-
-You need `--base-url` when your site lives in a subdirectory.
-
-Let's look at an example:
-
-<Code
-  code={`<a href="./getting-started.html">Get Started</a>
-<a href="../about.html">About Us</a>`}
-  lang={fileLang}
-  title={fileName}
-/>
-
-Say this page will be deployed to `example.com/docs/guide.html`. Those relative links should resolve to:
-
+If this page deploys to `example.com/docs/guide.html`, those links should resolve to:
 - `example.com/docs/getting-started.html`
 - `example.com/about.html`
 
-To check if these links are valid, tell lychee where the site will be hosted:
+Tell lychee where the site will be hosted:
 
 ```bash
 lychee --base-url https://example.com/docs/ "**/*.html"
 ```
 
-:::note[Good to know]
-The `--base-url` parameter works similarly to other tools you might know:
+## How It Works
 
-- [Jekyll's `baseurl`](https://jekyllrb.com/docs/configuration/options/)
-- [Vite's `base` config](https://vike.dev/base-url#base)
-- [Hugo's `baseURL`](https://gohugo.io/methods/site/baseurl/)
-- [The HTML `<base>` tag](https://www.w3schools.com/tags/tag_base.asp)
+lychee converts relative links to full URLs using the base URL:
 
-If you've used any of these, lychee's `--base-url` follows the same concept.
-:::
-
-## How Does It Work?
-
-When you set `--base-url`, lychee will:
-
-1. Find all links in your HTML files
-2. Convert relative links to full URLs
-3. Check if the referenced files exist in your project
-
-Here's what happens to different types of links:
-
-<Code
-  code={`<!-- Original links -->
+```html
+<!-- Original -->
 <a href="./guide.html">Guide</a>
-<a href="../about.html">About</a>
-<a href="https://other.com">External</a>
 
 <!-- After --base-url https://example.com/docs/ -->
-
 <a href="https://example.com/docs/guide.html">Guide</a>
-<a href="https://example.com/about.html">About</a>
-<a href="https://other.com">External</a>`} lang={fileLang}
-title="Link Resolution Example" />
+```
 
-## Common Use Cases
+## Examples
 
 ### Documentation Sites
 
-Running your docs locally? Tell lychee to check against your dev server:
-
 ```bash
+# Check against dev server
 lychee --base-url http://localhost:3000/docs/ "docs/**/*.html"
-```
 
-Want to verify links before deploying? lychee can check if files exist in your project:
-
-```bash
+# Check before deploying
 lychee --base-url https://example.com/docs/ "docs/**/*.html"
 ```
 
-:::note
-Even though your site isn't deployed yet, lychee can verify that the files your links point to exist in your project. This helps catch broken links before they go live!
-:::
-
 ### GitHub Pages
 
-If your site will be on GitHub Pages:
-
 ```bash
-# For a project site
+# Project site
 lychee --base-url https://username.github.io/project/ "**/*.html"
 
-# For local development
+# Local development
 lychee --base-url http://localhost:4000/project/ "**/*.html"
 ```
 
-### Blogging Platforms
-
-Using WordPress, Ghost, or Jekyll with a blog at `example.com/blog/`? Here's how to check those links:
+### Blog Subdirectories
 
 ```bash
 lychee --base-url https://example.com/blog/ "content/**/*.html"
 ```
 
-## Local Development
+## Trailing Slash
 
-You can use `file://` URLs to check files without running a server:
+Always include a trailing slash for directories:
 
 ```bash
-lychee --base-url file:///absolute/path/to/site/ "**/*.html"
+# ✅ Correct
+lychee --base-url https://example.com/docs/
+
+# ❌ Incorrect
+lychee --base-url https://example.com/docs
 ```
 
-This is helpful when you want to verify links exist on your filesystem.
-
-## Important Details
-
-Let me explain the technical necessity of the trailing slash:
-
-### Add A Trailing Slash If It's A Directory
-
-When in doubt about whether to include the trailing slash, include it. It's almost always what you want when working with static sites and documentation.
-
-<Code
-  code={`# ✅ Good - links will resolve correctly
-lychee --base-url https://example.com/docs/
-# ❌ Bad - links will break
-lychee --base-url https://example.com/docs`}
-  lang="bash"
-  title="Trailing Slash Example"
-/>
-
-The trailing slash is crucial because it tells lychee whether `/docs` is a file or a directory. This follows standard URL resolution rules:
-
-- `https://example.com/docs/` (with slash) means "docs" is a directory
-  - `./guide.html` resolves to `/docs/guide.html`
-  - `../about.html` resolves to `/about.html`
-
-- `https://example.com/docs` (no slash) means "docs" could be a file
-  - `./guide.html` resolves to `/guide.html` (goes up one level!)
-  - `../about.html` resolves to `/about.html`
-
-lychee can't automatically add the slash because both forms are valid - they just mean different things. For example, `https://example.com/docs` might be a single page, while `https://example.com/docs/` is its directory version. This distinction is part of how URLs work on the web.
+The trailing slash tells lychee that `/docs` is a directory, not a file. This affects how relative paths are resolved.
 
 ## `--base-url` vs `--root-dir`
 
-These solve different problems:
-
-- `--base-url` is for URLs (like `https://example.com/docs/`)
-  - Use it when you care about your site's final URL structure
-  - Helps validate relative links
-
-- [`--root-dir`](/recipes/root-dir) is for file paths (like `./public/`)
-  - Use it to find files on your computer
-  - Helps validate absolute paths
+- `--base-url` - For URLs (like `https://example.com/docs/`)
+- `--root-dir` - For file paths (like `./public/`)
 
 You can use both together:
 
@@ -174,10 +89,8 @@ You can use both together:
 lychee --base-url https://example.com/docs/ --root-dir $(pwd)/public/ "public/**/*.html"
 ```
 
-## Troubleshooting
+## Configuration File
 
-If links aren't being checked correctly:
-
-1. Verify your base URL has a trailing slash
-2. For local development, ensure your server is running
-3. Use `--verbose` to see how lychee resolves links
+```toml title="lychee.toml"
+base_url = "https://example.com/docs/"
+```

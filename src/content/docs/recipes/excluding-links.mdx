@@ -1,0 +1,169 @@
+---
+title: Excluding Links
+description: Use regular expressions to selectively include or exclude links from being checked by lychee.
+---
+
+lycheeimport { Aside } from "@astrojs/starlight/components";
+
+lychee allows you to selectively check links using `--include` and `--exclude` parameters. Both accept regular expressions.
+
+## Exclude Domains
+
+```bash
+# Exclude LinkedIn (often blocks bots)
+lychee --exclude 'linkedin\.com' docs/
+
+# Exclude multiple domains
+lychee --exclude '(linkedin|twitter)\.com' docs/
+```
+
+## Exclude Local Links
+
+```bash
+# Exclude all private IPs and localhost
+lychee --exclude-all-private docs/
+```
+
+## Use `.lycheeignore`
+
+Create a `.lycheeignore` file for permanent exclusions:
+
+```text title=".lycheeignore"
+# Social media (often block bots)
+https://linkedin.com
+https://twitter.com
+
+# Private/local URLs
+http://localhost
+http://127.0.0.1
+
+# Regex patterns
+^mailto:  # Ignore all email links
+```
+
+## Include Links
+
+Use `--include` to check only specific links:
+
+```bash
+# Only check your own domain
+lychee --include '^https?://yourdomain\.com' docs/
+
+# Only check GitHub links
+lychee --include 'github\.com' docs/
+```
+
+## Combining Include and Exclude
+
+Include takes precedence over exclude:
+
+```bash
+# Exclude all links EXCEPT GitHub
+lychee --exclude '.*' --include 'github\.com' docs/
+
+# Check only your domain, but exclude the blog
+lychee --include 'yourdomain\.com' --exclude 'yourdomain\.com/blog' docs/
+```
+
+<Aside type="tip">
+  Includes have higher priority than excludes.
+</Aside>
+
+## Examples
+
+### Exclude by Path
+
+```bash
+lychee --exclude 'example\.com/private/' docs/
+lychee --exclude 'example\.com/blog/\d{4}/' docs/
+```
+
+### Exclude by File Type
+
+```bash
+lychee --exclude '\.(pdf|zip|exe|dmg)$' docs/
+```
+
+### Exclude URL Parameters
+
+```bash
+lychee --exclude '\?(utm_source|utm_medium)=' docs/
+```
+
+### Exclude by Protocol
+
+```bash
+lychee --exclude '^mailto:' docs/
+lychee --exclude '^ftp:' docs/
+```
+
+## Configuration File
+
+```toml title="lychee.toml"
+exclude = [
+  '^https://www\.linkedin\.com',
+  '^https://twitter\.com',
+]
+
+include = [
+  '^https://yourdomain\.com',
+]
+
+exclude_all_private = true
+```
+
+## Regex Tips
+
+### Escape Special Characters
+
+```bash
+# Correct - escapes the dot
+lychee --exclude 'example\.com'
+
+# Incorrect - dot matches any character
+lychee --exclude 'example.com'
+```
+
+### Match Full URLs
+
+```bash
+# Good - matches full URL
+lychee --exclude '^https?://example\.com'
+
+# May not work - missing scheme
+lychee --exclude 'example\.com'
+```
+
+### Use Alternation
+
+```bash
+lychee --exclude '(example|test|demo)\.(com|org)'
+```
+
+Test patterns at [regex101.com](https://regex101.com).
+
+## Debugging
+
+See which links are checked or excluded:
+
+```bash
+lychee --verbose docs/
+```
+
+See all links that would be checked:
+
+```bash
+lychee --dump docs/
+```
+
+## Troubleshooting
+
+**Use single quotes:**
+
+```bash
+# ✓ Correct
+lychee --exclude 'example\.com' docs/
+
+# ✗ May not work (shell expansion)
+lychee --exclude "example\.com" docs/
+```

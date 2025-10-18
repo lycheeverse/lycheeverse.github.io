@@ -1,0 +1,61 @@
+---
+title: Pretty URLs (Fallback Extensions and Index Files)
+description: Handle pretty URLs that omit file extensions or index filenames when checking local files.
+lychee---
+
+Pretty URLs omit file extensions or index filenames to make links shorter. lychee supports checking these URLs in local files.
+
+:::note
+Pretty URLs only need special handling for local files. When checking online webpages, the web server resolves them automatically.
+:::
+
+lychee## Fallback Extensions
+
+Static site generators like Hugo can generate URLs without `.html` extensions. lychee can try multiple extensions when a link doesn't resolve:
+
+```bash
+lychee --fallback-extensions html,htm docs/
+```
+
+If a link like `/about` doesn't exist, lychee will try:
+1. `/about.html`
+2. `/about.htm`
+
+## Index Files
+
+Many web servers return an index file (like `index.html`) when a directory is requested.
+
+By default, lychee considers directory links valid if the directory exists. To check for index files:
+
+```bash
+lychee --index-files index.html,index.htm docs/
+```
+
+lychee will look for these files in the specified order. If none exist, the link is broken.
+
+### Accept Directories as Fallback
+
+Use `.` to accept directories if no index file is found:
+
+```bash
+lychee --index-files index.html,. docs/
+```
+
+This checks for `index.html` first, then accepts the directory if it exists.
+
+## Combined Usage
+
+```bash
+lychee --fallback-extensions html --index-files index.html,. docs/
+```
+
+:::tip
+Fallback extensions are not applied to index file names. Specify full filenames in `--index-files`.
+:::
+
+## Configuration File
+
+```toml title="lychee.toml"
+fallback_extensions = ["html", "htm"]
+# Note: index_files not yet supported in config
+```

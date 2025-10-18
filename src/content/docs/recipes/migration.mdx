@@ -1,0 +1,61 @@
+---
+title: Remapping One URL to Another
+description: Use the --remap option to test URL migrations and check if old links were updated to new domains.
+---
+
+When migrating your website to a new domain, use lychee's `--remap` option to check if all links were updated correctly.
+
+## Basic Usage
+
+```bash
+lychee --remap 'example.com example.org' -- https://example.com/sitemap.xml
+```
+
+The `--remap` option takes space-separated pairs: the old URL pattern and the new URL pattern.
+
+## Test Against Local Development
+
+```bash
+lychee --remap 'example.com localhost:8000' docs/
+```
+
+## Multiple Remaps
+
+```bash
+lychee --remap 'example.com example.org' \
+       --remap 'oldsite.com newsite.com' \
+       docs/
+```
+
+## Combined with Other Options
+
+```bash
+lychee --remap 'example.com example.org' \
+       --exclude 'example.org/old' \
+       --verbose \
+       --max-concurrency 4 \
+       https://example.com/sitemap.xml
+```
+
+## Regular Expressions
+
+Replace parts of URLs using regex:
+
+```bash
+# Migrate from GitHub to GitLab
+lychee --remap 'github.com/(.*) gitlab.com/$1' docs/
+
+# With named capture groups
+lychee --remap 'github.com/(?P<org>.*)/(?P<repo>.*) gitlab.com/$org/$repo' docs/
+```
+
+## Configuration File
+
+```toml title="lychee.toml"
+remap = [
+    "example.com example.org",
+    "github.com/(.*) gitlab.com/$1"
+]
+```
+
+See the [example config](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml) for more details.

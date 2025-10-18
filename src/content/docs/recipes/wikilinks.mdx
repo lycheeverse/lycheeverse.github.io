@@ -1,0 +1,30 @@
+---
+title: Wikilinks
+description: Check Wikilinks in Markdown files that include full paths to linked resources.
+---
+
+lychee can check Wikilinks in Markdown files if they include a path to the linked resource.
+
+## Supported Format
+
+```markdown
+# ✅ Works - includes path
+
+[[https://example.com/docs/]]
+[[./another/markdown/file.md]]
+
+# ❌ Doesn't work - path-less links
+
+[[another-markdown-page]]
+```
+
+## Limitations
+
+Tools like [Obsidian](https://obsidian.md/) use path-less Wikilinks with just the filename (no path or extension).
+
+lychee cannot determine the correct path for these links because the file could be:
+- In the same directory
+- In a subdirectory
+- In a parent directory
+
+Recursive search for these files is not currently supported.
