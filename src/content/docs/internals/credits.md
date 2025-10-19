@@ -1,5 +1,6 @@
 ---
 title: Credits
+description: Open source projects and maintainers that make lychee possible.
 ---
 
 lychee would not be possible without the following projects.

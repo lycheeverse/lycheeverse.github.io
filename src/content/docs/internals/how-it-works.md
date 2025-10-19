@@ -1,11 +1,11 @@
 ---
 title: How lychee Works
+description: Technical overview of lychee's asynchronous architecture, link extraction, and concurrent processing pipeline.
 ---
 
 ## High-Level Overview
 
-Here is a talk explaining the high-level architecture of lychee
-and the broader context of link checkers:
+This talk explains lychee's high-level architecture and the broader context of link checkers:
 
 <div style=" position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; margin-bottom: 40px;">
 <iframe
@@ -17,25 +17,42 @@ webkitallowfullscreen mozallowfullscreen allowfullscreen>
 
 ## Asynchronous Architecture
 
-lychee is fully asynchronous.
+lychee is fully asynchronous, enabling high-performance concurrent link checking.
 
-It reads inputs and extracts links into a [`futures::stream::Stream`](https://docs.rs/futures/latest/futures/stream/trait.Stream.html).
-Each link gets filtered by an async pipeline and finally gets sent to a pool of
-[reqwest](https://github.com/seanmonstar/reqwest) HTTP clients, which check all links concurrently.
+The pipeline:
+
+1. **Input Reading**: Files are read and parsed asynchronously
+2. **Link Extraction**: Links are extracted into a [`futures::stream::Stream`](https://docs.rs/futures/latest/futures/stream/trait.Stream.html)
+3. **Filtering**: Each link passes through an async filter pipeline
+4. **Concurrent Checking**: Filtered links are sent to a pool of [reqwest](https://github.com/seanmonstar/reqwest) HTTP clients that check all links concurrently
 
 :::note
-Due to its asynchronous nature, results get printed in order of response time
-of each individual link and _not_ in order of appearance inside input files.
+Results are printed in order of response time, not in order of appearance in input files. This is due to the asynchronous nature of the link checking process.
 :::
 
-## Extractors
+## Link Extractors
 
-The extractors do all the heavy lifting.
-They extract all links from a given input file and return them as a stream.
-We want the extractors to be as fast and memory-efficient as possible.
+Extractors handle link discovery from different file formats. They're optimized for speed and memory efficiency.
 
-Currently we support three main extractors:
+### Supported Extractors
 
-- [Pulldown CMark](https://github.com/raphlinus/pulldown-cmark) for Markdown files
-- [html5gum](https://github.com/untitaker/html5gum) for HTML
-- [linkify](https://github.com/robinst/linkify) as a fallback for plaintext files and other unknown formats.
+**Markdown**: [pulldown-cmark](https://github.com/raphlinus/pulldown-cmark)
+- Pull parser for CommonMark
+- Fast, memory-efficient parsing
+- Handles Markdown-specific link syntax
+
+**HTML**: [html5gum](https://github.com/untitaker/html5gum)
+- WHATWG-compliant HTML5 tokenizer
+- Tag soup parser for malformed HTML
+- Handles real-world HTML reliably
+
+**Plaintext/Fallback**: [linkify](https://github.com/robinst/linkify)
+- Finds URLs and email addresses in plain text
+- Handles surrounding punctuation correctly
+- Used for unknown file formats
+
+## Concurrency Model
+
+lychee uses Rust's async runtime (tokio) to manage concurrent operations efficiently. The default concurrency is 128 simultaneous requests, configurable via `--max-concurrency`.
+
+This allows lychee to check thousands of links in seconds while maintaining low memory usage.

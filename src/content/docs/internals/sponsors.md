@@ -1,5 +1,6 @@
 ---
 title: Sponsors
+description: Organizations and individuals supporting lychee's development through sponsorship.
 ---
 
 Thanks to the following organizations for sponsoring the development of lychee.
