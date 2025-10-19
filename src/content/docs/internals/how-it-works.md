@@ -1,5 +1,5 @@
 ---
-title: How Lychee Works
+title: How lychee Works
 ---
 
 ## High-Level Overview
