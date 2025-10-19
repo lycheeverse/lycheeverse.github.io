@@ -11,7 +11,7 @@ export default defineConfig({
 			},
 			title: "Docs",
 			description:
-				"Official documentation for lychee - a fast, asynchronous link checker",
+				"Official documentation for lychee, a fast link checker for finding broken URLs and email addresses in Markdown, HTML, and documentation files",
 			editLink: {
 				baseUrl:
 					"https://github.com/lycheeverse/lycheeverse.github.io/edit/master/",
