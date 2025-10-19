@@ -1,63 +1,114 @@
 ---
 title: Too Many Open Files
+description: Resolve "too many open files" errors by adjusting concurrent requests or system limits.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
 
-The number of concurrent network requests (`MAX_CONCURRENCY`) is set to 128 by default.
+The "too many open files" error occurs when lychee exhausts available file handles. Each network request uses a socket, represented as a file on UNIX systems.
 
-Every network request maps to an open socket, which is represented as a file on UNIX systems.
-If you see error messages like `error trying to connect: tcp open error: Too
-many open files (os error 24)` then you ran out of file handles.
+Error message:
 
-You can either reduce the number of concurrent requests with the `--max-concurrency` option or increase the number of allowed open files on your system.
-For example, to reduce the number of concurrent requests to 50:
+```bash
+error trying to connect: tcp open error: Too many open files (os error 24)
+```
+
+lychee's default concurrency is 128, meaning up to 128 simultaneous network connections. Systems with low file handle limits can't support this many open files.
+
+## Reduce Concurrent Requests
+
+Lower the concurrency to stay within system limits:
 
 ```bash
 lychee --max-concurrency 50 https://example.com
 ```
 
-<Aside type="caution">Comes with a performance penalty</Aside>
+<Aside type="caution">Lower concurrency reduces performance</Aside>
 
-## UNIX
+Experiment with values between 10 and 100 to find the right balance for your system.
 
-To increase the number of allowed open files, you can use the `ulimit` command on UNIX systems.
-For example, to increase the limit to 4096:
+## Increase System Limits
+
+### UNIX/Linux/macOS
+
+Check current limit:
+
+```bash
+ulimit -n
+```
+
+Increase for the current shell session:
 
 ```bash
 ulimit -n 4096
 ```
 
-<Aside>The `ulimit` command only affects the current shell session.</Aside>
+<Aside>This only affects the current shell session</Aside>
 
-For permanent increases (e.g., across reboots), use `launchctl` to set system limits:
+### Permanent Increase (macOS)
+
+Set system-wide limits with `launchctl`:
 
 ```bash
 sudo launchctl limit maxfiles 4096 unlimited
 ```
 
-Then apply per-session with `ulimit -n 4096`. This sets a soft limit of 4096 and removes the hard cap.
+Then apply per-session:
 
-<Aside>
-  You might need to restart your terminal or system for the changes to take
-  effect.
-</Aside>
+```bash
+ulimit -n 4096
+```
 
-For system-wide boot changes, create `/Library/LaunchDaemons/limit.maxfiles.plist` with XML keys for `<key>LimitLoadToSessionType</key><string>System</string>` and limits—see Apple docs.
+This sets a soft limit of 4096 and removes the hard cap.
 
-## Windows
+For persistent boot changes, create `/Library/LaunchDaemons/limit.maxfiles.plist` with appropriate XML configuration. See [Apple documentation](https://support.apple.com/) for details.
 
-On Windows, you can increase the limit by modifying the registry.
+<Aside>Restart your terminal or system for changes to take effect</Aside>
 
-1. Open the Registry Editor (`regedit`).
-2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip
-\Parameters`.
-3. Create a new `DWORD` value named `MaxUserPort` and set it to `65534`.
-4. Create another `DWORD` value named `TcpTimedWaitDelay` and set it to `30`.
-5. Restart your computer for the changes to take effect.
+### Permanent Increase (Linux)
+
+Edit `/etc/security/limits.conf`:
+
+```bash
+* soft nofile 4096
+* hard nofile 8192
+```
+
+Or for a specific user:
+
+```bash
+username soft nofile 4096
+username hard nofile 8192
+```
+
+Logout and login for changes to take effect.
+
+### Windows
+
+Windows handles file limits differently. The error typically indicates port exhaustion rather than file handle limits.
+
+Increase available ports via Registry Editor:
+
+1. Open Registry Editor (`regedit`)
+2. Navigate to `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters`
+3. Create `DWORD` value `MaxUserPort` = `65534`
+4. Create `DWORD` value `TcpTimedWaitDelay` = `30`
+5. Restart your computer
 
 <Aside type="caution">
-  This addresses port exhaustion (common for socket errors); for raw file
-  handles, check app-specific limits. Modifying the registry can have unintended
-  consequences. Always back up your registry before making changes.
+  Back up your registry before making changes. Incorrect modifications can cause system instability.
 </Aside>
+
+## Configuration File
+
+```toml title="lychee.toml"
+max_concurrency = 50
+```
+
+## Recommended Values
+
+- **Low-end systems**: 20-50 concurrent requests
+- **Standard systems**: 50-100 concurrent requests
+- **High-end systems**: 100-200 concurrent requests
+
+Start conservatively and increase if no errors occur.

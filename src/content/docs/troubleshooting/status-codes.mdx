@@ -1,9 +1,63 @@
 ---
 title: Status Codes
+description: Configure which HTTP status codes lychee should accept as valid responses.
 ---
 
-Some websites don't respond with a `200` (OK) status code. Instead they might
-send `204` (No Content), `206` (Partial Content), or [something else entirely](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/418).
+Some websites return non-standard success codes instead of `200 OK`. Common alternatives include:
 
-In case you run into such issues you can work around that by providing a custom
-list of accepted status codes, such as `--accept 200,204,206`.
+- `204` (No Content)
+- `206` (Partial Content)
+- `418` (I'm a teapot)
+- Other [HTTP status codes](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status)
+
+## Accepting Additional Status Codes
+
+Use `--accept` to specify which status codes should be treated as valid:
+
+```bash
+lychee --accept 200,204,206 .
+```
+
+This treats 200, 204, and 206 responses as successful.
+
+## Common Use Cases
+
+### API Endpoints
+
+APIs often return `204 No Content` for successful operations without response bodies:
+
+```bash
+lychee --accept 200,201,204 .
+```
+
+### Partial Content
+
+Media servers may return `206 Partial Content`:
+
+```bash
+lychee --accept 200,206 .
+```
+
+### Accept All 2xx Codes
+
+Accept any successful 2xx status code:
+
+```bash
+lychee --accept '200..=299' .
+```
+
+## Configuration File
+
+```toml title="lychee.toml"
+accept = [200, 204, 206]
+```
+
+Or use ranges:
+
+```toml title="lychee.toml"
+accept = ['200..=299']
+```
+
+:::caution
+Be cautious when accepting non-standard status codes. Verify the server's behavior to ensure the responses are actually valid.
+:::

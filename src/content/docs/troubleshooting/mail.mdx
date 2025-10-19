@@ -1,20 +1,50 @@
 ---
 title: Mail Addresses
+description: Check email addresses with lychee and troubleshoot common verification issues.
 ---
 
-You can check email addresses by providing the `--include-mail` flag.
-We use https://github.com/reacherhq/check-if-email-exists for email checking.
-You can test your mail address with curl:
+Email address checking is disabled by default. Enable it with the `--include-mail` flag:
 
 ```bash
- curl -X POST \
+lychee --include-mail .
+```
+
+## How It Works
+
+lychee uses [check-if-email-exists](https://github.com/reacherhq/check-if-email-exists) for email validation.
+
+Test an email address with curl:
+
+```bash
+curl -X POST \
   'https://api.reacher.email/v0/check_email' \
   -H 'content-type: application/json' \
   -H 'authorization: test_api_token' \
   -d '{"to_email": "box@domain.test"}'
 ```
 
-Some settings on your mail server (such as `SPF` Policy, `DNSBL`) may prevent
-your email from being verified. If you have an error with checking a working
-email, you can exclude specific addresses with the `--exclude` flag or skip
-all email addresses by removing the `--include-mail` flag.
+## Verification Issues
+
+Mail server settings can prevent verification:
+
+- SPF Policy restrictions
+- DNSBL (DNS-based blocklists)
+- SMTP configuration
+- Firewall rules
+
+## Excluding Problematic Addresses
+
+If valid emails fail verification, exclude specific addresses:
+
+```bash
+lychee --include-mail --exclude 'box@domain\.test' .
+```
+
+Or skip email checking entirely by removing the `--include-mail` flag.
+
+## Configuration File
+
+```toml title="lychee.toml"
+include_mail = true
+exclude = ['box@domain\.test']
+```

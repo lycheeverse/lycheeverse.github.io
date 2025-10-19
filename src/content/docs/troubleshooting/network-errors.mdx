@@ -1,18 +1,13 @@
 ---
 title: Network Errors
+description: Diagnose and resolve certificate errors and network-related failures when checking links.
 ---
 
 import { Aside } from "@astrojs/starlight/components";
 
-If you run lychee and some links fail then it could be certificate-related issue.
-Certificates are used to verify the identity of a website and to establish a secure connection.
-Different operating systems and tools have different ways to handle certificates.
+Network errors typically indicate certificate validation issues, bot detection, or connection problems.
 
-If lychee is unable to verify the certificate of a website, it will show a
-network error. This could be due to an expired certificate, an invalid
-certificate, or a certificate from an unknown authority.
-
-Examples of network errors that could be certificate-related:
+Common error messages:
 
 ```bash
 Failed: Network error: error sending request for url
@@ -22,95 +17,87 @@ Failed: Network error: error sending request for url
 Network error: Forbidden
 ```
 
-## What now?
+## Verify with curl
 
-### Double-check with a different tool
-
-Try using a different tool like [`curl`](https://curl.se/):
+Test if the issue is specific to lychee:
 
 ```bash
 curl https://example.com
 ```
 
-If this works, then the issue is with lychee and not the website.
-In that case, please open an issue on the lychee GitHub repository.
+If curl succeeds but lychee fails, open an issue on GitHub. If curl also fails, the problem is with the website or your system.
 
-If it doesn't work, then the issue is with the website or your system.
-It might be related to the certificate or the user agent. The site might also use a bot detection such as Cloudflare Bot Management. Read on to find out more.
+## Certificate Issues
 
-### Use the `--insecure` flag
+### Ignore Certificate Errors
 
-You can use the `--insecure` flag to ignore certificate errors:
+Use `--insecure` to bypass certificate validation:
 
 ```bash
 lychee --insecure https://example.com
 ```
 
-If this works, then the issue is with the certificate.
-If it doesn't work, the issue might be with lychee or the website.
-Please follow the steps below to narrow down the issue further.
+If this resolves the issue, the website has certificate problems (expired, invalid, or from an unknown authority).
 
-### Try a different user agent
-
-You can try using a different user agent:
-
-```bash
-lychee --user-agent "curl/8.4.0" https://example.com
-```
-
-If this works, then the website might be blocking lychee or any other user agent
-that it doesn't recognize. There's little you can do in this case, except to
-contact the website administrator and ask them to whitelist lychee or keep the
-user agent as `curl`, which is a popular user agent.
-
-If you'd like to emulate your local `curl` user agent, you can run:
-
-```bash
-curl -s https://httpbin.org/user-agent
-```
-
-This will show you the user agent that curl uses on your system.
-
-### Cloudflare Bot Management and other bot detection
-
-Some websites use bot detection services like Cloudflare Bot Management to
-prevent automated tools from accessing their content.
-Unfortunately, this includes lychee, even though it does not scrape the website.
-
-To check if the website is using Cloudflare Bot Management, you can
-use a service like [BuiltWith](https://builtwith.com/). Just enter the website
-URL and check if it uses any bot detection services like Cloudflare Bot Management or
-Cloudflare Challenge.
-
-If the website uses a bot detection service, which is blocking lychee, there's
-little you can do. You can try contacting the website administrator and ask them
-to whitelist lychee.
-
-### Update the CA certificates
-
-To resolve certificate-related issues, you can update the CA certificates on
-your system.
+### Update CA Certificates
 
 <Aside>
-  CA stands for Certificate Authority and is an entity that issues digital
-  certificates. It's what your browser uses to verify the identity of a website.
+  CA (Certificate Authority) certificates verify website identities. Outdated certificates cause validation failures.
 </Aside>
 
-If you're on a Debian-based system (including Ubuntu), you can update the
-certificates by running:
+**Debian/Ubuntu:**
 
 ```bash
 sudo apt-get install ca-certificates
 ```
 
-For other systems, you can follow the instructions below:
+**macOS:** [Apple Support Guide](https://support.apple.com/en-us/103272)
 
-- [macOS](https://support.apple.com/en-us/103272)
-- [Windows](https://learn.microsoft.com/en-us/skype-sdk/sdn/articles/installing-the-trusted-root-certificate)
-- [Arch Linux](https://wiki.archlinux.org/title/Transport_Layer_Security)
+**Windows:** [Microsoft Documentation](https://learn.microsoft.com/en-us/skype-sdk/sdn/articles/installing-the-trusted-root-certificate)
 
-Also, see this [Stack Overflow
-discussion](https://stackoverflow.com/a/24618403/270334) for additional
-information.
+**Arch Linux:** [TLS Wiki](https://wiki.archlinux.org/title/Transport_Layer_Security)
 
-After that, try running lychee again and see if the issue is resolved. If not, please open an issue on the lychee GitHub repository.
+See this [Stack Overflow discussion](https://stackoverflow.com/a/24618403/270334) for additional guidance.
+
+## User Agent Issues
+
+Some sites block unrecognized user agents. Try a common one:
+
+```bash
+lychee --user-agent "curl/8.4.0" https://example.com
+```
+
+Check your system's curl user agent:
+
+```bash
+curl -s https://httpbin.org/user-agent
+```
+
+If changing the user agent works, the site is blocking lychee's default agent. Keep using curl's user agent or contact the site administrator.
+
+## Bot Detection
+
+Services like Cloudflare Bot Management block automated tools, including lychee.
+
+### Check for Bot Detection
+
+Use [BuiltWith](https://builtwith.com/) to identify bot protection services:
+- Enter the website URL
+- Look for Cloudflare Bot Management, Cloudflare Challenge, or similar services
+
+### Solutions
+
+- Contact the site administrator to whitelist lychee
+- Use `--user-agent` with a browser user agent
+- Exclude the domain with `--exclude`
+
+## Configuration File
+
+```toml title="lychee.toml"
+insecure = true
+user_agent = "curl/8.4.0"
+```
+
+:::caution
+Using `--insecure` disables certificate validation and should only be used for testing. It compromises security.
+:::

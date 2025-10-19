@@ -1,81 +1,126 @@
 ---
 title: Rate Limits
+description: Prevent and handle rate limiting when checking multiple links from the same domain.
 ---
 
 import { Code } from "@astrojs/starlight/components";
 export const fileName = "lychee.toml";
 export const fileLang = "toml";
 
-:::note
-When checking many links from a single website, chances are you will get
-rate limited at some point. The result is that lychee will report a lot of broken
-links with `429` as a status code.
-Below you'll find some ideas to mitigate that scenario.
-:::
+Rate limiting occurs when checking many links from a single website. Servers return `429 Too Many Requests` status codes, causing lychee to report broken links.
 
-## Limit The Number Of Retries
+## Reduce Concurrent Requests
 
-If lychee hits a `429`, it will retry the request (after some exponential backoff).
-With many concurrent requests to the same site, this increases the chances of getting rate limited.
-(See also [Thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem).)
+Limit concurrent requests to give servers time between checks:
 
-To avoid that, set the number of retries to 0: `--max-retries 0`.
+```bash
+lychee --max-concurrency 10 .
+```
 
-## Reduce The Number Of Concurrent Requests
+Lower values reduce rate limiting risk but slow down execution. Experiment to find the right balance.
 
-You can limit the total number of concurrent requests with `--max-concurrency`. This
-way you can give the remote server some time to breath in-between requests and
-reduce the risk of getting rate-limited. Note that this will slow down execution
-in general, though, so you should play around with different values.
+Default is 128 concurrent requests.
 
-## Accept `429` Status Code
+## Disable Retries
 
-As a last resort, you might want to accept `429` as a valid status code.
-This way, rate limiting issues won't get reported.
+When lychee hits a `429` error, it retries with exponential backoff. With many concurrent requests, this can worsen rate limiting ([thundering herd problem](https://en.wikipedia.org/wiki/Thundering_herd_problem)).
 
-You can either set it as a command-line argument (`--accept 200,429`) or in the config.
+Disable retries:
 
-<Code code={`accept = [429, 200]`} lang={fileLang} title={fileName} />
+```bash
+lychee --max-retries 0 .
+```
+
+## Accept 429 Status Code
+
+As a last resort, accept `429` as valid to prevent rate limit errors from being reported:
+
+```bash
+lychee --accept 200,429 .
+```
+
+Or in configuration:
+
+<Code code={`accept = [200, 429]`} lang={fileLang} title={fileName} />
 
 ## GitHub Rate Limiting
 
-GitHub has a quite aggressive rate limiter.
-When you come across errors like
+GitHub has aggressive rate limiting. Without authentication, you're limited to **60 requests per hour**.
+
+Error message:
 
 ```bash
 GitHub token not specified. To check GitHub links reliably, use `--github-token`
 flag / `GITHUB_TOKEN` env var.
 ```
 
-it means **you're getting rate-limited** 😐. As per the message, you can make lychee
-use a GitHub personal access token to circumvent this.
+### Using a GitHub Token
+
+With a token, the rate limit increases to **1,000 requests per hour per repository** (15,000 for enterprise accounts).
+
+Set via environment variable:
+
+```bash
+export GITHUB_TOKEN=your_token_here
+lychee .
+```
+
+Or use the flag:
+
+```bash
+lychee --github-token your_token_here .
+```
+
+Or in configuration:
+
+```toml title="lychee.toml"
+github_token = "your_token_here"
+```
+
+Generate a token in your [GitHub account settings](https://github.com/settings/tokens). A personal token with no extra permissions is sufficient for checking public repository links.
 
 :::tip
-When using `GITHUB_TOKEN`, the rate limit is **1,000 requests per hour per repository**.
-For requests to resources that belong to an enterprise account on GitHub.com,
-GitHub Enterprise Cloud's rate limit applies, and the limit is 15,000 requests
-per hour per repository. ([Source](https://docs.github.com/en/developers/apps/building-github-apps/rate-limits-for-github-apps))
-So using a token can greatly increase the number of requests you can make! 🚀
+See the [example config](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml) for more configuration options.
 :::
 
-You can optionally set an environment variable with your Github token like so
-`GITHUB_TOKEN=xxxx`, or use the `--github-token` CLI option. It can also be set
-in the config file. [Here is an example config file](https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml).
+## Cache Results
 
-The token can be generated in your
-[GitHub account settings page](https://github.com/settings/tokens). A personal token with no extra
-permissions is enough to be able to check public repos links.
+Caching reduces repeated requests to the same URLs:
 
-## Exclude Entire Website When Getting Rate-Limited
+```bash
+lychee --cache --max-cache-age 12h .
+```
 
-Sometimes you encounter a website with a particularly stringent rate-limiting
-policy and none of the suggestions work.
-In that case you can exclude it from getting checked altogether. Example: `--exclude example.com`.
+Only links exceeding the cache age are checked again.
 
-## Cache the Results
+For GitHub Actions, see the [caching recipe](/github_action_recipes/caching).
 
-If the `--cache` flag is used, this can also help to reduce the amount of calls
-that are sent to a page because only links that exceed the cache age are queried
-again. This value can be adjusted with `--max-cache-age`, e.g. `12h`.
-If you run into rate-limiting issues when using the GitHub Action,
-see the [caching configuration here](/github_action_recipes/caching).
+## Exclude Domains
+
+If a website has strict rate limiting that can't be resolved, exclude it entirely:
+
+```bash
+lychee --exclude example.com .
+```
+
+Multiple exclusions:
+
+```bash
+lychee --exclude example.com --exclude another.com .
+```
+
+## Configuration File
+
+```toml title="lychee.toml"
+max_concurrency = 10
+max_retries = 0
+accept = [200, 429]
+github_token = "env:GITHUB_TOKEN"
+cache = true
+max_cache_age = "12h"
+exclude = ['example.com']
+```
+
+:::note
+Use `env:GITHUB_TOKEN` to read the token from an environment variable instead of hardcoding it.
+:::
