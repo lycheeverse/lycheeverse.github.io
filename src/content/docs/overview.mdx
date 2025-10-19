@@ -1,5 +1,6 @@
 ---
 title: Overview
+description: Fast, async link checker written in Rust for finding broken hyperlinks and mail addresses in documentation, websites, and codebases.
 ---
 
 <video autoplay loop muted playsinline width="800" height="600">
@@ -12,33 +13,30 @@ title: Overview
 
 ## What is lychee?
 
-lychee is a fast, async link checker written in Rust. It finds broken hyperlinks and mail addresses in your Markdown and HTML files, codebases, and websites. It's simple, lightweight, and easy to use.
-It is perfect for checking documentation, blogs, and static sites, and can be easily integrated into CI/CD pipelines.
+lychee is a fast, async link checker written in Rust. It finds broken hyperlinks and mail addresses in Markdown files, HTML documents, codebases, and websites.
 
-## Why was lychee created?
+## Why lychee?
 
-lychee was born out of a personal need. Matthias, the original author, maintains
-a [repository for static code analysis tools on Github](https://github.com/analysis-tools-dev/static-analysis). The links to the
-tools regularly broke, so he decided to add a link checker to the repo, to get
-notified. Unfortunately the existing solutions were either too slow, deprecated,
-or were lacking functionality. So he decided to write a link checker himself
-&mdash; how hard could it be?
+- **Fast**: Asynchronous architecture checks thousands of links concurrently
+- **Reliable**: Handles real-world HTML, Markdown, and plaintext files
+- **Lightweight**: Single static binary with no runtime dependencies
+- **Flexible**: Extensive configuration options and multiple output formats
+- **CI/CD Ready**: JSON output and GitHub Action support
+- **Open Source**: Actively maintained with community contributions
 
-A few _years_ later, he reached a point where 10% of the functionality works
-most of the time and the result is called lychee.
+## Origin Story
 
-## Trivia
+lychee was created by Matthias Endler to solve a specific problem: broken links in the [static analysis tools repository](https://github.com/analysis-tools-dev/static-analysis). Existing link checkers were either too slow, deprecated, or lacked necessary features.
 
-### Project Name
+What started as a simple solution evolved into a robust, production-ready tool used by major projects across GitHub.
 
-The name lychee is a play on _link checker_. Originally we wanted to call it
-[liche](https://github.com/raviqqe/liche), but that name was already used by a
-link checker written in Go (which has since been deprecated).
+## Project Name
 
-### Original Motivation
+The name "lychee" is a play on _link checker_. The original name [liche](https://github.com/raviqqe/liche) was already taken by a Go-based link checker (now deprecated).
 
-Matthias live-coded the first version of lychee in an episode of Hello Rust.
-You can watch it below.
+## First Version
+
+Matthias live-coded the first version of lychee in an episode of Hello Rust:
 
 <div style=" position: relative; padding-bottom: 56.25%; padding-top: 30px; height: 0; overflow: hidden; margin-bottom: 40px;">
   <iframe
@@ -50,12 +48,22 @@ You can watch it below.
   ></iframe>
 </div>
 
-### Why should I use lychee?
+## Key Features
 
-- **Speed**: lychee is built with Rust and designed for speed, making it perfect for large projects.
-- **Markdown & HTML Support**: lychee natively supports Markdown and HTML files, making it ideal for documentation and websites.
-- **Static Binary**: lychee is distributed as a single static binary, making installation and updates a breeze.
-- **JSON Output**: Easily integrate lychee into your CI/CD pipelines with structured JSON output.
-- **Asynchronous**: lychee uses asynchronous requests to check links, making it faster and more efficient than traditional link checkers.
-- **Customizable**: lychee offers a wide range of configuration options to tailor the link checking process to your needs.
-- **Open Source**: lychee is open source and welcomes contributions from the community.
+### Speed
+Built with Rust and designed for performance. Async architecture enables checking large projects in seconds.
+
+### Native Format Support
+Dedicated parsers for Markdown and HTML. Fallback parser for plaintext and unknown formats.
+
+### Static Binary
+Distributed as a single executable. No runtime dependencies or complex installation.
+
+### Structured Output
+JSON output for easy integration with CI/CD pipelines and automation tools.
+
+### Highly Configurable
+Extensive options for exclusions, retries, timeouts, rate limiting, caching, and custom headers.
+
+### Community Driven
+Open source with active development. Contributions welcome from developers worldwide.

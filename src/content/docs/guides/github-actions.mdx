@@ -1,0 +1,274 @@
+---
+title: GitHub Actions
+description: Integrate lychee into your CI/CD pipeline with GitHub Actions for automated link checking.
+---
+
+import CodeBlock from "../../../components/code.astro";
+import { Aside } from "@astrojs/starlight/components";
+
+lychee is available as a [GitHub Action](https://github.com/lycheeverse/lychee-action) for automated link checking in your CI/CD pipeline.
+
+## Basic Setup
+
+Check all links in your repository:
+
+```yaml
+name: Check Links
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - name: Link Checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: --verbose --no-progress './**/*.md' './**/*.html'
+```
+
+## Scheduled Checks with Issue Creation
+
+Check all repository links daily and create an issue when broken links are found:
+
+<CodeBlock file=".github/workflows/check-links.yml" />
+
+This workflow:
+- Triggers manually via `workflow_dispatch`
+- Triggers via repository dispatch events
+- Runs daily at 18:00 UTC
+- Creates labeled issues with detailed reports when broken links are detected
+- Requires `write` permissions for issues
+
+## Pull Request Checks
+
+Check only newly added links in pull requests by comparing against the base branch:
+
+<CodeBlock file=".github/workflows/check-pr-links.yml" />
+
+This approach reduces noise from pre-existing broken links and focuses reviews on new content.
+
+<Aside>
+  [Discussion on GitHub](https://github.com/lycheeverse/lychee-action/issues/238)
+</Aside>
+
+## Add PR Comments
+
+Notify pull request authors about broken links:
+
+```yaml
+name: Check Links
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  check-links:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: lycheeverse/lychee-action@v2
+      - name: Comment Broken Links
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          path: lychee/out.md
+```
+
+The comment automatically updates when new commits are pushed to the PR.
+
+## Caching
+
+Cache lychee results to reduce requests during consecutive runs and avoid rate limits:
+
+```yaml
+name: Check URLs with lychee
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Run everyday at 3 am UTC
+    - cron: "0 3 * * *"
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      # Cache lychee results
+      - name: Restore lychee cache
+        uses: actions/cache@v4
+        with:
+          path: .lycheecache
+          key: cache-lychee-${{ github.sha }}
+          restore-keys: cache-lychee-
+
+      - uses: actions/checkout@v5
+
+      - name: lychee URL checker
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --cache
+            --verbose
+            --no-progress
+            './**/*.md'
+            './**/*.html'
+          fail: true
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+### Advanced Caching
+
+Always save the cache, even when link checks fail:
+
+```yaml
+- name: Restore lychee cache
+  id: restore-cache
+  uses: actions/cache/restore@v4
+  with:
+    path: .lycheecache
+    key: cache-lychee-${{ github.sha }}
+    restore-keys: cache-lychee-
+
+- name: Run lychee
+  uses: lycheeverse/lychee-action@v2
+  with:
+    args: "--cache --max-cache-age 1d ."
+
+- name: Save lychee cache
+  uses: actions/cache/save@v4
+  if: always()
+  with:
+    path: .lycheecache
+    key: ${{ steps.restore-cache.outputs.cache-primary-key }}
+```
+
+## Replace Broken Links with Archived Versions
+
+Automatically replace broken links with archived versions from the Wayback Machine.
+
+David Gardiner documented this approach in a blog series:
+
+- [Fixing my blog (part 2) - Broken links](https://david.gardiner.net.au/2022/04/blog-fix-part2.html)
+- [Fixing my blog (part 3) - Querying the Wayback Machine](https://david.gardiner.net.au/2022/04/blog-fix-part3.html)
+- [Fixing my blog (part 4) - Updating the files](https://david.gardiner.net.au/2022/04/blog-fix-part4.html)
+
+The workflow combines:
+1. lychee-action to find broken links
+2. [Wayback Machine Query Action](https://github.com/marketplace/actions/wayback-machine-query) to find archived versions
+3. [Replace multiple strings in files](https://github.com/marketplace/actions/replace-multiple-strings-in-files) to update files
+
+## Action Configuration Options
+
+The lychee-action supports all CLI options via the `args` parameter:
+
+```yaml
+- uses: lycheeverse/lychee-action@v2
+  with:
+    # Check all markdown and HTML files
+    args: --verbose --no-progress './**/*.md' './**/*.html'
+
+    # Fail the action on broken links
+    fail: true
+
+    # Custom output format
+    format: markdown
+
+    # Custom output file
+    output: ./lychee-report.md
+
+    # Job summary (appears in GitHub UI)
+    jobSummary: true
+  env:
+    # Use GitHub token to avoid rate limits
+    GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+## Common Patterns
+
+### Check Multiple File Types
+
+```yaml
+args: |
+  --verbose
+  --no-progress
+  './**/*.md'
+  './**/*.html'
+  './**/*.rst'
+  './**/*.txt'
+```
+
+### Exclude Specific Domains
+
+```yaml
+args: |
+  --verbose
+  --no-progress
+  --exclude 'example.com'
+  --exclude 'localhost'
+  './**/*.md'
+```
+
+### Accept Additional Status Codes
+
+```yaml
+args: |
+  --verbose
+  --no-progress
+  --accept 200,204,206,429
+  './**/*.md'
+```
+
+### Custom Configuration File
+
+```yaml
+args: |
+  --config lychee.toml
+  --verbose
+  --no-progress
+  './**/*.md'
+```
+
+## Troubleshooting
+
+### Rate Limiting
+
+Use the `GITHUB_TOKEN` environment variable to increase GitHub API rate limits:
+
+```yaml
+env:
+  GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+```
+
+This increases the limit from 60 to 1,000 requests per hour per repository.
+
+### Workflow Permissions
+
+For workflows that create issues or comments, ensure proper permissions:
+
+```yaml
+permissions:
+  issues: write
+  pull-requests: write
+```
+
+### Cache Not Working
+
+Ensure the cache step runs before lychee-action and uses consistent key patterns:
+
+```yaml
+restore-keys: cache-lychee-
+```
+
+This allows partial cache matches across different commits.
+
+## Resources
+
+- [lychee-action Repository](https://github.com/lycheeverse/lychee-action)
+- [GitHub Actions Documentation](https://docs.github.com/en/actions)
+- [All dependents using lychee-action](https://github.com/lycheeverse/lychee-action/network/dependents)
