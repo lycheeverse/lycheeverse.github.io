@@ -1,0 +1,29 @@
+---
+import { Code } from "@astrojs/starlight/components";
+
+interface Props {
+	url: string;
+	lang?: string;
+	title?: string;
+	meta?: string;
+}
+
+const { url, lang, title, meta } = Astro.props;
+
+// Fetch the remote file content at build time
+const response = await fetch(url);
+if (!response.ok) {
+	throw new Error(`Failed to fetch ${url}: ${response.statusText}`);
+}
+const code = await response.text();
+
+// Determine language from URL if not specified
+const inferredLang = lang ?? url.split(".").pop() ?? "txt";
+
+// Build meta string with title
+const metaString = title
+	? `title="${title}"${meta ? ` ${meta}` : ""}`
+	: (meta ?? "");
+---
+
+<Code code={code} lang={inferredLang} meta={metaString} />
