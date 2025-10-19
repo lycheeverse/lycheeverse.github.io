@@ -1,5 +1,6 @@
 ---
 title: CLI
+description: Complete reference for all lychee command-line options and arguments.
 ---
 
 ## Usage
