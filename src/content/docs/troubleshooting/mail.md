@@ -1,5 +1,6 @@
 ---
 title: Mail Addresses
+description: Check email addresses with lychee and troubleshoot common verification issues.
 ---
 
 You can check email addresses by providing the `--include-mail` flag.

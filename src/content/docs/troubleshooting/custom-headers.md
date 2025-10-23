@@ -1,5 +1,6 @@
 ---
 title: Custom Headers
+description: Configure custom HTTP headers for sites that require specific headers to return valid responses.
 ---
 
 Some sites expect one or more custom headers to return a valid response.

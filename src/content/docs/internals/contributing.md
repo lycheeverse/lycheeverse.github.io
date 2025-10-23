@@ -1,5 +1,6 @@
 ---
 title: Contributing
+description: Guidelines for contributing to lychee - report bugs, suggest features, write documentation, and implement improvements.
 ---
 
 In case you would like to contribute to lychee,

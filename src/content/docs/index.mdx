@@ -1,14 +1,14 @@
 ---
 title: lychee
-description: A fast, async link checker written in Rust. Finds broken hyperlinks and mail addresses, supports Markdown, HTML and more, simple and lightweight.
+description: Fast link checker for finding broken URLs and email addresses in Markdown, HTML, and documentation. Built with Rust for speed and reliability.
 template: splash
 editUrl: true
 lastUpdated: false
 hero:
   title: Catch Broken Links in Seconds
-  tagline: Async, Rust-Powered Simplicity for Docs, Sites, and Codebases.
+  tagline: Fast, reliable link checking for documentation, websites, and repositories
   image:
-    alt: A glittering, brightly colored logo
+    alt: lychee logo featuring a stylized lychee fruit
     file: /src/assets/logo.svg
   actions:
     - text: Get started
@@ -24,21 +24,19 @@ hero:
 import { Icon, CardGrid, Card } from "@astrojs/starlight/components";
 
 <CardGrid stagger>
-<Card title="Async" icon="rocket">
-    Lychee is built with Rust and designed for speed, making it perfect for large projects.
+<Card title="Blazing Fast" icon="rocket">
+    Built with Rust for speed. Check thousands of links in seconds with async concurrency.
 </Card>
 
 <Card title="Markdown & HTML" icon="star">
-  Lychee natively supports Markdown and HTML files, making it ideal for
-  documentation and websites.
+    Native support for Markdown and HTML with fallback parsing for any text format.
 </Card>
 
 <Card title="Static Binary" icon="download">
-  Lychee is distributed as a single static binary, making installation and
-  updates a breeze.
+    Single static binary with no runtime dependencies. Install once and run anywhere.
 </Card>
 
-<Card title="JSON Output" icon="document">
-    Easily integrate lychee into your CI/CD pipelines with structured JSON output.
+<Card title="CI/CD Ready" icon="document">
+    JSON output and GitHub Action support for seamless CI/CD integration.
 </Card>
 </CardGrid>

@@ -1,5 +1,6 @@
 ---
 title: Excluding Links
+description: Use regular expressions to selectively include or exclude links from being checked by lychee.
 ---
 
 lychee allows you to selectively check links using `--include` and `--exclude` parameters. Both accept regular expressions, giving you powerful control over which links to check or ignore.

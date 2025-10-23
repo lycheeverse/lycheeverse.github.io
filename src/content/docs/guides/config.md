@@ -1,5 +1,6 @@
 ---
 title: Configure lychee
+description: Configure lychee using TOML files to customize link checking behavior for your project.
 ---
 
 The configuration file is a [TOML](https://toml.io) file that can be used to specify the options that are also available on the command line.

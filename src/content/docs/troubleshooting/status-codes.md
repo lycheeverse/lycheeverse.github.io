@@ -1,5 +1,6 @@
 ---
 title: Status Codes
+description: Configure which HTTP status codes lychee should accept as valid responses.
 ---
 
 Some websites don't respond with a `200` (OK) status code. Instead they might

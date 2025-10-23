@@ -1,5 +1,6 @@
 ---
 title: Too Many Redirects
+description: Diagnose and resolve redirect loop errors when checking links.
 ---
 
 At times you might get an error message like this:

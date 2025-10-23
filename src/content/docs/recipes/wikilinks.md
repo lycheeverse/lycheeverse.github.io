@@ -1,5 +1,6 @@
 ---
 title: Wikilinks
+description: Check Wikilinks in Markdown files that include full paths to linked resources.
 ---
 
 Lychee can check Wikilinks in Markdown files as long as they provide a path to the linked ressource.

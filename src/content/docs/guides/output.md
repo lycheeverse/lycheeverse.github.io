@@ -1,5 +1,6 @@
 ---
 title: Output Modes
+description: Customize how lychee displays results in the terminal and formats reports for different output formats.
 ---
 
 lychee supports a number of output formats for displaying the results of a check.

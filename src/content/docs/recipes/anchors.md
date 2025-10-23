@@ -1,5 +1,6 @@
 ---
-title: Checking Anchor Links (Fragment Identifiers)
+title: Anchor Links
+description: Check anchor links (fragment identifiers) in HTML and Markdown files to ensure they point to existing targets.
 ---
 
 lychee can check anchor links (also called fragments) in both HTML and Markdown files. This feature helps ensure that internal links to specific sections of a page are valid.

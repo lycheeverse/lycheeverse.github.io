@@ -1,5 +1,6 @@
 ---
 title: Caching
+description: Speed up repeated link checks by caching results between runs to reduce redundant network requests.
 ---
 
 Caching can significantly speed up repeated checks by reducing requests to the same URL during consecutive runs. For instance, caching responses from `https://github.com` can decrease the load when checking multiple links. Here's how to cache the results of a Lychee run.

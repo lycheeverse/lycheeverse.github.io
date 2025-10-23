@@ -1,5 +1,6 @@
 ---
 title: How Lychee Works
+description: Technical overview of lychee's asynchronous architecture, link extraction, and concurrent processing pipeline.
 ---
 
 ## High-Level Overview

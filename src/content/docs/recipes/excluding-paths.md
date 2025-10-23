@@ -1,5 +1,6 @@
 ---
 title: Excluding Paths
+description: Exclude specific filesystem paths from being checked using regular expressions and gitignore patterns.
 ---
 
 lychee respects '.gitignore' and '.ignore' files by default.
