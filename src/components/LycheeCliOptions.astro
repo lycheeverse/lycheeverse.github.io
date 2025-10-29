@@ -15,10 +15,10 @@ function extractHelpFromReadme(readme: string) {
       "LycheeCliOptions: commandline parameters section not found in readme",
     );
 
-  const [, text] = section.split("\n```text\n", 2);
+  const [, text] = section.split("\n```help-message\n", 2);
   if (!text)
     throw new Error(
-      "LycheeCliOptions: ```text marker not found in commandline parameters section",
+      "LycheeCliOptions: ```help-message marker not found in commandline parameters section",
     );
 
   const [helpText] = text.split("\n```\n", 2);
