@@ -44,12 +44,7 @@ jobs:
         run: git stash push --include-untracked
 
       - name: Check out feature branch
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git checkout ${{ github.head_ref }}
-          else
-            git checkout ${{ github.ref_name }}
-          fi
+        run: git checkout ${{ github.ref }}
 
       - name: Apply stashed changes
         run: git stash pop || true
