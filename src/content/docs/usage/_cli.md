@@ -1,0 +1,60 @@
+---
+title: Command Line Options
+---
+
+lychee supports a lot of command line options.
+You can see all of them by running `lychee --help`.
+
+Below is the full list of options with a short description.
+
+## Options
+
+OPTIONSGOHERE
+
+:::note
+Most of the options (like `--scheme` or `--exclude`) are for **links inside inputs**,
+and **not** for the filtering the inputs themselves.
+:::
+
+## On Schemes
+
+lychee supports the following schemes:
+
+- `http`
+- `https`
+- `file`
+- `mailto`
+
+If you don't specify any schemes, lychee will check all links regardless of
+their scheme. Otherwise, it will only check links with the specified schemes.
+
+## Repeating Options
+
+Options marked with `...` can be specified multiple times.
+For example, `--exclude` can be specified multiple times to exclude multiple URLs.
+This is also true for `--header`, `--include`, `--remap`, `--scheme`, and `--exclude-path`.
+
+Here is an example:
+
+```bash
+lychee --exclude https://example.com --exclude https://example.org
+```
+
+There is a shorthand where you can specify multiple arguments in one go.
+
+Instead of writing this:
+
+```bash
+lychee --scheme http --scheme file https://example.com
+```
+
+You can also write this:
+
+```bash
+lychee --scheme http file -- https://example.com
+```
+
+:::caution[Attention]
+If you use the shorthand notation you need to separate the options from the inputs with `--`.
+Otherwise, the options will be interpreted as inputs!
+:::
