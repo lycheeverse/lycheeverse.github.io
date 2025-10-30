@@ -44,7 +44,7 @@ jobs:
         run: git stash push --include-untracked
 
       - name: Check out feature branch
-        run: git checkout ${{ github.ref }}
+        run: git fetch origin ${{ github.ref }} && git checkout FETCH_HEAD
 
       - name: Apply stashed changes
         run: git stash pop || true
