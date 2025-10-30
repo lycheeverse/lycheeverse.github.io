@@ -582,7 +582,7 @@ lychee --mode emoji README.md
 
 ## Repeating Options
 
-Options can be specified multiple times. This is true for:
+Some options can be specified multiple times. This is true for:
 
 - `--exclude`
 - `--exclude-path`
@@ -597,21 +597,6 @@ Here is an example:
 lychee --exclude https://example.com --exclude https://example.org README.md
 ```
 
-There is a shorthand where you can specify multiple arguments in one go.
+To specify multiple values in this way, the argument flag should be repeated.
+Otherwise, the extra values would be treated as link checking inputs.
 
-Instead of writing this:
-
-```bash
-lychee --scheme http --scheme file https://example.com
-```
-
-You can also write this:
-
-```bash
-lychee --scheme http file -- https://example.com
-```
-
-:::caution[Attention]
-If you use the shorthand notation you need to separate the options from the inputs with `--`.
-Otherwise, the options will be interpreted as inputs!
-:::
