@@ -8,6 +8,8 @@ export default defineConfig({
 	site: "https://lychee.cli.rs",
 	markdown: {
 		remarkPlugins: [
+			// automatically converting smart dashes causes problems with cli arguments.
+			// to insert dashes, use unicode or &mdash; or &ndash;.
 			[smartypants, { dashes: false }]
 		]
 	},
