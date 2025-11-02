@@ -1,10 +1,18 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import { generateCliOptionsIntegration } from "./src/fetchReadme";
+import smartypants from "remark-smartypants";
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://lychee.cli.rs",
+	markdown: {
+		remarkPlugins: [
+			[smartypants, { dashes: false }]
+		]
+	},
 	integrations: [
+		generateCliOptionsIntegration("src/content/docs/guides/_cli.md"),
 		starlight({
 			expressiveCode: {
 				themes: ["catppuccin-frappe", "catppuccin-latte"],
