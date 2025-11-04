@@ -66,4 +66,4 @@ Feel free to open up an issue if you are missing a specific file format or have 
 [html5ever]: https://github.com/servo/html5ever
 [CommonMark]: https://commonmark.org/
 [pulldown-cmark]: https://github.com/pulldown-cmark/pulldown-cmark/
-[lychee-all]: https://github.com/thomas-zahner/lychee-all/
+[lychee-all]: https://github.com/lycheeverse/lychee-all
