@@ -1,584 +1,620 @@
 ---
 title: CLI
 ---
+<!--
+The _cli.md file is used as a template to generate the cli.md file
+at build time.
+-->
 
-## Usage
+lychee is a fast, asynchronous link checker which detects broken URLs and mail addresses in local files and websites. It supports Markdown and HTML and works well with many plain text file formats.
 
-```bash
-lychee [OPTIONS] <inputs>...
+lychee is powered by lychee-lib, the Rust library for link checking.
+
+```
+Usage: lychee [OPTIONS] [inputs]...
 ```
 
-### Arguments
-
-**`<inputs>...`**
-
-The inputs (where to get links to check from). These can be:
-
-- Files (e.g. `README.md`)
-- File globs (e.g. `"~/git/*/README.md"`)
-- Remote URLs (e.g. `https://example.com/README.md`)
-- Standard input (`-`)
-
-:::note
-Use `--` to separate inputs from options that allow multiple arguments.
-:::
-
-## General Options
-
-### `--config` / `-c`
-
-Configuration file to use.
-
-**Default:** `lychee.toml`
+## Arguments
+### [inputs]...
 
 ```bash
-lychee --config custom-config.toml
+lychee [inputs]...
 ```
+    Inputs for link checking (where to get links to check from). These can be:
+    files (e.g. `README.md`), file globs (e.g. `'~/git/*/README.md'`), remote URLs
+    (e.g. `https://example.com/README.md`), or standard input (`-`). Alternatively,
+    use `--files-from` to read inputs from a file.
 
-### `--verbose` / `-v`
+    NOTE: Use `--` to separate inputs from options that allow multiple arguments.
 
-Set verbosity level; more output per occurrence (e.g. `-v` or `-vv`).
+## Options
+### -a, --accept
 
 ```bash
-lychee -vv README.md
+lychee --accept <ACCEPT>
 ```
+    A List of accepted status codes for valid links
 
-### `--quiet` / `-q`
+    The following accept range syntax is supported: [start]..[[=]end]|code. Some valid
+    examples are:
 
-Less output per occurrence (e.g. `-q` or `-qq`).
+    - 200 (accepts the 200 status code only)
+    - ..204 (accepts any status code < 204)
+    - ..=204 (accepts any status code <= 204)
+    - 200..=204 (accepts any status code from 200 to 204 inclusive)
+    - 200..205 (accepts any status code from 200 to 205 excluding 205, same as 200..=204)
+
+    Use "lychee --accept '200..=204, 429, 500' <inputs>..." to provide a comma-
+    separated list of accepted status codes. This example will accept 200, 201,
+    202, 203, 204, 429, and 500 as valid status codes.
+
+**default**: 100..=103,200..=299
+
+
+### --archive
 
 ```bash
-lychee -qq README.md
+lychee --archive <ARCHIVE>
 ```
+    Specify the use of a specific web archive. Can be used in combination with `--suggest`
 
-### `--no-progress` / `-n`
+**possible values**: wayback
 
-Do not show progress bar. This is recommended for non-interactive shells (e.g. for continuous integration).
+
+### -b, --base-url
 
 ```bash
-lychee --no-progress README.md
+lychee --base-url <BASE_URL>
 ```
+    Base URL to use when resolving relative URLs in local files. If specified,
+    relative links in local files are interpreted as being relative to the given
+    base URL.
 
-### `--help` / `-h`
+    For example, given a base URL of `https://example.com/dir/page`, the link `a`
+    would resolve to `https://example.com/dir/a` and the link `/b` would resolve
+    to `https://example.com/b`. This behavior is not affected by the filesystem
+    path of the file containing these links.
 
-Print help information (use `-h` for a summary).
+    Note that relative URLs without a leading slash become siblings of the base
+    URL. If, instead, the base URL ended in a slash, the link would become a child
+    of the base URL. For example, a base URL of `https://example.com/dir/page/` and
+    a link of `a` would resolve to `https://example.com/dir/page/a`.
 
-### `--version` / `-V`
+    Basically, the base URL option resolves links as if the local files were hosted
+    at the given base URL address.
 
-Print version information.
+    The provided base URL value must either be a URL (with scheme) or an absolute path.
+    Note that certain URL schemes cannot be used as a base, e.g., `data` and `mailto`.
 
-## Input Options
-
-### `--extensions`
-
-Test the specified file extensions for URIs when checking files locally.
-
-Multiple extensions can be separated by commas. Note that if you want to check filetypes which have multiple extensions, e.g. HTML files with both `.html` and `.htm` extensions, you need to specify both extensions explicitly.
-
-**Default:** `md,mkd,mdx,mdown,mdwn,mkdn,mkdown,markdown,html,htm,txt`
+### --base
 
 ```bash
-lychee --extensions md,html,txt
+lychee --base <BASE>
 ```
+    Deprecated; use `--base-url` instead
 
-### `--skip-missing`
-
-Skip missing input files (default is to error if they don't exist).
+### --basic-auth
 
 ```bash
-lychee --skip-missing file1.md file2.md
+lychee --basic-auth <BASIC_AUTH>
 ```
+    Basic authentication support. E.g. `http://example.com username:password`
 
-### `--no-ignore`
-
-Do not skip files that would otherwise be ignored by `.gitignore`, `.ignore`, or the global ignore file.
+### -c, --config
 
 ```bash
-lychee --no-ignore .
+lychee --config <CONFIG_FILE>
 ```
+    Configuration file to use
 
-### `--hidden`
+**default**: lychee.toml
 
-Do not skip hidden directories and files.
+
+### --cache
 
 ```bash
-lychee --hidden .
+lychee --cache
 ```
+    Use request cache stored on disk at `.lycheecache`
 
-### `--glob-ignore-case`
-
-Ignore case when expanding filesystem path glob inputs.
+### --cache-exclude-status
 
 ```bash
-lychee --glob-ignore-case "**/*.MD"
+lychee --cache-exclude-status <CACHE_EXCLUDE_STATUS>
 ```
+    A list of status codes that will be ignored from the cache
 
-### `--dump`
+    The following exclude range syntax is supported: [start]..[[=]end]|code. Some valid
+    examples are:
 
-Don't perform any link checking. Instead, dump all the links extracted from inputs that would be checked.
+    - 429 (excludes the 429 status code only)
+    - 500.. (excludes any status code >= 500)
+    - ..100 (excludes any status code < 100)
+    - 500..=599 (excludes any status code from 500 to 599 inclusive)
+    - 500..600 (excludes any status code from 500 to 600 excluding 600, same as 500..=599)
+
+    Use "lychee --cache-exclude-status '429, 500..502' <inputs>..." to provide a
+    comma-separated list of excluded status codes. This example will not cache results
+    with a status code of 429, 500 and 501.
+
+### --cookie-jar
 
 ```bash
-lychee --dump README.md
+lychee --cookie-jar <COOKIE_JAR>
 ```
+    Tell lychee to read cookies from the given file. Cookies will be stored in the
+    cookie jar and sent with requests. New cookies will be stored in the cookie jar
+    and existing cookies will be updated.
 
-### `--dump-inputs`
-
-Don't perform any link extraction and checking. Instead, dump all input sources from which links would be collected.
+### --default-extension
 
 ```bash
-lychee --dump-inputs "docs/**/*.md"
+lychee --default-extension <EXTENSION>
 ```
+    This is the default file extension that is applied to files without an extension.
 
-## Caching Options
+    This is useful for files without extensions or with unknown extensions. The extension will be used to determine the file type for processing. Examples: --default-extension md, --default-extension html
 
-### `--cache`
-
-Use request cache stored on disk at `.lycheecache`.
+### --dump
 
 ```bash
-lychee --cache README.md
+lychee --dump
 ```
+    Don't perform any link checking. Instead, dump all the links extracted from inputs that would be checked
 
-### `--max-cache-age`
-
-Discard all cached requests older than this duration.
-
-**Default:** `1d`
+### --dump-inputs
 
 ```bash
-lychee --cache --max-cache-age 7d README.md
+lychee --dump-inputs
 ```
+    Don't perform any link extraction and checking. Instead, dump all input sources from which links would be collected
 
-### `--cache-exclude-status`
-
-A list of status codes that will be ignored from the cache.
-
-The following exclude range syntax is supported: `[start]..[[=]end]|code`
-
-Valid examples:
-
-- `429` (excludes the 429 status code only)
-- `500..` (excludes any status code >= 500)
-- `..100` (excludes any status code < 100)
-- `500..=599` (excludes any status code from 500 to 599 inclusive)
-- `500..600` (excludes any status code from 500 to 600 excluding 600, same as 500..=599)
+### -E, --exclude-all-private
 
 ```bash
-lychee --cache --cache-exclude-status '429, 500..502' README.md
+lychee --exclude-all-private
 ```
+    Exclude all private IPs from checking.
+    Equivalent to `--exclude-private --exclude-link-local --exclude-loopback`
 
-## Network Options
-
-### `--max-redirects` / `-m`
-
-Maximum number of allowed redirects.
-
-**Default:** `5`
+### --exclude
 
 ```bash
-lychee --max-redirects 10 README.md
+lychee --exclude <EXCLUDE>
 ```
+    Exclude URLs and mail addresses from checking. The values are treated as regular expressions
 
-### `--max-retries`
-
-Maximum number of retries per request.
-
-**Default:** `3`
+### --exclude-file
 
 ```bash
-lychee --max-retries 5 README.md
+lychee --exclude-file <EXCLUDE_FILE>
 ```
+    Deprecated; use `--exclude-path` instead
 
-### `--retry-wait-time` / `-r`
-
-Minimum wait time in seconds between retries of failed requests.
-
-**Default:** `1`
+### --exclude-link-local
 
 ```bash
-lychee --retry-wait-time 5 README.md
+lychee --exclude-link-local
 ```
+    Exclude link-local IP address range from checking
 
-### `--timeout` / `-t`
-
-Website timeout in seconds from connect to response finished.
-
-**Default:** `20`
+### --exclude-loopback
 
 ```bash
-lychee --timeout 30 README.md
+lychee --exclude-loopback
 ```
+    Exclude loopback IP address range and localhost from checking
 
-### `--max-concurrency`
-
-Maximum number of concurrent network requests.
-
-**Default:** `128`
+### --exclude-path
 
 ```bash
-lychee --max-concurrency 64 README.md
+lychee --exclude-path <EXCLUDE_PATH>
 ```
+    Exclude paths from getting checked. The values are treated as regular expressions
 
-### `--threads` / `-T`
-
-Number of threads to utilize. Defaults to number of cores available to the system.
+### --exclude-private
 
 ```bash
-lychee --threads 4 README.md
+lychee --exclude-private
 ```
+    Exclude private IP address ranges from checking
 
-### `--user-agent` / `-u`
-
-User agent string to use for requests.
-
-**Default:** `lychee/0.20.1`
+### --extensions
 
 ```bash
-lychee --user-agent "Mozilla/5.0" README.md
+lychee --extensions <EXTENSIONS>
 ```
+    Test the specified file extensions for URIs when checking files locally.
 
-### `--insecure` / `-i`
+    Multiple extensions can be separated by commas. Note that if you want to check filetypes,
+    which have multiple extensions, e.g. HTML files with both .html and .htm extensions, you need to
+    specify both extensions explicitly.
 
-Proceed for server connections considered insecure (invalid TLS).
+**default**: md,mkd,mdx,mdown,mdwn,mkdn,mkdown,markdown,html,htm,txt
+
+
+### -f, --format
 
 ```bash
-lychee --insecure README.md
+lychee --format <FORMAT>
 ```
+    Output format of final status report
 
-### `--min-tls`
+**default**: compact
 
-Minimum accepted TLS Version.
+**possible values**: compact, detailed, json, markdown, raw
 
-**Possible values:** `TLSv1_0`, `TLSv1_1`, `TLSv1_2`, `TLSv1_3`
+
+### --fallback-extensions
 
 ```bash
-lychee --min-tls TLSv1_2 README.md
+lychee --fallback-extensions <FALLBACK_EXTENSIONS>
 ```
+    When checking locally, attempts to locate missing files by trying the given
+    fallback extensions. Multiple extensions can be separated by commas. Extensions
+    will be checked in order of appearance.
 
-### `--method` / `-X`
+    Example: --fallback-extensions html,htm,php,asp,aspx,jsp,cgi
 
-Request method to use.
+    Note: This option takes effect on `file://` URIs which do not exist and on
+          `file://` URIs pointing to directories which resolve to themself (by the
+          --index-files logic).
 
-**Default:** `get`
+### --files-from
 
 ```bash
-lychee --method head README.md
+lychee --files-from <PATH>
 ```
+    Read input filenames from the given file or stdin (if path is '-').
 
-### `--offline`
+    This is useful when you have a large number of inputs that would be
+    cumbersome to specify on the command line directly.
 
-Only check local files and block network requests.
+    Examples:
+      lychee --files-from list.txt
+      find . -name '*.md' | lychee --files-from -
+      echo 'README.md' | lychee --files-from -
+
+    File Format:
+      Each line should contain one input (file path, URL, or glob pattern).
+      Lines starting with '#' are treated as comments and ignored.
+      Empty lines are also ignored.
+
+### --generate
 
 ```bash
-lychee --offline README.md
+lychee --generate <GENERATE>
 ```
+    Generate special output (e.g. the man page) instead of performing link checking
 
-## Authentication Options
+**possible values**: man
 
-### `--header` / `-H`
 
-Set custom header for requests.
-
-Some websites require custom headers to be passed in order to return valid responses. You can specify custom headers in the format `'Name: Value'`. For example, `'Accept: text/html'`. This is the same format that other tools like curl or wget use. Multiple headers can be specified by using the flag multiple times.
+### --github-token
 
 ```bash
-lychee --header "Accept: text/html" --header "Authorization: Bearer token" README.md
+lychee --github-token <GITHUB_TOKEN>
 ```
+    GitHub API token to use when checking github.com links, to avoid rate limiting
 
-### `--basic-auth`
+**env**: GITHUB_TOKEN
 
-Basic authentication support.
 
-Format: `http://example.com username:password`
+### --glob-ignore-case
 
 ```bash
-lychee --basic-auth "http://example.com user:pass" README.md
+lychee --glob-ignore-case
 ```
+    Ignore case when expanding filesystem path glob inputs
 
-### `--github-token`
-
-GitHub API token to use when checking github.com links, to avoid rate limiting.
-
-**Environment variable:** `GITHUB_TOKEN`
+### -h, --help
 
 ```bash
-lychee --github-token ghp_xxxxxxxxxxxx README.md
-# or
-export GITHUB_TOKEN=ghp_xxxxxxxxxxxx
-lychee README.md
+lychee --help
 ```
+    Print help (see a summary with '-h')
 
-### `--cookie-jar`
-
-Tell lychee to read cookies from the given file. Cookies will be stored in the cookie jar and sent with requests. New cookies will be stored in the cookie jar and existing cookies will be updated.
+### -H, --header
 
 ```bash
-lychee --cookie-jar cookies.txt README.md
+lychee --header <HEADER:VALUE>
 ```
+    Set custom header for requests
 
-## Filter Options
+    Some websites require custom headers to be passed in order to return valid responses.
+    You can specify custom headers in the format 'Name: Value'. For example, 'Accept: text/html'.
+    This is the same format that other tools like curl or wget use.
+    Multiple headers can be specified by using the flag multiple times.
 
-### `--scheme` / `-s`
-
-Only test links with the given schemes (e.g. https). Omit to check links with any other scheme.
-
-Supported schemes: `http`, `https`, `file`, `mailto`
+### --hidden
 
 ```bash
-lychee --scheme https README.md
-lychee --scheme http https file -- README.md
+lychee --hidden
 ```
+    Do not skip hidden directories and files
 
-:::note
-If you don't specify any schemes, lychee will check all links regardless of their scheme. Otherwise, it will only check links with the specified schemes.
-:::
-
-### `--include`
-
-URLs to check (supports regex). Has preference over all excludes.
+### -i, --insecure
 
 ```bash
-lychee --include "https://example.com.*" README.md
+lychee --insecure
 ```
+    Proceed for server connections considered insecure (invalid TLS)
 
-### `--exclude`
-
-Exclude URLs and mail addresses from checking. The values are treated as regular expressions.
+### --include
 
 ```bash
-lychee --exclude "https://example.com" --exclude "mailto:.*" README.md
+lychee --include <INCLUDE>
 ```
+    URLs to check (supports regex). Has preference over all excludes
 
-### `--exclude-path`
-
-Exclude paths from getting checked. The values are treated as regular expressions.
+### --include-fragments
 
 ```bash
-lychee --exclude-path "node_modules" --exclude-path "vendor" .
+lychee --include-fragments
 ```
+    Enable the checking of fragments in links
 
-### `--exclude-file`
-
-:::caution[Deprecated]
-Use `--exclude-path` instead.
-:::
-
-### `--exclude-all-private` / `-E`
-
-Exclude all private IPs from checking. Equivalent to `--exclude-private --exclude-link-local --exclude-loopback`.
+### --include-mail
 
 ```bash
-lychee --exclude-all-private README.md
+lychee --include-mail
 ```
+    Also check email addresses
 
-### `--exclude-private`
-
-Exclude private IP address ranges from checking.
+### --include-verbatim
 
 ```bash
-lychee --exclude-private README.md
+lychee --include-verbatim
 ```
+    Find links in verbatim sections like `pre`- and `code` blocks
 
-### `--exclude-link-local`
-
-Exclude link-local IP address range from checking.
+### --include-wikilinks
 
 ```bash
-lychee --exclude-link-local README.md
+lychee --include-wikilinks
 ```
+    Check WikiLinks in Markdown files
 
-### `--exclude-loopback`
-
-Exclude loopback IP address range and localhost from checking.
+### --index-files
 
 ```bash
-lychee --exclude-loopback README.md
+lychee --index-files <INDEX_FILES>
 ```
+    When checking locally, resolves directory links to a separate index file.
+    The argument is a comma-separated list of index file names to search for. Index
+    names are relative to the link's directory and attempted in the order given.
 
-### `--include-mail`
+    If `--index-files` is specified, then at least one index file must exist in
+    order for a directory link to be considered valid. Additionally, the special
+    name `.` can be used in the list to refer to the directory itself.
 
-Also check email addresses.
+    If unspecified (the default behavior), index files are disabled and directory
+    links are considered valid as long as the directory exists on disk.
+
+    Example 1: `--index-files index.html,readme.md` looks for index.html or readme.md
+               and requires that at least one exists.
+
+    Example 2: `--index-files index.html,.` will use index.html if it exists, but
+               still accept the directory link regardless.
+
+    Example 3: `--index-files ''` will reject all directory links because there are
+               no valid index files. This will require every link to explicitly name
+               a file.
+
+    Note: This option only takes effect on `file://` URIs which exist and point to a directory.
+
+### -m, --max-redirects
 
 ```bash
-lychee --include-mail README.md
+lychee --max-redirects <MAX_REDIRECTS>
 ```
+    Maximum number of allowed redirects
 
-### `--include-fragments`
+**default**: 5
 
-Enable the checking of fragments in links (e.g., checking if `#section` exists on a page).
+
+### --max-cache-age
 
 ```bash
-lychee --include-fragments README.md
+lychee --max-cache-age <MAX_CACHE_AGE>
 ```
+    Discard all cached requests older than this duration
 
-### `--include-verbatim`
+**default**: 1d
 
-Find links in verbatim sections like `pre`- and `code` blocks.
+
+### --max-concurrency
 
 ```bash
-lychee --include-verbatim README.md
+lychee --max-concurrency <MAX_CONCURRENCY>
 ```
+    Maximum number of concurrent network requests
 
-### `--include-wikilinks`
+**default**: 128
 
-Check WikiLinks in Markdown files.
+
+### --max-retries
 
 ```bash
-lychee --include-wikilinks README.md
+lychee --max-retries <MAX_RETRIES>
 ```
+    Maximum number of retries per request
 
-## Status Code Options
+**default**: 3
 
-### `--accept` / `-a`
 
-A list of accepted status codes for valid links.
-
-The following accept range syntax is supported: `[start]..[[=]end]|code`
-
-Valid examples:
-
-- `200` (accepts the 200 status code only)
-- `..204` (accepts any status code < 204)
-- `..=204` (accepts any status code <= 204)
-- `200..=204` (accepts any status code from 200 to 204 inclusive)
-- `200..205` (accepts any status code from 200 to 205 excluding 205, same as 200..=204)
-
-**Default:** `100..=103,200..=299`
+### --min-tls
 
 ```bash
-lychee --accept '200..=204, 429, 500' README.md
+lychee --min-tls <MIN_TLS>
 ```
+    Minimum accepted TLS Version
 
-### `--require-https`
+**possible values**: TLSv1_0, TLSv1_1, TLSv1_2, TLSv1_3
 
-When HTTPS is available, treat HTTP links as errors.
+
+### --mode
 
 ```bash
-lychee --require-https README.md
+lychee --mode <MODE>
 ```
+    Set the output display mode. Determines how results are presented in the terminal
 
-## URL Transformation Options
+**default**: color
 
-### `--base-url` / `-b`
+**possible values**: plain, color, emoji, task
 
-Base URL used to resolve relative URLs during link checking.
+
+### -n, --no-progress
 
 ```bash
-lychee --base-url https://example.com docs/
+lychee --no-progress
 ```
+    Do not show progress bar.
+    This is recommended for non-interactive shells (e.g. for continuous integration)
 
-### `--base`
-
-:::caution[Deprecated]
-Use `--base-url` instead.
-:::
-
-### `--root-dir`
-
-Root path to use when checking absolute local links. Must be an absolute path.
+### --no-ignore
 
 ```bash
-lychee --root-dir /home/user/project docs/
+lychee --no-ignore
 ```
+    Do not skip files that would otherwise be ignored by '.gitignore', '.ignore', or the global ignore file
 
-### `--remap`
-
-Remap URI matching pattern to different URI.
+### -o, --output
 
 ```bash
-lychee --remap "https://old.example.com https://new.example.com" README.md
+lychee --output <OUTPUT>
 ```
+    Output file of status report
 
-### `--fallback-extensions`
-
-When checking locally, attempts to locate missing files by trying the given fallback extensions. Multiple extensions can be separated by commas. Extensions will be checked in order of appearance.
-
-:::note
-This option only takes effect on `file://` URIs which do not exist.
-:::
+### --offline
 
 ```bash
-lychee --fallback-extensions html,htm,php,asp README.md
+lychee --offline
 ```
+    Only check local files and block network requests
 
-### `--index-files`
-
-When checking locally, resolves directory links to a separate index file. The argument is a comma-separated list of index file names to search for. Index names are relative to the link's directory and attempted in the order given.
-
-If `--index-files` is specified, then at least one index file must exist in order for a directory link to be considered valid. Additionally, the special name `.` can be used in the list to refer to the directory itself.
-
-If unspecified (the default behavior), index files are disabled and directory links are considered valid as long as the directory exists.
-
-:::note
-This option only takes effect on `file://` URIs which exist and point to a directory.
-:::
-
-**Examples:**
+### -q, --quiet...
 
 ```bash
-# Looks for index.html or readme.md and requires that at least one exists
-lychee --index-files index.html,readme.md docs/
-
-# Will use index.html if it exists, but still accept the directory link regardless
-lychee --index-files index.html,. docs/
-
-# Will reject all directory links because there are no valid index files
-lychee --index-files '' docs/
+lychee --quiet...
 ```
+    Less output per occurrence (e.g. `-q` or `-qq`)
 
-## Web Archive Options
-
-### `--archive`
-
-Specify the use of a specific web archive. Can be used in combination with `--suggest`.
-
-**Possible values:** `wayback`
+### -r, --retry-wait-time
 
 ```bash
-lychee --archive wayback --suggest README.md
+lychee --retry-wait-time <RETRY_WAIT_TIME>
 ```
+    Minimum wait time in seconds between retries of failed requests
 
-### `--suggest`
+**default**: 1
 
-Suggest link replacements for broken links, using a web archive. The web archive can be specified with `--archive`.
+
+### --remap
 
 ```bash
-lychee --suggest README.md
+lychee --remap <REMAP>
 ```
+    Remap URI matching pattern to different URI
 
-## Output Options
-
-### `--output` / `-o`
-
-Output file of status report.
+### --require-https
 
 ```bash
-lychee --output report.txt README.md
+lychee --require-https
 ```
+    When HTTPS is available, treat HTTP links as errors
 
-### `--format` / `-f`
-
-Output format of final status report.
-
-**Default:** `compact`
-
-**Possible values:** `compact`, `detailed`, `json`, `markdown`, `raw`
+### --root-dir
 
 ```bash
-lychee --format json --output report.json README.md
+lychee --root-dir <ROOT_DIR>
 ```
+    Root directory to use when checking absolute links in local files. This option is
+    required if absolute links appear in local files, otherwise those links will be
+    flagged as errors. This must be an absolute path (i.e., one beginning with `/`).
 
-### `--mode`
+    If specified, absolute links in local files are resolved by prefixing the given
+    root directory to the requested absolute link. For example, with a root-dir of
+    `/root/dir`, a link to `/page.html` would be resolved to `/root/dir/page.html`.
 
-Set the output display mode. Determines how results are presented in the terminal.
+    This option can be specified alongside `--base-url`. If both are given, an
+    absolute link is resolved by constructing a URL from three parts: the domain
+    name specified in `--base-url`, followed by the `--root-dir` directory path,
+    followed by the absolute link's own path.
 
-**Default:** `color`
-
-**Possible values:** `plain`, `color`, `emoji`, `task`
+### -s, --scheme
 
 ```bash
-lychee --mode emoji README.md
+lychee --scheme <SCHEME>
 ```
+    Only test links with the given schemes (e.g. https). Omit to check links with
+    any other scheme. At the moment, we support http, https, file, and mailto.
+
+### --skip-missing
+
+```bash
+lychee --skip-missing
+```
+    Skip missing input files (default is to error if they don't exist)
+
+### --suggest
+
+```bash
+lychee --suggest
+```
+    Suggest link replacements for broken links, using a web archive. The web archive can be specified with `--archive`
+
+### -t, --timeout
+
+```bash
+lychee --timeout <TIMEOUT>
+```
+    Website timeout in seconds from connect to response finished
+
+**default**: 20
+
+
+### -T, --threads
+
+```bash
+lychee --threads <THREADS>
+```
+    Number of threads to utilize. Defaults to number of cores available to the system
+
+### -u, --user-agent
+
+```bash
+lychee --user-agent <USER_AGENT>
+```
+    User agent
+
+**default**: lychee/0.20.1
+
+
+### -v, --verbose...
+
+```bash
+lychee --verbose...
+```
+    Set verbosity level; more output per occurrence (e.g. `-v` or `-vv`)
+
+### -V, --version
+
+```bash
+lychee --version
+```
+    Print version
+
+### -X, --method
+
+```bash
+lychee --method <METHOD>
+```
+    Request method
+
+**default**: get
+
 
 ## Repeating Options
 
