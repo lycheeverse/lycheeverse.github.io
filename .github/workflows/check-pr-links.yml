@@ -37,19 +37,14 @@ jobs:
         id: dump_links_from_master
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --dump --base-url dist --exclude-all-private dist
+          args: '--dump --root-dir ${{ github.workspace }}/dist --exclude-all-private dist'
           output: ./links-master.txt
 
       - name: Stash untracked files
         run: git stash push --include-untracked
 
       - name: Check out feature branch
-        run: |
-          if [ "${{ github.event_name }}" = "pull_request" ]; then
-            git checkout ${{ github.head_ref }}
-          else
-            git checkout ${{ github.ref_name }}
-          fi
+        run: git fetch origin ${{ github.ref }} && git checkout FETCH_HEAD
 
       - name: Apply stashed changes
         run: git stash pop || true
@@ -66,7 +61,7 @@ jobs:
       - name: Check links in PR changes
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --base-url dist --exclude-all-private dist
+          args: '--root-dir ${{ github.workspace }}/dist --exclude-all-private dist'
           fail: true
 
       - name: Suggestions
