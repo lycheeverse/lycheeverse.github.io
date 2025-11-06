@@ -7,3 +7,7 @@ https://www.nongnu.org/atool
 
 # 404 page is directly in dist/404.html but we've remapped it to an invalid path
 dist/404/index.html$
+
+# Code examples in base-url.mdx which don't exist
+/docs/about.php$
+/docs/recipes/guide.php$
