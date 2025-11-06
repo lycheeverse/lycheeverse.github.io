@@ -24,44 +24,21 @@ jobs:
         with:
           version: latest
 
-      - name: Check out master branch
-        run: git checkout master
-
-      - name: Install dependencies for master
-        run: pnpm install --frozen-lockfile
-
-      - name: Build site from master
-        run: pnpm build
-
-      - name: Dump all links from master
-        id: dump_links_from_master
-        uses: lycheeverse/lychee-action@v2
-        with:
-          args: '--dump --root-dir ${{ github.workspace }}/dist --exclude-all-private dist'
-          output: ./links-master.txt
-
-      - name: Stash untracked files
-        run: git stash push --include-untracked
-
-      - name: Check out feature branch
-        run: git fetch origin ${{ github.ref }} && git checkout FETCH_HEAD
-
-      - name: Apply stashed changes
-        run: git stash pop || true
-
       - name: Install dependencies for feature branch
         run: pnpm install --frozen-lockfile
 
       - name: Build site from feature branch
         run: pnpm build
 
-      - name: Append links-master.txt to .lycheeignore
-        run: cat links-master.txt >> .lycheeignore
-
-      - name: Check links in PR changes
+      - name: Check links
         uses: lycheeverse/lychee-action@v2
         with:
-          args: '--root-dir ${{ github.workspace }}/dist --exclude-all-private dist'
+          # Remap live URLs to build directory because the links are potentially not live (not yet on master)
+          args: |
+            --root-dir $PWD/dist
+            --exclude-all-private
+            --remap 'https://lychee\.cli\.rs/(.*)/ file://'$PWD'/dist/$1/index.html'
+            dist
           fail: true
 
       - name: Suggestions
