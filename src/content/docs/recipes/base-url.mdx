@@ -66,15 +66,15 @@ Here's what happens to different types of links:
 
 <Code
   code={`<!-- Original links -->
-<a href="./guide.html">Guide</a>
-<a href="../about.html">About</a>
-<a href="https://other.com">External</a>
+<a href="./guide.php">Guide</a>
+<a href="../about.php">About</a>
+<a href="https://example.com">Absolute</a>
 
 <!-- After --base-url https://example.com/docs/ -->
 
-<a href="https://example.com/docs/guide.html">Guide</a>
-<a href="https://example.com/about.html">About</a>
-<a href="https://other.com">External</a>`} lang={fileLang}
+<a href="https://example.com/docs/guide.php">Guide</a>
+<a href="https://example.com/about.php">About</a>
+<a href="https://example.com">Absolute</a>`} lang={fileLang}
 title="Link Resolution Example" />
 
 ## Common Use Cases

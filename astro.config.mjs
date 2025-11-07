@@ -42,6 +42,7 @@ export default defineConfig({
 						"guides/config",
 						"guides/cli",
 						"guides/output",
+						"guides/preprocessing",
 					],
 				},
 				{
