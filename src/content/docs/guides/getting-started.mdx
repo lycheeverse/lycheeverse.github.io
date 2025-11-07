@@ -23,7 +23,7 @@ You can install lychee using various package managers.
     <Code code="docker pull lycheeverse/lychee" lang="sh" />
   </TabItem>
   <TabItem label="NixOS">
-    <Code code="nix-env -iA nixos.lychee" lang="sh" />
+    <Code code="nix-shell -p lychee" lang="sh" />
   </TabItem>
   <TabItem label="FreeBSD">
     <Code code="pkg install lychee" lang="sh" />
@@ -206,24 +206,11 @@ In this command, we ignore the case when globbing, so it matches
 - `~/projects/rust_game_/README`
 - `~/projects/python_script_/Readme.markdown`
 
-### Check Links From Epub File
+### Check other file formats
 
-If you have [atool](https://www.nongnu.org/atool) installed, you can check links inside `.epub` files as well!
-
-```bash
-acat -F zip {file.epub} "_.xhtml" "_.html" | lychee -
-```
-
-:::caution[Attention]
-lychee parses other file formats as plaintext and extracts links using [linkify](https://github.com/robinst/linkify).
-This generally works well if there are no format- or encoding
-specifics, but in case you need dedicated support for a new file format, please
-consider [creating an issue](https://github.com/lycheeverse/lychee/issues).
-:::
-
-[atool]: https://www.nongnu.org/atool
-[linkify]: https://github.com/robinst/linkify
-[issue]: https://github.com/lycheeverse/lychee/issues
+By preprocessing files it is possible to do link checking on
+files which aren't officially supported by lychee.
+See [file preprocessing](/guides/preprocessing).
 
 ## GitHub Action
 
