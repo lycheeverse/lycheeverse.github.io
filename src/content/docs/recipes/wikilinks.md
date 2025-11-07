@@ -2,7 +2,7 @@
 title: Wikilinks
 ---
 
-Lychee can check Wikilinks in Markdown files as long as they provide a path to the linked ressource.
+lychee can check Wikilinks in Markdown files as long as they provide a path to the linked ressource.
 
 ```markdown
 # ✅ Good - links can be checked
@@ -17,7 +17,7 @@ Lychee can check Wikilinks in Markdown files as long as they provide a path to t
 
 Tools like e.g. [Obsidian](https://obsidian.md/) use the second (bad) form of link, using only the file name without path or file extension.
 
-Lychee has no possibility of determining the correct path for this file as it could be:
+lychee has no possibility of determining the correct path for this file as it could be:
 
 - in the same directory
 - in a subdirectory

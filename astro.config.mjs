@@ -39,7 +39,7 @@ export default defineConfig({
 					items: [
 						{ label: "Getting Started", link: "/guides/getting-started" },
 						{ label: "Library Usage", link: "/guides/library" },
-						{ label: "Configure Lychee", link: "/guides/config" },
+						{ label: "Configure lychee", link: "/guides/config" },
 						{ label: "CLI", link: "/guides/cli" },
 						{ label: "Output Modes", link: "/guides/output" },
 					],
@@ -126,7 +126,7 @@ export default defineConfig({
 					label: "Internals",
 					items: [
 						{
-							label: "How Lychee Works",
+							label: "How lychee Works",
 							link: "/internals/how-it-works",
 						},
 						{
