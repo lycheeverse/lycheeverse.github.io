@@ -42,7 +42,6 @@ function* generateMarkdown(lines: string[]) {
 	const optionRegex = /^[- ,a-zA-Z]{2,6}(--|\[)([a-z-.\]]+)/;
 	const usageRegex = /^Usage: /;
 	const bodyRegex = /^ {10}(.*)/;
-	const defaultValuesRegex = /^\[(default|possible values|env): (.*)\]$/;
 
 	let match: RegExpMatchArray | null = null;
 	for (const line of lines) {
@@ -62,13 +61,7 @@ function* generateMarkdown(lines: string[]) {
 			yield "```";
 			yield "";
 		} else if ((match = line.match(bodyRegex))) {
-			const line = match[1];
-			if ((match = line.match(defaultValuesRegex))) {
-				yield `**${match[1]}**: ${match[2]}`;
-				yield "";
-			} else {
-				yield `    ${line}`;
-			}
+			yield `    ${match[1]}`;
 		} else {
 			yield line;
 		}
