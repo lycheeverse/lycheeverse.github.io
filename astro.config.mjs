@@ -2,7 +2,6 @@ import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import { generateCliOptionsIntegration } from "./src/fetchReadme";
 import smartypants from "remark-smartypants";
-import { pluginCodeMarkerAnchors } from "./src/CodeMarkerAnchorPlugin.mjs";
 
 // https://astro.build/config
 export default defineConfig({
@@ -18,7 +17,6 @@ export default defineConfig({
 		generateCliOptionsIntegration("src/content/docs/guides/_cli.md"),
 		starlight({
 			expressiveCode: {
-  			plugins: [pluginCodeMarkerAnchors()],
 				themes: ["catppuccin-frappe", "catppuccin-latte"],
 			},
 			title: "Docs",
