@@ -6,7 +6,7 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"includes": ["**", "!!**/dist", "!!**/.astro"]
+		"ignoreUnknown": false
 	},
 	"html": {
 		"experimentalFullSupportEnabled": true
