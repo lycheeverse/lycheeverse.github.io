@@ -32,23 +32,13 @@ function extractHelpFromReadme(readme: string) {
 	return helpText;
 }
 
-// https://stackoverflow.com/a/6234804
-function escapeMarkdown(unsafe: string): string {
-	return unsafe
-		.replace(/&/g, "&amp;")
-		.replace(/</g, "&lt;")
-		.replace(/>/g, "&gt;")
-		.replace(/"/g, "&quot;")
-		.replace(/'/g, "&#039;");
-}
-
 function splitLines(s: string): string[] {
 	return s.split(/\r?\n/g);
 }
 
 // biome-ignore-start lint/suspicious/noAssignInExpressions: using assignment expressions for regex match is conventional
 function* generateMarkdown(lines: string[]) {
-	const headingRegex = /^\w+:$/;
+	const headingRegex = /^(\w+):$/;
 	const optionRegex = /^[- ,a-zA-Z]{2,6}(--|\[)([a-z-.\]]+)/;
 	const usageRegex = /^Usage: /;
 	const bodyRegex = /^ {10}(.*)/;
@@ -60,16 +50,17 @@ function* generateMarkdown(lines: string[]) {
 			yield "```";
 			yield line;
 			yield "```";
-		} else if (line.match(headingRegex)) {
-			yield `## ${escapeMarkdown(line.replace(/:$/, ""))}`;
+		} else if ((match = line.match(headingRegex))) {
+			yield `## ${match[1]}`;
 		} else if ((match = line.match(optionRegex))) {
-			const option = escapeMarkdown(match[0]).trim();
+			const option = match[0].trim();
 			const longOption = line.replace(/-[^-],/, "");
 			yield `### ${option}`;
 			yield "";
 			yield "```bash";
 			yield `lychee ${longOption.trimStart()}`;
 			yield "```";
+			yield "";
 		} else if ((match = line.match(bodyRegex))) {
 			const line = match[1];
 			if ((match = line.match(defaultValuesRegex))) {
