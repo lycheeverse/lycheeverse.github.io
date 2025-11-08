@@ -47,114 +47,58 @@ export default defineConfig({
 				{
 					label: "Guides",
 					items: [
-						{ label: "Getting Started", link: "/guides/getting-started" },
-						{ label: "Library Usage", link: "/guides/library" },
-						{ label: "Configure Lychee", link: "/guides/config" },
-						{ label: "CLI", link: "/guides/cli" },
-						{ label: "Output Modes", link: "/guides/output" },
+						"guides/getting-started",
+						"guides/library",
+						"guides/config",
+						"guides/cli",
+						"guides/output",
+						"guides/preprocessing",
 					],
 				},
 				{
 					label: "Recipes",
 					items: [
-						{ label: "Anchor Links", link: "/recipes/anchors" },
-						{ label: "Caching", link: "/recipes/caching" },
-						{ label: "Excluding Links", link: "/recipes/excluding-links" },
-						{ label: "Excluding Paths", link: "/recipes/excluding-paths" },
-						{
-							label: "Remapping One URL to Another",
-							link: "/recipes/migration",
-						},
-						{
-							label: "Testing Sites Not Served from Root with --base-url",
-							link: "/recipes/base-url",
-						},
-						{
-							label: "Local File Checking with --root-dir",
-							link: "/recipes/root-dir",
-						},
-						{
-							label: "Pretty URLs (Fallback Extensions and Index Files)",
-							link: "/recipes/pretty-urls",
-						},
-						{ label: "Wikilinks", link: "/recipes/wikilinks" },
+						"recipes/anchors",
+						"recipes/caching",
+						"recipes/excluding-links",
+						"recipes/excluding-paths",
+						"recipes/migration",
+						"recipes/base-url",
+						"recipes/root-dir",
+						"recipes/pretty-urls",
+						"recipes/wikilinks",
 					],
 				},
 				{
 					label: "GitHub Action Recipes",
 					items: [
-						{
-							label: "Check Links in Repository",
-							link: "/github_action_recipes/check-repository",
-						},
-						{
-							label: "Check Links in Pull Requests",
-							link: "/github_action_recipes/pull-requests",
-						},
-						{
-							label: "Replace with Archived Links",
-							link: "/github_action_recipes/archived-links",
-						},
-						{
-							label: "Add Pull Request Comment",
-							link: "/github_action_recipes/add-pr-comment",
-						},
-						{
-							label: "Caching Requests",
-							link: "/github_action_recipes/caching",
-						},
+						"github_action_recipes/check-repository",
+						"github_action_recipes/pull-requests",
+						"github_action_recipes/archived-links",
+						"github_action_recipes/add-pr-comment",
+						"github_action_recipes/caching",
 					],
 				},
 				{
 					label: "Troubleshooting",
 					items: [
-						{ label: "Rate Limits", link: "/troubleshooting/rate-limits" },
-						{
-							label: "Custom Headers",
-							link: "/troubleshooting/custom-headers",
-						},
-						{ label: "Mail Addresses", link: "/troubleshooting/mail" },
-						{
-							label: "Network Errors",
-							link: "/troubleshooting/network-errors",
-						},
-						{
-							label: "Too Many Open Files",
-							link: "/troubleshooting/open-files",
-						},
-						{
-							label: "Too Many Redirects",
-							link: "/troubleshooting/redirects",
-						},
-						{
-							label: "Special Status Codes",
-							link: "/troubleshooting/status-codes",
-						},
+						"troubleshooting/rate-limits",
+						"troubleshooting/custom-headers",
+						"troubleshooting/mail",
+						"troubleshooting/network-errors",
+						"troubleshooting/open-files",
+						"troubleshooting/redirects",
+						"troubleshooting/status-codes",
 					],
 				},
 				{
 					label: "Internals",
 					items: [
-						{
-							label: "How Lychee Works",
-							link: "/internals/how-it-works",
-						},
-						{
-							label: "Contributing",
-							link: "/internals/contributing",
-						},
-						{
-							label: "Sponsors",
-							link: "/internals/sponsors",
-						},
-						{
-							label: "Credits",
-							link: "/internals/credits",
-						},
-						{
-							label: "Users",
-							link: "/internals/users",
-						},
+						"internals/how-it-works",
+						"internals/contributing",
+						"internals/sponsors",
+						"internals/credits",
+						"internals/users",
 					],
 				},
 			],

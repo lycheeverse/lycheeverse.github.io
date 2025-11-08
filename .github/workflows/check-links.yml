@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v5
 
       - name: Build site
-        uses: withastro/action@v4
+        uses: withastro/action@v5
         with:
           package-manager: pnpm@latest
 
@@ -23,5 +23,5 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: --base-url dist --exclude-all-private dist
+          args: '--root-dir ${{ github.workspace }}/dist --exclude-all-private dist'
           fail: false

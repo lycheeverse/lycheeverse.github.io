@@ -1,8 +1,17 @@
-https://api.reacher.email/v0/check_email
 file:///home/user/website/
 ^https://www/$
 ^https://web/$
-# 404 page returns a 404, d'oh
-https://lychee.cli.rs/404/
-# Errors with "Too Many Requests"
+
+# URL is used with POST
+https://api.reacher.email/v0/check_email
+
+# 404 page is directly in dist/404.html but we've remapped it to an invalid path
+dist/404/index.html$
+
+# Code examples in base-url.mdx which don't exist
+/docs/about.php$
+/docs/recipes/guide.php$
+
+# Websites with aggressive rate limiting / bot detection
 https://www.nongnu.org/atool
+https://builtwith.com/

@@ -3,7 +3,13 @@
 	"assist": { "actions": { "source": { "organizeImports": "on" } } },
 	"files": {
 		"ignoreUnknown": true,
-		"includes": ["**", "!node_modules", "!.astro", "!dist"]
+		"includes": ["**", "!!.astro", "!!dist"]
+	},
+	"html": {
+		"experimentalFullSupportEnabled": true
+	},
+	"formatter": {
+		"lineEnding": "auto"
 	},
 	"overrides": [
 		{
