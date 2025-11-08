@@ -1,7 +1,7 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
-import { generateCliOptionsIntegration } from "./src/fetchReadme";
 import smartypants from "remark-smartypants";
+import { generateCliOptionsIntegration } from "./src/fetchReadme";
 
 // https://astro.build/config
 export default defineConfig({
@@ -10,8 +10,8 @@ export default defineConfig({
 		remarkPlugins: [
 			// automatically converting smart dashes causes problems with cli arguments.
 			// to insert dashes, use unicode or &mdash; or &ndash;.
-			[smartypants, { dashes: false }]
-		]
+			[smartypants, { dashes: false }],
+		],
 	},
 	integrations: [
 		generateCliOptionsIntegration("src/content/docs/guides/_cli.md"),
