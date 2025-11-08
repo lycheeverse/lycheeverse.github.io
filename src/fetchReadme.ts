@@ -47,8 +47,9 @@ function* generateMarkdown(lines: string[]) {
 	let match: RegExpMatchArray | null = null;
 	for (const line of lines) {
 		if (line.match(usageRegex)) {
-			yield "```";
-			yield line;
+			yield "Usage:";
+			yield "```bash";
+			yield line.replace(/^Usage: /, "");
 			yield "```";
 		} else if ((match = line.match(headingRegex))) {
 			yield `## ${match[1]}`;
@@ -67,7 +68,7 @@ function* generateMarkdown(lines: string[]) {
 				yield `**${match[1]}**: ${match[2]}`;
 				yield "";
 			} else {
-				yield `    ${line}`;
+				yield line;
 			}
 		} else {
 			yield line;
@@ -96,7 +97,7 @@ export async function generateCliOptionsMarkdown() {
 		"--root-dir heading missing, check optionRegex",
 	);
 	assert(
-		usageText.match("\n    Inputs for link checking"),
+		usageText.match("\nInputs for link checking"),
 		"expected body text missing, check bodyRegex",
 	);
 
