@@ -4,11 +4,6 @@ import { generateCliOptionsIntegration } from "./src/fetchReadme";
 import smartypants from "remark-smartypants";
 import { pluginCodeMarkerAnchors } from "./src/CodeMarkerAnchorPlugin.mjs";
 
-// https://github.com/withastro/starlight/blob/main/packages/starlight/integrations/expressive-code/theming.ts
-const isDark = false;
-const neutralMinimal = isDark ? '#ffffff17' : '#0000001a';
-const neutralDimmed = isDark ? '#ffffff40' : '#00000055';
-
 // https://astro.build/config
 export default defineConfig({
 	site: "https://lychee.cli.rs",
@@ -25,12 +20,6 @@ export default defineConfig({
 			expressiveCode: {
   			plugins: [pluginCodeMarkerAnchors()],
 				themes: ["catppuccin-frappe", "catppuccin-latte"],
-				styleOverrides: {
-					textMarkers: {
-						markBackground: neutralMinimal,
-						markBorderColor: neutralDimmed,
-					}
-				}
 			},
 			title: "Docs",
 			description:
