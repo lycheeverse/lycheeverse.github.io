@@ -2,7 +2,7 @@
 title: Caching
 ---
 
-Caching can significantly speed up repeated checks by reducing requests to the same URL during consecutive runs. For instance, caching responses from `https://github.com` can decrease the load when checking multiple links. Here's how to cache the results of a Lychee run.
+Caching can significantly speed up repeated checks by reducing requests to the same URL during consecutive runs. For instance, caching responses from `https://github.com` can decrease the load when checking multiple links. Here's how to cache the results of a lychee run.
 
 ## Caching on the command line
 

@@ -10,7 +10,7 @@ responses to reduce the load.
 Here is an example GitHub Actions workflow that caches lychee results:
 
 ```yaml
-name: Check URLs with Lychee
+name: Check URLs with lychee
 
 on:
   push:
@@ -31,10 +31,10 @@ jobs:
           key: cache-lychee-${{ github.sha }}
           restore-keys: cache-lychee-
 
-      # check URLs with Lychee
+      # check URLs with lychee
       - uses: actions/checkout@v5
 
-      - name: Lychee URL checker
+      - name: lychee URL checker
         uses: lycheeverse/lychee-action@v2
         with:
           # arguments with file types to check
