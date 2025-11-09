@@ -1,5 +1,5 @@
 ---
-title: CLI
+title: Command-Line Flags
 ---
 <!--
 The _cli.md file is used as a template to generate the cli.md file

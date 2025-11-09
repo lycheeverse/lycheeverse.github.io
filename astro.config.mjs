@@ -48,11 +48,11 @@ export default defineConfig({
 					label: "Guides",
 					items: [
 						"guides/getting-started",
-						"guides/library",
-						"guides/config",
 						"guides/cli",
+						"guides/config",
 						"guides/output",
 						"guides/preprocessing",
+						"guides/library",
 					],
 				},
 				{
