@@ -18,9 +18,9 @@ To clone the repository, run
 
 To install the dependencies, run
 
-## Local Development
-
 `pnpm install`
+
+## Local Development
 
 To start the development server, run
 
