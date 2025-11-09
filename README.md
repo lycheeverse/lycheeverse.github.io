@@ -10,12 +10,21 @@ This is the source code for the official documentation page of [lychee](https://
 
 ## Getting Started
 
-```bash
-git clone https://github.com/lycheeverse/lycheeverse.github.io.git
-cd lycheeverse.github.io
-pnpm install
-pnpm dev
-```
+To clone the repository, run
+
+`git clone https://github.com/lycheeverse/lycheeverse.github.io.git`
+
+## Installation
+
+To install the dependencies, run
+
+## Local Development
+
+`pnpm install`
+
+To start the development server, run
+
+`pnpm dev`
 
 ## Raise an Issue
 
