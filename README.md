@@ -1,6 +1,6 @@
 # lychee Documentation
 
-This is the source code for the official documentation page of [lychee](https://github.com/lycheeverse/lychee/).
+This is the source code for the official documentation of [lychee](https://github.com/lycheeverse/lychee/), a fast, async link checker.
 
 [![Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml)
 [![Code Quality](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml)
@@ -8,40 +8,51 @@ This is the source code for the official documentation page of [lychee](https://
 [![Deploy](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml)
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-## Getting Started
+## Quick Start
 
-To clone the repository, run
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) (v18+)
+- [pnpm](https://pnpm.io/) package manager
+
+### Development
 
 ```bash
+# Clone the repository
 git clone https://github.com/lycheeverse/lycheeverse.github.io.git
 ```
 
-## Installation
-
-To install the dependencies, run
-
 ```bash
+# Install dependencies
 pnpm install
 ```
 
-## Local Development
-
-To start the development server, run
-
 ```bash
+# Start local dev server
 pnpm dev
 ```
 
-## Raise an Issue
+## Contributing
 
-Is something missing?
-Is something confusing?
-Is something wrong?
+We welcome contributions! Here's how to help:
 
-[See if your issue has already been reported](https://github.com/lycheeverse/lycheeverse.github.io/issues), and if not, [create a new one](https://github.com/lycheeverse/lycheeverse.github.io/issues/new/choose).
+### Report Issues
 
-## Make a Fix or Contribution
+Found a problem? Check if it's already been reported in our [issues](https://github.com/lycheeverse/lycheeverse.github.io/issues). If not, [create a new issue](https://github.com/lycheeverse/lycheeverse.github.io/issues/new/choose).
 
-Did you find a typo, a broken link, or another item with an obvious quick fix?
+### Submit Changes
 
-If you can see what the problem is, and you know how to fix it, then you can make a PR (pull request) with the change and contribute to the docs repo yourself.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes (fix typos, broken links, etc.)
+4. Submit a pull request
+
+## Project Structure
+
+```
+├── src/
+│   ├── assets/          # Images and static files
+│   └── content/         # Documentation pages (Markdown/MDX)
+├── astro.config.mjs     # Astro configuration
+└── package.json
+```
