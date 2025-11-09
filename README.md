@@ -8,6 +8,30 @@ This is the source code for the official documentation page of [lychee](https://
 [![Deploy](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml)
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
+## Getting Started
+
+To clone the repository, run
+
+```bash
+git clone https://github.com/lycheeverse/lycheeverse.github.io.git
+```
+
+## Installation
+
+To install the dependencies, run
+
+```bash
+pnpm install
+```
+
+## Local Development
+
+To start the development server, run
+
+```bash
+pnpm dev
+```
+
 ## Raise an Issue
 
 Is something missing?
