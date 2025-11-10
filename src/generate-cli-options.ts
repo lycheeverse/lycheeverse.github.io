@@ -2,11 +2,10 @@ import assert from "node:assert";
 import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import type { AstroIntegration } from "astro";
-
-const VERSION = "lychee-v0.21.0";
+import { LYCHEE_VERSION } from "./lychee-version";
 
 // https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
-const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${VERSION}/README.md`;
+const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${LYCHEE_VERSION}/README.md`;
 
 const TEMPLATE = "README-OPTIONS-PLACEHOLDER";
 
@@ -51,6 +50,12 @@ function* generateMarkdown(lines: string[]) {
 			yield "```bash";
 			yield line.replace(/^Usage: /, "");
 			yield "```";
+			yield `
+:::note
+This page is up-to-date as of
+[${LYCHEE_VERSION}](https://github.com/lycheeverse/lychee/releases/tag/${LYCHEE_VERSION}).
+:::
+`;
 		} else if ((match = line.match(headingRegex))) {
 			yield `## ${match[1]}`;
 		} else if ((match = line.match(optionRegex))) {
@@ -120,7 +125,7 @@ export function generateCliOptionsIntegration(
 				addWatchFile(realpathSync(templatePath));
 				addWatchFile(import.meta.filename);
 
-				logger.info(`Fetching from git tag ${VERSION}`);
+				logger.info(`Fetching from git tag ${LYCHEE_VERSION}`);
 				rmSync(outputPath, { force: true });
 				const usageText = generateCliOptionsMarkdown();
 

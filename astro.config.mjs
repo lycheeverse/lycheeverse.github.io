@@ -1,7 +1,7 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import smartypants from "remark-smartypants";
-import { generateCliOptionsIntegration } from "./src/fetchReadme";
+import { generateCliOptionsIntegration } from "./src/generate-cli-options";
 
 // https://astro.build/config
 export default defineConfig({
