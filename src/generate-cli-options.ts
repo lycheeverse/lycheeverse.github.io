@@ -25,10 +25,10 @@ function extractHelpFromReadme(readme: string) {
 	const [helpText] = text.split("\n```\n", 2);
 	if (!helpText)
 		throw new Error(
-			"LycheeCliOptions: closing ``` marker not found after ```text",
+			"LycheeCliOptions: closing ``` marker not found after ```help-message",
 		);
 
-	return helpText;
+	return helpText.trim();
 }
 
 function splitLines(s: string): string[] {
