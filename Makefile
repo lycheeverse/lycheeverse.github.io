@@ -1,3 +1,3 @@
-.PHONY: run dev
-run dev:
-	npm run dev
+.PHONY: watch
+watch: ## Run webserver and watch for changes
+	pnpm run dev
