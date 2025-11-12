@@ -1,5 +1,5 @@
 ---
-title: Configure lychee
+title: Configuration File
 ---
 
 The configuration file is a [TOML](https://toml.io) file that can be used to specify the options that are also available on the command line.

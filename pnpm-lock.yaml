@@ -17,6 +17,9 @@ importers:
       astro:
         specifier: ^5.15.3
         version: 5.15.3(@types/node@24.10.0)(rollup@4.52.5)(typescript@5.9.3)(yaml@2.8.1)
+      remark-smartypants:
+        specifier: ^3.0.2
+        version: 3.0.2
       sharp:
         specifier: ^0.34.4
         version: 0.34.4

@@ -1,10 +1,20 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
+import smartypants from "remark-smartypants";
+import { generateCliOptionsIntegration } from "./src/generate-cli-options";
 
 // https://astro.build/config
 export default defineConfig({
 	site: "https://lychee.cli.rs",
+	markdown: {
+		remarkPlugins: [
+			// automatically converting smart dashes causes problems with cli arguments.
+			// to insert dashes, use unicode or &mdash; or &ndash;.
+			[smartypants, { dashes: false }],
+		],
+	},
 	integrations: [
+		generateCliOptionsIntegration("src/content/docs/guides/_cli.md"),
 		starlight({
 			expressiveCode: {
 				themes: ["catppuccin-frappe", "catppuccin-latte"],
@@ -38,11 +48,11 @@ export default defineConfig({
 					label: "Guides",
 					items: [
 						"guides/getting-started",
-						"guides/library",
-						"guides/config",
 						"guides/cli",
+						"guides/config",
 						"guides/output",
 						"guides/preprocessing",
+						"guides/library",
 					],
 				},
 				{

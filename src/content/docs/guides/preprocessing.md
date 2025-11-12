@@ -1,5 +1,5 @@
 ---
-title: File preprocessing
+title: File Preprocessing
 ---
 
 Out of the box lychee supports HTML, Markdown and plain text formats.
