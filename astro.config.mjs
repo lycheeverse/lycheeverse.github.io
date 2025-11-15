@@ -4,6 +4,9 @@ import { defineConfig } from "astro/config";
 // https://astro.build/config
 export default defineConfig({
 	site: "https://lychee.cli.rs",
+	redirects: {
+		"/introduction": "/",
+	},
 	integrations: [
 		starlight({
 			expressiveCode: {
