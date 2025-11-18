@@ -1,13 +1,14 @@
 import assert from "node:assert";
-import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import {
+	readFileSync,
+	realpathSync,
+	rmSync,
+	watchFile,
+	writeFileSync,
+} from "node:fs";
 import { basename, dirname, join } from "node:path";
-import type { AstroIntegration } from "astro";
+import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { LYCHEE_VERSION } from "./lychee-version";
-
-// https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
-const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${LYCHEE_VERSION}/README.md`;
-
-const TEMPLATE = "README-OPTIONS-PLACEHOLDER";
 
 function extractHelpFromReadme(readme: string) {
 	const [, section] = readme.split(/### Commandline Parameters/, 2);
@@ -82,11 +83,8 @@ This page is up-to-date as of
 }
 // biome-ignore-end lint/suspicious/noAssignInExpressions: using assignment expressions for regex match is conventional
 
-export async function generateCliOptionsMarkdown() {
-	const readme = await fetch(url);
-	assert(readme.ok, `${readme.status} when fetching ${url}`);
-
-	const rawUsageText = extractHelpFromReadme(await readme.text());
+export async function generateCliOptionsMarkdown(readmeContents: string) {
+	const rawUsageText = extractHelpFromReadme(readmeContents);
 	const usageText = [...generateMarkdown(splitLines(rawUsageText))].join("\n");
 
 	assert(
@@ -109,35 +107,69 @@ export async function generateCliOptionsMarkdown() {
 	return usageText;
 }
 
-export function generateCliOptionsIntegration(
-	templatePath: string,
-): AstroIntegration {
-	const [dir, file] = [dirname(templatePath), basename(templatePath)];
+// Fetch file from main lychee repository at the currently pinned tag
+async function fetchFromRepository(filePath: string) {
+	const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${LYCHEE_VERSION}/${filePath}`;
 
+	const readme = await fetch(url);
+	assert(readme.ok, `${readme.status} when fetching ${url}`);
+	return readme.text();
+}
+
+// Rewrite the template file at templatePath to a non-template file
+// and replace the placeholder in the process.
+async function applyPlaceholder(
+	templatePath: string,
+	placeholder: string,
+	replacement: string,
+	logger: AstroIntegrationLogger,
+	addWatchFile: (path: URL | string) => void,
+) {
+	const [dir, file] = [dirname(templatePath), basename(templatePath)];
 	const outputPath = join(dir, file.replace("_", ""));
 
+	logger.info(`Using template file ${templatePath}`);
+
+	addWatchFile(realpathSync(templatePath));
+	addWatchFile(import.meta.filename);
+
+	rmSync(outputPath, { force: true });
+
+	const docTemplateText = readFileSync(templatePath, "utf-8");
+	const docOutput = docTemplateText.replace(placeholder, replacement);
+
+	assert(
+		docOutput !== docTemplateText,
+		`Placeholder ${placeholder} not found in template file ${templatePath}`,
+	);
+	logger.info(`Writing output file ${outputPath}`);
+	writeFileSync(outputPath, docOutput);
+}
+
+async function generateCliFile(
+	logger: AstroIntegrationLogger,
+	addWatchFile: (path: URL | string) => void,
+) {
+	logger.info(`Fetching from git tag ${LYCHEE_VERSION}`);
+	const content = await generateCliOptionsMarkdown(
+		await fetchFromRepository("README.md"),
+	);
+
+	await applyPlaceholder(
+		"src/content/docs/guides/_cli.md",
+		"README-OPTIONS-PLACEHOLDER",
+		content,
+		logger,
+		addWatchFile,
+	);
+}
+
+export function generateContent(): AstroIntegration {
 	return {
-		name: "lycheeverse:generate-cli-page",
+		name: "lycheeverse:generate-content",
 		hooks: {
 			"astro:config:setup": async ({ logger, addWatchFile }) => {
-				logger.info(`Using template file ${templatePath}`);
-
-				addWatchFile(realpathSync(templatePath));
-				addWatchFile(import.meta.filename);
-
-				logger.info(`Fetching from git tag ${LYCHEE_VERSION}`);
-				rmSync(outputPath, { force: true });
-				const usageText = generateCliOptionsMarkdown();
-
-				const docTemplateText = readFileSync(templatePath, "utf-8");
-				const docOutput = docTemplateText.replace(TEMPLATE, await usageText);
-
-				assert(
-					docOutput !== docTemplateText,
-					`Placeholder ${TEMPLATE} not found in template file`,
-				);
-				logger.info(`Writing output file ${outputPath}`);
-				writeFileSync(outputPath, docOutput);
+				generateCliFile(logger, addWatchFile);
 			},
 		},
 	};
