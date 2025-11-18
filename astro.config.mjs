@@ -1,7 +1,7 @@
 import starlight from "@astrojs/starlight";
 import { defineConfig } from "astro/config";
 import smartypants from "remark-smartypants";
-import { generateFiles } from "./src/generate/generate";
+import { generateFilesFromMainRepo } from "./src/generate/generate";
 
 // https://astro.build/config
 export default defineConfig({
@@ -14,7 +14,7 @@ export default defineConfig({
 		],
 	},
 	integrations: [
-		generateFiles(),
+		generateFilesFromMainRepo(),
 		starlight({
 			expressiveCode: {
 				themes: ["catppuccin-frappe", "catppuccin-latte"],

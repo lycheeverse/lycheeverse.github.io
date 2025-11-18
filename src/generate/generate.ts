@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
+import { join, parse } from "node:path";
 import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { generate as generateCliOptionsMarkdown } from "./generate-cli-options";
 import { LYCHEE_VERSION } from "./lychee-version";
@@ -21,17 +21,19 @@ class Generator {
 		return readme.text();
 	}
 
+	private generateOutputPath(path: string) {
+		const { dir, base } = parse(path);
+		return join(dir, base.replace(/^_/, ""));
+	}
+
 	// Rewrite the template file at templatePath to a non-template file
 	// and replace the placeholder in the process.
 	private async applyPlaceholder(
 		templatePath: string,
 		replacements: Array<{ placeholder: string; value: string }>,
 	) {
-		const [dir, file] = [dirname(templatePath), basename(templatePath)];
-		const outputPath = join(dir, file.replace("_", ""));
-
+		const outputPath = this.generateOutputPath(templatePath);
 		this.logger.info(`Using template file ${templatePath}`);
-
 		this.addWatchFile(realpathSync(templatePath));
 		this.addWatchFile(import.meta.filename);
 
@@ -90,8 +92,9 @@ export function versionNote(message = "This page is up-to-date as of") {
   `;
 }
 
-// Produce all generated files.
-export function generateFiles(): AstroIntegration {
+// Produce all generated documentation files where
+// the main lychee repository is used as input.
+export function generateFilesFromMainRepo(): AstroIntegration {
 	return {
 		name: "lycheeverse:generate-content",
 		hooks: {

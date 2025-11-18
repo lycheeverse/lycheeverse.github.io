@@ -70,8 +70,8 @@ function* generateMarkdown(lines: string[]) {
 // biome-ignore-end lint/suspicious/noAssignInExpressions: using assignment expressions for regex match is conventional
 
 export async function generate(readmeContents: string) {
-	const rawUsageText = extractHelpFromReadme(readmeContents);
-	const usageText = [...generateMarkdown(splitLines(rawUsageText))].join("\n");
+	const rawHelpText = extractHelpFromReadme(readmeContents);
+	const usageText = [...generateMarkdown(splitLines(rawHelpText))].join("\n");
 
 	assert(
 		usageText.match("\n## Options\n"),
