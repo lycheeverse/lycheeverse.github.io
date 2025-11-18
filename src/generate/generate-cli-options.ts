@@ -75,7 +75,7 @@ This page is up-to-date as of
 }
 // biome-ignore-end lint/suspicious/noAssignInExpressions: using assignment expressions for regex match is conventional
 
-export async function generateCliOptionsMarkdown(readmeContents: string) {
+export async function generate(readmeContents: string) {
 	const rawUsageText = extractHelpFromReadme(readmeContents);
 	const usageText = [...generateMarkdown(splitLines(rawUsageText))].join("\n");
 

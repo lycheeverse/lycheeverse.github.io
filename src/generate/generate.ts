@@ -3,7 +3,7 @@ import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
 import { LYCHEE_VERSION } from "./lychee-version";
-import { generateCliOptionsMarkdown } from "./generate-cli-options";
+import { generate as generateCliOptionsMarkdown } from "./generate-cli-options";
 
 class Generator {
 	constructor(
@@ -39,7 +39,7 @@ class Generator {
 		rmSync(outputPath, { force: true });
 
 		const docTemplateText = readFileSync(templatePath, "utf-8");
-		const docOutput = docTemplateText.replace(placeholder, replacement);
+		const docOutput = docTemplateText.replace(placeholder, () => replacement);
 
 		assert(
 			docOutput !== docTemplateText,
@@ -55,10 +55,20 @@ class Generator {
 		const content = await generateCliOptionsMarkdown(
 			await this.fetchFromRepository("README.md"),
 		);
-
 		await this.applyPlaceholder(
 			"src/content/docs/guides/_cli.md",
 			"README-OPTIONS-PLACEHOLDER",
+			content,
+		);
+	}
+
+	// Generate config.md file from lychee.example.toml
+	async config() {
+		const content = await this.fetchFromRepository("lychee.example.toml");
+		writeFileSync("/tmp/lychee.toml", content);
+		await this.applyPlaceholder(
+			"src/content/docs/guides/_config.md",
+			"CONFIG-PLACEHOLDER",
 			content,
 		);
 	}
@@ -71,6 +81,7 @@ export function generateContent(): AstroIntegration {
 			"astro:config:setup": async ({ logger, addWatchFile }) => {
 				const generator = new Generator(logger, addWatchFile);
 				await generator.cliOptions();
+				await generator.config();
 			},
 		},
 	};
