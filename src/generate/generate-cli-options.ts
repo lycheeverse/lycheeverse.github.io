@@ -1,6 +1,5 @@
 import assert from "node:assert";
-import type { AstroIntegration, AstroIntegrationLogger } from "astro";
-import { LYCHEE_VERSION } from "./lychee-version";
+import { versionNote as versionGenerationNote } from "./generate";
 
 function extractHelpFromReadme(readme: string) {
 	const [, section] = readme.split(/### Commandline Parameters/, 2);
@@ -43,12 +42,7 @@ function* generateMarkdown(lines: string[]) {
 			yield "```bash";
 			yield line.replace(/^Usage: /, "");
 			yield "```";
-			yield `
-:::note
-This page is up-to-date as of
-[${LYCHEE_VERSION}](https://github.com/lycheeverse/lychee/releases/tag/${LYCHEE_VERSION}).
-:::
-`;
+			yield versionGenerationNote();
 		} else if ((match = line.match(headingRegex))) {
 			yield `## ${match[1]}`;
 		} else if ((match = line.match(optionRegex))) {

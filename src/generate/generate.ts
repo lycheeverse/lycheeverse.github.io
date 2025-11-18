@@ -1,9 +1,9 @@
 import assert from "node:assert";
-import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { basename, dirname, join } from "node:path";
-import { LYCHEE_VERSION } from "./lychee-version";
+import type { AstroIntegration, AstroIntegrationLogger } from "astro";
 import { generate as generateCliOptionsMarkdown } from "./generate-cli-options";
+import { LYCHEE_VERSION } from "./lychee-version";
 
 class Generator {
 	constructor(
@@ -25,8 +25,7 @@ class Generator {
 	// and replace the placeholder in the process.
 	private async applyPlaceholder(
 		templatePath: string,
-		placeholder: string,
-		replacement: string,
+		replacements: Array<{ placeholder: string; value: string }>,
 	) {
 		const [dir, file] = [dirname(templatePath), basename(templatePath)];
 		const outputPath = join(dir, file.replace("_", ""));
@@ -37,17 +36,22 @@ class Generator {
 		this.addWatchFile(import.meta.filename);
 
 		rmSync(outputPath, { force: true });
+		let content = readFileSync(templatePath, "utf-8");
 
-		const docTemplateText = readFileSync(templatePath, "utf-8");
-		const docOutput = docTemplateText.replace(placeholder, () => replacement);
+		for (const { placeholder, value } of replacements) {
+			const before = content;
+			content = content.replace(placeholder, () => value);
+			const after = content;
 
-		assert(
-			docOutput !== docTemplateText,
-			`Placeholder ${placeholder} not found in template file ${templatePath}`,
-		);
+			if (before === after) {
+				throw new Error(
+					`Placeholder ${placeholder} not found in template file ${templatePath}`,
+				);
+			}
+		}
 
 		this.logger.info(`Writing output file ${outputPath}`);
-		writeFileSync(outputPath, docOutput);
+		writeFileSync(outputPath, content);
 	}
 
 	// Generate cli.md file from README.md
@@ -55,26 +59,39 @@ class Generator {
 		const content = await generateCliOptionsMarkdown(
 			await this.fetchFromRepository("README.md"),
 		);
-		await this.applyPlaceholder(
-			"src/content/docs/guides/_cli.md",
-			"README-OPTIONS-PLACEHOLDER",
-			content,
-		);
+		await this.applyPlaceholder("src/content/docs/guides/_cli.md", [
+			{ placeholder: "README-OPTIONS-PLACEHOLDER", value: content },
+		]);
 	}
 
 	// Generate config.md file from lychee.example.toml
 	async config() {
 		const content = await this.fetchFromRepository("lychee.example.toml");
-		writeFileSync("/tmp/lychee.toml", content);
-		await this.applyPlaceholder(
-			"src/content/docs/guides/_config.md",
-			"CONFIG-PLACEHOLDER",
-			content,
-		);
+		await this.applyPlaceholder("src/content/docs/guides/_config.md", [
+			{
+				placeholder: "CONFIG-PLACEHOLDER",
+				value: content,
+			},
+			{
+				placeholder: "CONFIG-VERSION-NOTE-PLACEHOLDER",
+				value: versionNote("This config file is up-to date as of"),
+			},
+		]);
 	}
 }
 
-export function generateContent(): AstroIntegration {
+// Create a note explaining which lychee version is pinned for generation.
+export function versionNote(message = "This page is up-to-date as of") {
+	return `
+  :::note
+  ${message}
+  [${LYCHEE_VERSION}](https://github.com/lycheeverse/lychee/releases/tag/${LYCHEE_VERSION}).
+  :::
+  `;
+}
+
+// Produce all generated files.
+export function generateFiles(): AstroIntegration {
 	return {
 		name: "lycheeverse:generate-content",
 		hooks: {
