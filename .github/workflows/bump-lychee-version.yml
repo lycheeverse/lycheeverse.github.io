@@ -1,12 +1,10 @@
-name: Links
+name: Bump lychee version
 
-on: push
-
-# on:
-#   repository_dispatch:
-#   workflow_dispatch:
-#   schedule:
-#     - cron: "00 18 * * *"
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: "00 18 * * *"
 
 jobs:
   bumpLycheeVersion:
