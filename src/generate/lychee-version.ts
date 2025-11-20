@@ -8,4 +8,4 @@
  * Generally, this should be increased soon after a lychee release,
  * as it's used to fetch the CLI options for the relevant version.
  */
-export const LYCHEE_VERSION = "lychee-v0.21.0";
+export const LYCHEE_VERSION = "nightly";
