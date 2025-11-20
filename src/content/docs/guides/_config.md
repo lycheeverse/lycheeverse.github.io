@@ -5,11 +5,11 @@ title: Configuration File
 The configuration file is a [TOML](https://toml.io) file that can be used to specify the options that are also available on the command line.
 It comes in handy when you want to specify a lot of options, or when you want to configure lychee for continuous integration as part of a repository.
 
-The configuration file is optional and can be specified with the `--config` option.
-`./lychee.toml` in the current working directory is used by default if it exists, even when `--config` isn't specified.
+By default `lychee.toml` is used if it exists in the current working directory.
+If `--config <PATH>` is specified, then the configuration file at the specified path will be used.
 
 ```bash
-lychee --config ./lychee.toml
+lychee --config config.toml
 ```
 
 For example, the default value for the `--timeout` option is `20` seconds.
