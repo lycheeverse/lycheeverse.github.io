@@ -1,13 +1,5 @@
 import assert from "node:assert";
-import { readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
-import { basename, dirname, join } from "node:path";
-import type { AstroIntegration } from "astro";
-import { LYCHEE_VERSION } from "./lychee-version";
-
-// https://raw.githubusercontent.com/lycheeverse/lychee/master/README.md
-const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${LYCHEE_VERSION}/README.md`;
-
-const TEMPLATE = "README-OPTIONS-PLACEHOLDER";
+import { versionNote as versionGenerationNote } from "./generate";
 
 function extractHelpFromReadme(readme: string) {
 	const [, section] = readme.split(/### Commandline Parameters/, 2);
@@ -50,12 +42,7 @@ function* generateMarkdown(lines: string[]) {
 			yield "```bash";
 			yield line.replace(/^Usage: /, "");
 			yield "```";
-			yield `
-:::note
-This page is up-to-date as of
-[${LYCHEE_VERSION}](https://github.com/lycheeverse/lychee/releases/tag/${LYCHEE_VERSION}).
-:::
-`;
+			yield versionGenerationNote();
 		} else if ((match = line.match(headingRegex))) {
 			yield `## ${match[1]}`;
 		} else if ((match = line.match(optionRegex))) {
@@ -82,12 +69,9 @@ This page is up-to-date as of
 }
 // biome-ignore-end lint/suspicious/noAssignInExpressions: using assignment expressions for regex match is conventional
 
-export async function generateCliOptionsMarkdown() {
-	const readme = await fetch(url);
-	assert(readme.ok, `${readme.status} when fetching ${url}`);
-
-	const rawUsageText = extractHelpFromReadme(await readme.text());
-	const usageText = [...generateMarkdown(splitLines(rawUsageText))].join("\n");
+export async function generate(readmeContents: string) {
+	const rawHelpText = extractHelpFromReadme(readmeContents);
+	const usageText = [...generateMarkdown(splitLines(rawHelpText))].join("\n");
 
 	assert(
 		usageText.match("\n## Options\n"),
@@ -107,38 +91,4 @@ export async function generateCliOptionsMarkdown() {
 	);
 
 	return usageText;
-}
-
-export function generateCliOptionsIntegration(
-	templatePath: string,
-): AstroIntegration {
-	const [dir, file] = [dirname(templatePath), basename(templatePath)];
-
-	const outputPath = join(dir, file.replace("_", ""));
-
-	return {
-		name: "lycheeverse:generate-cli-page",
-		hooks: {
-			"astro:config:setup": async ({ logger, addWatchFile }) => {
-				logger.info(`Using template file ${templatePath}`);
-
-				addWatchFile(realpathSync(templatePath));
-				addWatchFile(import.meta.filename);
-
-				logger.info(`Fetching from git tag ${LYCHEE_VERSION}`);
-				rmSync(outputPath, { force: true });
-				const usageText = generateCliOptionsMarkdown();
-
-				const docTemplateText = readFileSync(templatePath, "utf-8");
-				const docOutput = docTemplateText.replace(TEMPLATE, await usageText);
-
-				assert(
-					docOutput !== docTemplateText,
-					`Placeholder ${TEMPLATE} not found in template file`,
-				);
-				logger.info(`Writing output file ${outputPath}`);
-				writeFileSync(outputPath, docOutput);
-			},
-		},
-	};
 }

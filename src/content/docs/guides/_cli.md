@@ -27,4 +27,3 @@ lychee --exclude https://example.com --exclude https://example.org README.md
 
 To specify multiple values in this way, the argument flag should be repeated.
 Otherwise, the extra values would be treated as link checking inputs.
-
