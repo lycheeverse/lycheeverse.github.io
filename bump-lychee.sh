@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-POSITION=1 # 0 is nightly, 1 is latest stable release
+POSITION=0 # 0 is nightly, 1 is latest stable release
 LATEST=$(curl "https://api.github.com/repos/lycheeverse/lychee/releases" | jq -r ".[$POSITION] | .name")
 FILE=src/generate/lychee-version.ts
 
