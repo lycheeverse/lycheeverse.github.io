@@ -1,0 +1,20 @@
+name: Links
+
+on: push
+
+# on:
+#   repository_dispatch:
+#   workflow_dispatch:
+#   schedule:
+#     - cron: "00 18 * * *"
+
+jobs:
+  bumpLycheeVersion:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Bump lychee version
+        run: ./bump-lychee.sh
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
