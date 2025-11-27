@@ -11,14 +11,14 @@ class Generator {
 		private addWatchFile: (path: URL | string) => void,
 	) {}
 
-	// Fetch file from main lychee repository at the currently pinned tag
+	// Fetch file contents from main lychee repository at the currently pinned tag
 	private async fetchFromRepository(filePath: string) {
 		this.logger.info(`Fetching ${filePath} from git tag ${LYCHEE_VERSION}`);
 		const url = `https://raw.githubusercontent.com/lycheeverse/lychee/refs/tags/${LYCHEE_VERSION}/${filePath}`;
 
-		const readme = await fetch(url);
-		assert(readme.ok, `${readme.status} when fetching ${url}`);
-		return readme.text();
+		const response = await fetch(url);
+		assert(response.ok, `Encountered ${response.status} when fetching ${url}`);
+		return response.text();
 	}
 
 	private generateOutputPath(path: string) {
