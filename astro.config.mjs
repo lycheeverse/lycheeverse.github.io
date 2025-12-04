@@ -13,6 +13,9 @@ export default defineConfig({
 			[smartypants, { dashes: false }],
 		],
 	},
+	redirects: {
+		"/introduction": "/overview/",
+	},
 	integrations: [
 		generateFilesFromMainRepo(),
 		starlight({
