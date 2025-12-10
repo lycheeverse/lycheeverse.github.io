@@ -1,6 +1,8 @@
 #! /usr/bin/env bash
 
-LATEST=$(curl "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | jq -r ".name")
+set -euo pipefail
+
+LATEST=$(curl --fail "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | jq -er ".name")
 FILE=src/generate/lychee-version.ts
 
 sed -i -e "s/LYCHEE_VERSION = \"[^\"]*\"/LYCHEE_VERSION = \"$LATEST\"/" $FILE
