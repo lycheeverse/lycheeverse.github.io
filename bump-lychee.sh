@@ -7,7 +7,7 @@ FILE=src/generate/lychee-version.ts
 
 sed -i -e "s/LYCHEE_VERSION = \"[^\"]*\"/LYCHEE_VERSION = \"$LATEST\"/" $FILE
 
-if [ -v "$CI" ]; then
+if [ -n "$CI" ]; then
     git config user.name "lychee bot"
     git config user.email "noreply@lychee.cli.rs"
 fi
