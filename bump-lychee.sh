@@ -1,7 +1,6 @@
 #! /usr/bin/env bash
 
-POSITION=1 # 0 is nightly, 1 is latest stable release
-LATEST=$(curl "https://api.github.com/repos/lycheeverse/lychee/releases" | jq -r ".[$POSITION] | .name")
+LATEST=$(curl "https://api.github.com/repos/lycheeverse/lychee/releases/latest" | jq -r ".name")
 FILE=src/generate/lychee-version.ts
 
 sed -i -e "s/LYCHEE_VERSION = \"[^\"]*\"/LYCHEE_VERSION = \"$LATEST\"/" $FILE
