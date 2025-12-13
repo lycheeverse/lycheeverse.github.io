@@ -1,27 +1,40 @@
 ---
-title: Testing Sites Not Served from Root with --base-url
-description: Understanding how to use the --base-url parameter in lychee
+title: Applying a Base URL with --base-url
 ---
 
 import { Code } from "@astrojs/starlight/components";
 export const fileName = "docs/guide.html";
 export const fileLang = "html";
 
-## What Is The Base URL?
+## What Is the Base URL?
 
-The `--base-url` parameter in lychee lets you check links for sites that aren't
-served from the root domain. This is useful when your site lives in a
-subdirectory, like `example.com/docs/`.
+In HTML, a base URL is used when resolving relative links; relative links will be resolved
+[relative to](https://developer.mozilla.org/en-US/docs/Web/API/URL_API/Resolving_relative_references)
+the base URL. For example, a link to `page.html` with a base URL of
+`https://example.com/help/` would resolve to `https://example.com/help/page.html`.
 
-## Do You Need To Set A Base URL?
+For most published sites, the base URL of a page is just the normal URL of the page.
+The [`<base>`][base] HTML element can be used to override the base URL for a
+particular HTML page, but this is rare.
 
-Most of the time, you don't! Skip `--base-url` if:
+[base]: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Elements/base
 
-- Your site runs at a root domain (like `example.com`)
-- You're only checking absolute URLs
-- Your links should resolve relative to their files
+## Do You Need To Set a Base URL?
 
-You need `--base-url` when your site lives in a subdirectory.
+Most of the time, you don't!
+
+**Skip** `--base-url` **if**:
+
+- You're only checking fully-qualified URLs.
+- Your site runs at a root domain like `example.com`.
+- Your relative links should resolve to other local files based on their folder structure.
+
+If your use case falls into the second or third case,
+[--root-dir](/recipes/root-dir/) may be useful instead. Setting a root
+directory can help to resolve absolute links, and relative links will be
+resolved based on a local file's path.
+
+## An Example
 
 Let's look at an example:
 
@@ -43,6 +56,14 @@ To check if these links are valid, tell lychee where the site will be hosted:
 lychee --base-url https://example.com/docs/ "**/*.html"
 ```
 
+:::caution[Important]
+lychee's `--base-url` option applies the same base URL to _all_ local files.
+
+This can cause problems when local files have relative links to other local files based
+on their filesystem structure, as `--base-url` does not consider the folder structure.
+:::
+
+{/*
 :::note[Good to know]
 The `--base-url` parameter works similarly to other tools you might know:
 
@@ -53,14 +74,15 @@ The `--base-url` parameter works similarly to other tools you might know:
 
 If you've used any of these, lychee's `--base-url` follows the same concept.
 :::
+*/}
 
 ## How Does It Work?
 
 When you set `--base-url`, lychee will:
 
-1. Find all links in your HTML files
-2. Convert relative links to full URLs
-3. Check if the referenced files exist in your project
+1. Find all links in your HTML files.
+2. Convert relative links to full URLs using the given base URL.
+3. Check if the full URLs are valid and reachable.
 
 Here's what happens to different types of links:
 
@@ -93,9 +115,11 @@ Want to verify links before deploying? lychee can check if files exist in your p
 lychee --base-url https://example.com/docs/ "docs/**/*.html"
 ```
 
+{/*
 :::note
 Even though your site isn't deployed yet, lychee can verify that the files your links point to exist in your project. This helps catch broken links before they go live!
 :::
+*/}
 
 ### GitHub Pages
 
@@ -158,21 +182,15 @@ lychee can't automatically add the slash because both forms are valid - they jus
 
 ## `--base-url` vs `--root-dir`
 
-These solve different problems:
+These solve different problems, and using both together is generally not recommended.
 
-- `--base-url` is for URLs (like `https://example.com/docs/`)
-  - Use it when you care about your site's final URL structure
-  - Helps validate relative links
+- `--base-url` requires a URL (like `https://example.com/docs/`), and it:
+  - Applies to all relative links in local files.
+  - Resolves all relative links relative to the given base URL.
 
-- [`--root-dir`](/recipes/root-dir) is for file paths (like `./public/`)
-  - Use it to find files on your computer
-  - Helps validate absolute paths
-
-You can use both together:
-
-```bash
-lychee --base-url https://example.com/docs/ --root-dir $(pwd)/public/ "public/**/*.html"
-```
+- [`--root-dir`](/recipes/root-dir) requires a local folder path (like `./public/`), and it:
+  - Applies to links with absolute paths (links beginning with `/`) in local files.
+  - Resolves absolute links to files within the given root directory.
 
 ## Troubleshooting
 
