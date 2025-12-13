@@ -24,7 +24,7 @@ These links start with `/`, meaning they're absolute paths.
 If the site is built in a `public` directory, the files will be in `public/about.html` and `public/docs/guide.html`. To check these links, you'd run:
 
 ```bash
-lychee --root-dir "$(pwd)/public" "**/*.html"
+lychee --root-dir ./public "**/*.html"
 ```
 
 lychee will look for:
@@ -46,18 +46,8 @@ Common scenarios:
 - Any project where links start with `/`
 
 :::note
-`--root-dir` must be an absolute path. If you provide a relative path, lychee will error.
-
-```bash
-# ✅ Good
-lychee --root-dir /home/user/project/public/
-
-# ❌ Bad: will fail
-lychee --root-dir ./public/
-```
-
-This is a conservative solution to prevent edge cases.
-If you have a use case for allowing relative root directories, please [open an issue](https://github.com/lycheeverse/lychee/issues).
+`--root-dir` can be an absolute or a relative path. Relative paths are taken
+relative to the current working directory.
 :::
 
 ## Examples
@@ -79,26 +69,10 @@ my-site/
 To check the links:
 
 ```bash
-# Convert relative path to absolute first
-lychee --root-dir "$(pwd)/public" "public/**/*.html"
+lychee --root-dir public "public/**/*.html"
 ```
 
-For GitHub Actions, please replace `$(pwd)` with [`${{ github.workspace }}`](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs#github-context):
-
-```yaml '${{ github.workspace }}'
-jobs:
-  check-links:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v5
-      - uses: lycheeverse/lychee-action@v2
-        with:
-          args: >-
-            --verbose
-            --no-progress
-            --root-dir "${{ github.workspace }}/public"
-            "public/**/*.html"
-```
+For GitHub Actions, the working directory can be accessed with [`${{ github.workspace }}`](https://docs.github.com/en/actions/writing-workflows/choosing-what-your-workflow-does/accessing-contextual-information-about-workflow-runs#github-context).
 
 ### Documentation Site
 
@@ -116,7 +90,7 @@ To check these links:
 
 ```bash
 # Assuming you're in the project root
-lychee --root-dir "$(pwd)" "docs/**/*.html"
+lychee --root-dir . "docs/**/*.html"
 ```
 
 ## The Difference Between `--root-dir` and `--base-url`
@@ -125,52 +99,28 @@ These parameters serve different purposes:
 
 - `--root-dir` is for finding files on your computer
   - Only affects links that start with `/`
-  - Must be an absolute filesystem path
+  - Must be a filesystem path
   - Used when checking local files
 
 - [`--base-url`](/recipes/base-url) is for resolving URLs
   - Must be a URL (like `https://example.com/docs/`)
   - Used when checking how links will work once deployed
-  - Affects relative links (like `./guide.html`)
-
-### Using Both Together
-
-Sometimes you need both:
-
-```bash
-lychee \
-  --root-dir "$(pwd)/public" \
-  --base-url https://example.com/ \
-  "public/**/*.html"
-```
-
-This tells lychee:
-
-1. Look for `/`-prefixed files in `./public/`
-2. Resolve relative links against `https://example.com/`
+  - Affects all relative links (like `./guide.html`)
 
 ## Troubleshooting
 
 If your links aren't being found:
 
-1. Make sure you're using an absolute path:
+1. Check that the files exist in the location you expect:
 
-```bash
-# Get absolute path in bash
-full_path="$(pwd)/public"
-lychee --root-dir "$full_path" "**/*.html"
-```
+   ```bash
+   # Example debugging steps
+   ls -la ./public/about.html
+   ls -la ./public/docs/guide.html
+   ```
 
-2. Check that the files exist in the location you expect:
+2. Use `--verbose` to see how lychee is resolving paths:
 
-```bash
-# Example debugging steps
-ls -la ./public/about.html
-ls -la ./public/docs/guide.html
-```
-
-3. Use `--verbose` to see how lychee is resolving paths:
-
-```bash
-lychee --root-dir "$(pwd)/public" --verbose "**/*.html"
-```
+   ```bash
+   lychee --root-dir "$(pwd)/public" --verbose "**/*.html"
+   ```
