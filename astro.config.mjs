@@ -65,6 +65,7 @@ export default defineConfig({
 						"recipes/caching",
 						"recipes/excluding-links",
 						"recipes/excluding-paths",
+						"recipes/local-folder",
 						"recipes/migration",
 						"recipes/base-url",
 						"recipes/root-dir",
