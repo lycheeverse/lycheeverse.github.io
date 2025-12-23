@@ -1,0 +1,112 @@
+---
+title: Checking a Local Folder with URL Remapping
+description: Checking a local folder of HTML files which will be uploaded to a particular URL.
+---
+
+lychee can be used to check a directory of local HTML files before they're
+uploaded to a website. Even though your site isn't deployed yet, lychee can
+verify that all links will work when the site is uploaded to its online
+location.
+
+This works by mapping the content's future URLs to local files on your
+computer, using lychee's URL remapping feature. For links to these URLs, lychee
+will check that the corresponding files exist inside the local directory,
+rather than checking the online website.
+
+This means you can use fully-qualified links in your HTML files and the links
+will be checked correctly, even if those pages aren't online yet. This is
+especially useful as part of a CI pipeline which builds a static website.
+
+## Do You Need URL Remapping?
+
+In simple cases, you don't!
+
+By default, lychee can already resolve relative links to adjacent local files.
+By adding [`--root-dir`][root-dir], lychee can also resolve root-relative links
+(beginning with `/`) to the given root directory. In simple cases, this is all
+you need.
+
+Continue reading if:
+- you have fully-qualified links to files which exist locally but aren't online yet, or
+- your local folder will be uploaded to a _subdirectory_ of the website domain.
+
+[root-dir]: /recipes/root-dir/
+
+## Mapping Remote Domain to a Local Folder
+
+Suppose you have a local directory `out` and this will be uploaded to
+the domain root at `https://docs.example.com`.
+
+You can map URLs beginning with this domain into the local directory:
+```bash
+lychee ./out --root-dir ./out --remap "https://docs\.example\.com file://$(pwd)/out"
+```
+This will remap URLs so `https://docs.example.com/page.html` becomes
+`./out/page.html`, for example.
+
+:::caution[Caveats when using remaps]
+- For each URL, remaps are tried in order and the *first* matching
+  remap will be applied. If you are using remaps for multiple purposes, be aware
+  of potential conflicts between them.
+
+- Remaps are applied textually. For instance, `--remap 'https://example\.com/a
+  file://tmp` would also apply to a URL of `https://example.com/ab`. This is
+  undesirable but safely excluding this is very hard. Using regex's `$` would
+  conflict with `#fragments` or `?query` parameters, and appending a `/` would
+  cause the URL without a slash to be missed.
+
+- Remap patterns are regular expressions, so `.` in domain names should be
+  escaped to avoid matching more than you expect.
+:::
+
+## Mapping a Remote Subfolder to a Local Folder
+
+If, instead, your local folder will be uploaded to a _subdirectory_ of the website
+(rather than the domain root), you will need some more set up.
+
+Suppose that the local directory `out` will be uploaded to a subfolder at
+`https://example.com/docs/`.
+
+To make `--root-dir` work in this context, your local folder structure
+has to mimic the structure of the remote website. For example, you can set up
+the following folder structure by using symbolic links:
+```
+├── out
+│   └── page.html
+└── temp-root-dir
+    └── docs -> ../out
+```
+```bash
+mkdir temp-root-dir
+ln -s ../out temp-root-dir/docs
+```
+
+Additionally, since the local folder is only a subset of the website, certain
+relative links should be treated as links to the online website (for example,
+the root link `/`). In effect, this means that paths inside `./temp-root-dir`
+but outside of `./temp-root-dir/docs` must be redirected to the online website.
+
+Putting it all together, the lychee command looks like this:
+```bash
+lychee ./out \
+  --root-dir ./temp-root-dir \
+  --remap "https://example\.com/docs file://$(pwd)/out" \
+  --remap "file://$(pwd)/temp-root-dir/docs file://$(pwd)/temp-root-dir/docs" \
+  --remap "file://$(pwd)/temp-root-dir https://example\.com"
+```
+Note that the `temp-root-dir` is only needed for `--root-dir`, and that the
+order of remaps is significant&mdash;earlier remaps are tried first and have
+priority over later ones.
+
+## See Also
+
+If your URLs make use of automatic index files or automatic file extensions, see
+[Pretty URLs](/recipes/pretty-urls/) to enable the same features for local
+files.
+
+This documentation page was motivated by certain issue reports
+([#1918](https://github.com/lycheeverse/lychee/issues/1918),
+[#1594](https://github.com/lycheeverse/lychee/issues/1594)).
+In particular, the UX/documentation issue was discussed in
+[#1718](https://github.com/lycheeverse/lychee/issues/1718).
+
