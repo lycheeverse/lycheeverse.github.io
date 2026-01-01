@@ -7,10 +7,9 @@ description: Checking a local folder of HTML files which will be uploaded to a p
 import { Code } from "@astrojs/starlight/components";
 
 Often, you will want to check a local folder of HTML files before the folder
-get uploaded to a website (as part of a static site workflow, for example).
-Sometimes, this can be complicated when your local files use fully-qualified
-URLs which point to the _future_ locations of your local files after they're
-uploaded online.
+gets uploaded to a website (as part of a static site workflow, for example).
+Sometimes, this can be complicated {/* verb */} if your local files use fully-qualified
+URLs which point to _future_ online locations of the local files.
 
 For instance, you write a new blog post which will be uploaded to
 `https://example.com/docs/2025-01-01-post.html`. You might use that URL in
@@ -26,7 +25,7 @@ doesn't exist _yet_.
 This can cause problems for link checking, because lychee would check these
 links against the currently-online version of the site&mdash;this could be outdated or
 missing newly-added files. To solve this problem, we can tell lychee that
-certain online URLs should be *mapped* to certain local folder paths.
+certain online URLs should be *mapped* to local folder paths.
 
 [^fully]: A _fully-qualified_ link is one which includes a full scheme and domain name, like `https://example.com/page.html`.
 
