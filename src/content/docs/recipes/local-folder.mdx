@@ -2,20 +2,38 @@
 title: Checking a Local Folder with URL Remapping
 description: Checking a local folder of HTML files which will be uploaded to a particular URL.
 ---
+{/* vim: set syntax=markdown: */}
 
-lychee can be used to check a directory of local HTML files before they're
-uploaded to a website. Even though your site isn't deployed yet, lychee can
-verify that all links will work when the site is uploaded to its online
-location.
+import { Code } from "@astrojs/starlight/components";
+
+Often, you will want to check a local folder of HTML files before the folder
+get uploaded to a website (as part of a static site workflow, for example).
+Sometimes, this can be complicated when your local files use fully-qualified
+URLs which point to the _future_ locations of your local files after they're
+uploaded online.
+
+For instance, you write a new blog post which will be uploaded to
+`https://example.com/docs/2025-01-01-post.html`. You might use that URL in
+certain places (like permalinks and canonical links), even though the URL
+doesn't exist _yet_.
+<Code
+  code={`<h1>My blog post</h1>
+<a href="https://example.com/docs/2025-01-01-post.html">Permalink</a>`}
+  lang="html"
+  title="docs/2025-01-01-post.html"
+/>
+
+This can cause problems for link checking, because lychee would check these
+links against the currently-online version of the site&mdash;this could be outdated or
+missing newly-added files. To solve this problem, we can tell lychee that
+certain online URLs should be *mapped* to certain local folder paths.
+
+[^fully]: A _fully-qualified_ link is one which includes a full scheme and domain name, like `https://example.com/page.html`.
 
 This works by mapping the content's future URLs to local files on your
 computer, using lychee's URL remapping feature. For links to these URLs, lychee
 will check that the corresponding files exist inside the local directory,
 rather than checking the online website.
-
-This means you can use fully-qualified links in your HTML files and the links
-will be checked correctly, even if those pages aren't online yet. This is
-especially useful as part of a CI pipeline which builds a static website.
 
 ## Do You Need URL Remapping?
 
@@ -35,11 +53,11 @@ Continue reading if:
 ## Mapping Remote Domain to a Local Folder
 
 Suppose you have a local directory `out` and this will be uploaded to
-the domain root at `https://docs.example.com`.
+the domain *root* at `https://docs.example.com`.
 
 You can map URLs beginning with this domain into the local directory:
 ```bash
-lychee ./out --root-dir ./out --remap "https://docs\.example\.com file://$(pwd)/out"
+lychee ./out --root-dir ./out --remap "^https://docs\.example\.com file://$(pwd)/out"
 ```
 This will remap URLs so `https://docs.example.com/page.html` becomes
 `./out/page.html`, for example.
@@ -66,6 +84,10 @@ If, instead, your local folder will be uploaded to a _subdirectory_ of the websi
 
 Suppose that the local directory `out` will be uploaded to a subfolder at
 `https://example.com/docs/`.
+
+### Simple cases
+
+### All cases
 
 To make `--root-dir` work in this context, your local folder structure
 has to mimic the structure of the remote website. For example, you can set up
