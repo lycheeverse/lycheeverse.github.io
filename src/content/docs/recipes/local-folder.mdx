@@ -11,7 +11,7 @@ gets uploaded to a website (as part of a static site workflow, for example).
 Sometimes, this can be complicated {/* verb */} if your local files use fully-qualified
 URLs which point to _future_ online locations of the local files.
 
-For instance, you write a new blog post which will be uploaded to
+For instance, suppose you write a new blog post which will be uploaded to
 `https://example.com/docs/2025-01-01-post.html`. You might use that URL in
 certain places (like permalinks and canonical links), even though the URL
 doesn't exist _yet_.
@@ -33,7 +33,7 @@ will check that the corresponding files exist inside the local directory,
 rather than checking the online website.
 
 :::caution[Limitations]
-This guide uses lychee's URL remapping feature which is based on regular
+This guide uses lychee's URL remapping feature. This is based on regular
 expressions and has certain limitations, see [Limitations](#limitations).
 :::
 
@@ -64,20 +64,6 @@ lychee ./out --root-dir ./out --remap "^https://docs\.example\.com file://$(pwd)
 This will remap URLs so `https://docs.example.com/page.html` becomes
 `./out/page.html`, for example.
 
-:::caution[Caveats when using remaps]
-- For each URL, remaps are tried in order and the *first* matching
-  remap will be applied. If you are using remaps for multiple purposes, be aware
-  of potential conflicts between them.
-
-- Remaps are applied textually. For instance, `--remap 'https://example\.com/a
-  file://tmp` would also apply to a URL of `https://example.com/ab`. This is
-  undesirable but safely excluding this is very hard. Using regex's `$` would
-  conflict with `#fragments` or `?query` parameters, and appending a `/` would
-  cause the URL without a slash to be missed.
-
-- Remap patterns are regular expressions, so `.` in domain names should be
-  escaped to avoid matching more than you expect.
-:::
 
 ## Mapping a Remote Subfolder to a Local Folder
 
@@ -87,12 +73,6 @@ If, instead, your local folder will be uploaded to a _subdirectory_ of the websi
 Suppose that the local directory `out` will be uploaded to a subfolder at
 `https://example.com/docs/`.
 
-{/*
-In this section, we will use _inside_ to mean URL paths within the subfolder
-`https://example.com/docs/`, and _outside_ will mean URLs in
-`https://example.com` but outside the `/docs` folder.
-*/}
-
 :::tip
 Try the "Simple Case" first, even if you're not sure which case to use. If all
 links check successfully, then it's all good! Otherwise, if you see "not found"
@@ -100,12 +80,10 @@ errors or "root dir" errors, move on to [More Complex
 Cases](#more-complex-cases).
 :::
 
-
-### Simple Case
+### Simple Case ("Portable" Websites)
 
 If your website files are _portable_, then you can use a simple setup
-very similar to the [mapping whole
-domain](#mapping-remote-domain-to-a-local-folder) case.
+akin to the mapping whole domain case.
 
 Portable means that the local folder could be uploaded to any path on any
 domain and all its pages would work correctly. This is common for HTML files
@@ -115,7 +93,7 @@ As a guide, a local folder is likely to be portable if:
 - the local folder contains all needed resources (e.g., CSS, JS, images), and
 - the local HTML files _do not_ use root-relative links (beginning with `/`).
 
-In this case, you can simply use:
+In this simple case, you can use:
 ```bash
 lychee ./out --remap "^https://example\.com/docs file://$(pwd)/out"
 ```
@@ -125,9 +103,11 @@ correctly without more setup&mdash;see below if you need root directory support.
 
 ### More Complex Cases
 
-To make `--root-dir` work in this context, your local folder structure
-has to mimic the structure of the remote website. For example, you can set up
-the following folder structure by using symbolic links:
+To make `--root-dir` work in this context, your folder structure has to mimic
+the structure of the remote website. We can make a "temporary root dir" which
+has the right structure and sits next to the original local folder. In this
+way, we avoid needing to change our existing local folder structure, and we can
+use symbolic links to point to the existing files.
 ```
 ├── out
 │   └── page.html
@@ -148,17 +128,35 @@ Putting it all together, the lychee command looks like this:
 ```bash
 lychee ./out \
   --root-dir ./temp-root-dir \
-  --remap "https://example\.com/docs file://$(pwd)/out" \
+  --remap "^https://example\.com/docs file://$(pwd)/out" \
   --remap "file://$(pwd)/temp-root-dir/docs file://$(pwd)/temp-root-dir/docs" \
   --remap "file://$(pwd)/temp-root-dir https://example\.com"
 ```
-Note that the `temp-root-dir` is only needed for `--root-dir`, and that the
-order of remaps is significant&mdash;earlier remaps are tried first and have
-priority over later ones.
+Note that the order of remaps is significant&mdash;earlier remaps are tried
+first and have priority over later ones.
 
 ## Limitations
 
-fdjsaoifjdsaio
+- Remaps are applied textually. As an example, the remap
+  ```
+  --remap "^https://example\.com/docs file://$(pwd)/out"
+  ```
+  applies to any URL _beginning_ with that string even if it's inside a different subfolder.
+  For instance, it would also apply to a URL of `https://example.com/docs-2/page`.
+
+  If you need to guard against this, you can change the regex to end with
+  `([?#/]|$)` and add `$1` to the replacement, like so:
+  ```
+  --remap "^https://example\.com/docs([?#/]|$) file://$(pwd)/out$1"
+  ```
+
+- Remap patterns are regular expressions, so `.` in domain names should be
+  escaped as `\.` to avoid being interpreted as a wildcard. The commands
+  on this page use `\.` in examples. 
+
+- If you are using remaps for multiple purposes, be aware of potential
+  conflicts between them. For each URL, remaps are tried in order and the
+  *first* matching remap will be applied.
 
 ## See Also
 
