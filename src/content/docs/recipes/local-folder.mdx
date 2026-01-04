@@ -150,9 +150,10 @@ first and have priority over later ones.
   --remap "^https://example\.com/docs([?#/]|$) file://$(pwd)/out$1"
   ```
 
-- Remap patterns are regular expressions, so `.` in domain names should be
-  escaped as `\.` to avoid being interpreted as a wildcard. The commands
-  on this page use `\.` in examples. 
+- Remap patterns are regular expressions, so many common URL symbols
+  need to be escaped to avoid being treated as regex metacharacters
+  (including `.?$+` and brackets). For example, the commands on this
+  page use `\.` in domain names.
 
 - If you are using remaps for multiple purposes, be aware of potential
   conflicts between them. For each URL, remaps are tried in order and the
