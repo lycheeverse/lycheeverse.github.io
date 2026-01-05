@@ -70,7 +70,7 @@ export default defineConfig({
 						"recipes/base-url",
 						"recipes/root-dir",
 						"recipes/pretty-urls",
-						"recipes/wikilinks",
+						"recipes/md-wikilinks",
 					],
 				},
 				{
