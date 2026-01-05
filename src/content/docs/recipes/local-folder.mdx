@@ -32,7 +32,15 @@ computer, using lychee's URL remapping feature. For links to these URLs, lychee
 will check that the corresponding files exist inside the local directory,
 rather than checking the online website.
 
-:::caution[Limitations]
+:::tip[Please give feedback!]
+This page covers a fairly complicated topic, so feedback is appreciated! If
+something is unclear or not working as you expect, please let us know. You
+can open an issue or discussion for [this docs
+website](https://github.com/lycheeverse/lycheeverse.github.io) or [lychee
+itself](https://github.com/lycheeverse/lychee).
+:::
+
+:::note[Limitations]
 This guide uses lychee's URL remapping feature. This is based on regular
 expressions and has certain limitations, see [Limitations](#limitations).
 :::
@@ -147,12 +155,14 @@ first and have priority over later ones.
   If you need to guard against this, you can change the regex to end with
   `([?#/]|$)` and add `$1` to the replacement, like so:
   ```
-  --remap "^https://example\.com/docs([?#/]|$) file://$(pwd)/out$1"
+  --remap "^https://example\.com/docs([?#/]|$) file://$(pwd)/out\$1"
   ```
+  Note that the `$1` must be escaped to avoid being treated as a shell
+  variable.
 
 - Remap patterns are regular expressions, so many common URL symbols
-  need to be escaped to avoid being treated as regex metacharacters
-  (including `.?$+` and brackets). For example, the commands on this
+  should be escaped to avoid being treated as regex metacharacters
+  (including `.?$+` and brackets). For example, the remaps in this
   page use `\.` in domain names.
 
 - If you are using remaps for multiple purposes, be aware of potential
@@ -170,4 +180,6 @@ This documentation page was motivated by certain issue reports
 [#1594](https://github.com/lycheeverse/lychee/issues/1594)).
 In particular, the UX/documentation issue was discussed in
 [#1718](https://github.com/lycheeverse/lychee/issues/1718).
+These links are for historical background and might not reflect
+the current version of lychee.
 
