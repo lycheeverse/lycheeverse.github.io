@@ -57,10 +57,8 @@ lychee --base-url https://example.com/docs/ "**/*.html"
 ```
 
 :::caution[Important]
-lychee's `--base-url` option applies the same base URL to _all_ local files.
-
-This can cause problems when local files have relative links to other local files based
-on their filesystem structure, as `--base-url` does not consider the folder structure.
+lychee's `--base-url` does not consider the folder structure.
+This can cause problems when local files have relative links to other local files based on their filesystem structure, as `--base-url` applies the same base URL to _all_ local files.
 :::
 
 {/*
