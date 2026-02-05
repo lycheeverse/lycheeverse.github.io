@@ -27,7 +27,7 @@ Most of the time, you don't!
 
 - You're only checking fully-qualified URLs.
 - Your site runs at a root domain like `example.com`.
-- Your relative links should resolve to other local files based on their folder structure.
+- Your relative links in local files should resolve to other local files based on their folder structure.
 
 If your use case falls into the second or third case,
 [--root-dir](/recipes/root-dir/) may be useful instead. Setting a root
@@ -58,7 +58,8 @@ lychee --base-url https://example.com/docs/ "**/*.html"
 
 :::caution[Important]
 lychee's `--base-url` does not consider the folder structure.
-This can cause problems when local files have relative links to other local files based on their filesystem structure, as `--base-url` applies the same base URL to _all_ local files.
+This can cause problems when local files have relative links to other local files based on their filesystem structure.
+`--base-url` applies the same base URL to _all_ local files and may break these links.
 :::
 
 {/*
@@ -187,7 +188,7 @@ These solve different problems, and using both together is generally not recomme
   - Resolves all relative links relative to the given base URL.
 
 - [`--root-dir`](/recipes/root-dir) requires a local folder path (like `./public/`), and it:
-  - Applies to links with absolute paths (links beginning with `/`) in local files.
+  - Only applies to absolute links (links beginning with `/`) in local files.
   - Resolves absolute links to files within the given root directory.
 
 ## Troubleshooting
