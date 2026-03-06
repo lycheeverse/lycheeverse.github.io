@@ -75,7 +75,10 @@ export default defineConfig({
         },
         {
           label: "Continuous integration",
-          items: ["github_action_recipes/check-repository"],
+          items: [
+            "continuous-integration/github",
+            "continuous-integration/gitlab",
+          ],
         },
         {
           label: "Troubleshooting",
