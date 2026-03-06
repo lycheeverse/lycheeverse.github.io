@@ -7,7 +7,8 @@ import { Aside } from "@astrojs/starlight/components";
 
 ## Basic example
 
-This recipe demonstrates how to set up an automated workflow that will check all repository links once per day.
+This recipe demonstrates how to set up an automated workflow
+that will check all repository links on push.
 
 ```yaml
 name: Links
@@ -24,14 +25,14 @@ jobs:
         id: lychee
         uses: lycheeverse/lychee-action@v2
         with:
-          args: "EXAMPLE.md" # optionally specify arguments
+          format: "markdown"
+          args: ". --verbose"
 ```
 
-## Add comment to pull request
+## Pull request comment
 
 [sticky-pull-request-comment](https://github.com/marocchino/sticky-pull-request-comment)
-can be used to add lychee's results to a pull request using a sticky comment.
-This is useful if you want to notify the author of a pull request about broken links.
+is a practical way to display lychee's results on a pull request using a sticky comment.
 
 ```yaml
 name: Check links
@@ -52,14 +53,51 @@ jobs:
           path: lychee/out.md
 ```
 
+## Annotate link check errors
+
+Using the `junit` format it's possible to output the link check results
+as a [JUnit test report](https://github.com/testmoapp/junitxml).
+As shown in the below screenshot, this output can then be used
+to annotate link check failures directly in the code of a pull request
+using [action-junit-report](https://github.com/mikepenz/action-junit-report).
+
+![The PR diff view showing an annotation on line 2 of JUNIT-DEMO.md, indicating a failed link check on that line](images/junit-inline-annotations.png)
+
+```yaml
+name: Check links
+on:
+  pull_request:
+
+jobs:
+  junit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: false # continue on failures
+          format: "junit"
+          output: "results.xml"
+
+      - name: Publish link check report
+        uses: mikepenz/action-junit-report@v6
+        with:
+          report_paths: "results.xml"
+          annotate_only: true
+          fail_on_failure: true # only fail in the end
+```
+
 ## Caching
 
-Caching is a great way to speed up your CI/CD pipeline. It can be used
-to reduce the number of requests to the same URL during consecutive runs. For
-example, if you have a lot of links to `https://github.com`, you can cache the
-responses to reduce the load.
-
-Here is an example GitHub Actions workflow that caches lychee results:
+Caching is a great way to speed up your CI/CD pipeline and
+to reduce the number of requests performed.
+Caching is achieved by providing the `--cache` flag
+and reusing the `.lycheecache` file between consecutive runs.
+Below is an example workflow that caches lychee results.
 
 ```yaml
 name: Check URLs with lychee
@@ -98,7 +136,6 @@ jobs:
 
 This pipeline will automatically cache the results of the lychee run.
 Note that the cache will only be created if the run was successful.
-
 If you need more control over when caches are restored and saved, you can split
 the cache step and e.g. ensure to always save the cache (also when the link
 check step fails):
