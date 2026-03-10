@@ -74,13 +74,10 @@ export default defineConfig({
 					],
 				},
 				{
-					label: "GitHub Action Recipes",
+					label: "Continuous integration",
 					items: [
-						"github_action_recipes/check-repository",
-						"github_action_recipes/pull-requests",
-						"github_action_recipes/archived-links",
-						"github_action_recipes/add-pr-comment",
-						"github_action_recipes/caching",
+						"continuous-integration/github",
+						"continuous-integration/gitlab",
 					],
 				},
 				{

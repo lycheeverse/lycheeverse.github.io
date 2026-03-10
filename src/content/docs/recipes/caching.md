@@ -45,4 +45,4 @@ docker run -it -v $(pwd)/.lycheecache:/.lycheecache lycheeverse/lychee --cache -
 
 ## Caching in GitHub Actions
 
-To see how you can cache the results of a lychee run in GitHub Actions, [check out this page](/github_action_recipes/caching).
+To see how you can cache the results of a lychee run in GitHub Actions, [check out this page](/continuous-integration/github#caching).
