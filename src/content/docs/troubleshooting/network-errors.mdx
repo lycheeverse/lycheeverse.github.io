@@ -35,107 +35,18 @@ transient and may succeed on a second attempt.
 
 The table below summarises which error types trigger a retry:
 
-<table>
-  <thead>
-    <tr>
-      <th>Error type</th>
-      <th>Example</th>
-      <th>Retried?</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Timeout</td>
-      <td><code>Network error: operation timed out</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Too Many Requests (429)</td>
-      <td><code>Network error: too many requests</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Server error (5xx)</td>
-      <td><code>Response: 503 Service Unavailable</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Request timeout (408)</td>
-      <td><code>Response: 408 Request Timeout</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Incomplete response</td>
-      <td><code>Network error: connection closed before message completed</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Connection reset / aborted</td>
-      <td><code>Network error: Connection reset by server</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
-          <polyline points="20 6 9 17 4 12"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Connection refused / error</td>
-      <td><code>Network error: connection refused</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Certificate / TLS error</td>
-      <td><code>Network error: invalid certificate</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Redirect error</td>
-      <td><code>Failed: Too many redirects</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </td>
-    </tr>
-    <tr>
-      <td>Client error (4xx, except 408/429)</td>
-      <td><code>Response: 404 Not Found</code></td>
-      <td>
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
-          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
-        </svg>
-      </td>
-    </tr>
-  </tbody>
-</table>
+| Error type                         | Example                                                        | Retried? |
+| ---------------------------------- | -------------------------------------------------------------- | -------- |
+| Timeout                            | `Network error: operation timed out`                           | ✅       |
+| Too Many Requests (429)            | `Network error: too many requests`                             | ✅       |
+| Server error (5xx)                 | `Response: 503 Service Unavailable`                            | ✅       |
+| Request timeout (408)              | `Response: 408 Request Timeout`                                | ✅       |
+| Incomplete response                | `Network error: connection closed before message completed`    | ✅       |
+| Connection reset / aborted         | `Network error: Connection reset by server`                    | ✅       |
+| Connection refused / error         | `Network error: connection refused`                            | ❌       |
+| Certificate / TLS error            | `Network error: invalid certificate`                           | ❌       |
+| Redirect error                     | `Failed: Too many redirects`                                   | ❌       |
+| Client error (4xx, except 408/429) | `Response: 404 Not Found`                                      | ❌       |
 
 ### Configuring retries
 
