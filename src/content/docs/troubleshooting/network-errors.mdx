@@ -4,6 +4,9 @@ title: Network Errors
 
 import { Aside } from "@astrojs/starlight/components";
 
+export const Yes = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#22c55e" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-label="Yes"><polyline points="20 6 9 17 4 12"/></svg>;
+export const No = () => <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-label="No"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>;
+
 If you run lychee and some links fail, it could be a transient network issue or
 a certificate-related problem. Certificates are used to verify the identity of a
 website and to establish a secure connection. Different operating systems and
@@ -35,23 +38,23 @@ transient and may succeed on a second attempt.
 
 The table below summarises which error types trigger a retry:
 
-| Error Type                      | Retried? | Examples                                      |
-| ------------------------------- | -------- | --------------------------------------------- |
-| 5xx Server Errors               | ✅ Yes   | 500, 502, 503, 504                            |
-| 408 Request Timeout             | ✅ Yes   | Request took too long                         |
-| 429 Too Many Requests           | ✅ Yes   | Rate limit exceeded                           |
-| Connection Timeout              | ✅ Yes   | Server didn't respond in time                 |
-| Connection Reset                | ✅ Yes   | Connection dropped unexpectedly               |
-| Connection Aborted              | ✅ Yes   | Connection terminated mid-request             |
-| Incomplete Message              | ✅ Yes   | Response cut off before completion            |
-| 4xx Client Errors               | ❌ No    | 400, 401, 403, 404 (except 408, 429)          |
-| 2xx Success                     | ❌ No    | 200, 201, 204                                 |
-| 3xx Redirects                   | ❌ No    | 301, 302                                      |
-| Initial Connection Failure      | ❌ No    | Can't reach server at all                     |
-| Certificate Issues              | ❌ No    | SSL/TLS errors                                |
-| Invalid Request Body            | ❌ No    | Malformed data                                |
-| Decoding Errors                 | ❌ No    | Can't parse response                          |
-| Redirect Errors                 | ❌ No    | Too many redirects, etc.                      |
+| Error Type                      | Retried?       | Examples                                      |
+| ------------------------------- | -------------- | --------------------------------------------- |
+| 5xx Server Errors               | <Yes />        | 500, 502, 503, 504                            |
+| 408 Request Timeout             | <Yes />        | Request took too long                         |
+| 429 Too Many Requests           | <Yes />        | Rate limit exceeded                           |
+| Connection Timeout              | <Yes />        | Server didn't respond in time                 |
+| Connection Reset                | <Yes />        | Connection dropped unexpectedly               |
+| Connection Aborted              | <Yes />        | Connection terminated mid-request             |
+| Incomplete Message              | <Yes />        | Response cut off before completion            |
+| 4xx Client Errors               | <No />         | 400, 401, 403, 404 (except 408, 429)          |
+| 2xx Success                     | <No />         | 200, 201, 204                                 |
+| 3xx Redirects                   | <No />         | 301, 302                                      |
+| Initial Connection Failure      | <No />         | Can't reach server at all                     |
+| Certificate Issues              | <No />         | SSL/TLS errors                                |
+| Invalid Request Body            | <No />         | Malformed data                                |
+| Decoding Errors                 | <No />         | Can't parse response                          |
+| Redirect Errors                 | <No />         | Too many redirects, etc.                      |
 
 **As a rule of thumb:**
 - **Retries:** Temporary problems (server down, network hiccup, timeout)
