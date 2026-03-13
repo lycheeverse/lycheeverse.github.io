@@ -4,15 +4,16 @@ title: Network Errors
 
 import { Aside } from "@astrojs/starlight/components";
 
-If you run lychee and some links fail then it could be certificate-related issue.
-Certificates are used to verify the identity of a website and to establish a secure connection.
-Different operating systems and tools have different ways to handle certificates.
+If you run lychee and some links fail, it could be a transient network issue or
+a certificate-related problem. Certificates are used to verify the identity of a
+website and to establish a secure connection. Different operating systems and
+tools have different ways to handle certificates.
 
 If lychee is unable to verify the certificate of a website, it will show a
 network error. This could be due to an expired certificate, an invalid
 certificate, or a certificate from an unknown authority.
 
-Examples of network errors that could be certificate-related:
+Examples of network errors:
 
 ```bash
 Failed: Network error: error sending request for url
@@ -21,6 +22,157 @@ Failed: Network error: error sending request for url
 ```bash
 Network error: Forbidden
 ```
+
+```bash
+Network error: Connection reset by server. Server forcibly closed connection
+```
+
+## Retry Policy
+
+Lychee automatically retries failed requests before declaring a link broken.
+Not every error is worth retrying &mdash; some are permanent, while others are
+transient and may succeed on a second attempt.
+
+The table below summarises which error types trigger a retry:
+
+<table>
+  <thead>
+    <tr>
+      <th>Error type</th>
+      <th>Example</th>
+      <th>Retried?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Timeout</td>
+      <td><code>Network error: operation timed out</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Too Many Requests (429)</td>
+      <td><code>Network error: too many requests</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Server error (5xx)</td>
+      <td><code>Response: 503 Service Unavailable</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Request timeout (408)</td>
+      <td><code>Response: 408 Request Timeout</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Incomplete response</td>
+      <td><code>Network error: connection closed before message completed</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Connection reset / aborted</td>
+      <td><code>Network error: Connection reset by server</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="Yes" style="color: #22c55e">
+          <polyline points="20 6 9 17 4 12"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Connection refused / error</td>
+      <td><code>Network error: connection refused</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Certificate / TLS error</td>
+      <td><code>Network error: invalid certificate</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Redirect error</td>
+      <td><code>Failed: Too many redirects</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </td>
+    </tr>
+    <tr>
+      <td>Client error (4xx, except 408/429)</td>
+      <td><code>Response: 404 Not Found</code></td>
+      <td>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-label="No" style="color: #ef4444">
+          <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+### Configuring retries
+
+By default, lychee retries failed requests up to **3 times** with an
+exponential backoff starting at **1 second** (i.e. 1 s, 2 s, 4 s).
+
+You can tune this behaviour with two options:
+
+| Option | CLI flag | Config key | Default |
+|---|---|---|---|
+| Maximum retries | `--max-retries <NUM>` | `max_retries` | `3` |
+| Initial wait between retries | `--retry-wait-time <SECS>` | `retry_wait_time` | `1` |
+
+For example, to retry up to 5 times with a 5-second initial wait:
+
+```bash
+lychee --max-retries 5 --retry-wait-time 3 https://example.com
+```
+
+Or in `lychee.toml`:
+
+```toml
+max_retries = 5
+retry_wait_time = 3
+```
+
+To disable retries entirely, set `--max-retries 0`:
+
+```bash
+lychee --max-retries 0 https://example.com
+```
+
+<Aside>
+  Retries only apply to requests where lychee judges the failure to be
+  transient (see the table above). Permanent errors such as a `404 Not Found`
+  or a certificate problem are reported immediately without any retry.
+</Aside>
 
 ## What now?
 
@@ -36,7 +188,8 @@ If this works, then the issue is with lychee and not the website.
 In that case, please open an issue on the lychee GitHub repository.
 
 If it doesn't work, then the issue is with the website or your system.
-It might be related to the certificate or the user agent. The site might also use a bot detection such as Cloudflare Bot Management. Read on to find out more.
+It might be related to the certificate or the user agent. The site might also
+use bot detection such as Cloudflare Bot Management. Read on to find out more.
 
 ### Use the `--insecure` flag
 
@@ -82,7 +235,7 @@ use a service like [BuiltWith](https://builtwith.com/). Just enter the website
 URL and check if it uses any bot detection services like Cloudflare Bot Management or
 Cloudflare Challenge.
 
-If the website uses a bot detection service, which is blocking lychee, there's
+If the website uses a bot detection service which is blocking lychee, there's
 little you can do. You can try contacting the website administrator and ask them
 to whitelist lychee.
 
@@ -113,4 +266,5 @@ Also, see this [Stack Overflow
 discussion](https://stackoverflow.com/a/24618403/270334) for additional
 information.
 
-After that, try running lychee again and see if the issue is resolved. If not, please open an issue on the lychee GitHub repository.
+After that, try running lychee again and see if the issue is resolved. If not,
+please open an issue on the lychee GitHub repository.
