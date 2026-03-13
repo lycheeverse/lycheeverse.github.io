@@ -35,18 +35,27 @@ transient and may succeed on a second attempt.
 
 The table below summarises which error types trigger a retry:
 
-| Error type                         | Example                                                        | Retried? |
-| ---------------------------------- | -------------------------------------------------------------- | -------- |
-| Timeout                            | `Network error: operation timed out`                           | ✅       |
-| Too Many Requests (429)            | `Network error: too many requests`                             | ✅       |
-| Server error (5xx)                 | `Response: 503 Service Unavailable`                            | ✅       |
-| Request timeout (408)              | `Response: 408 Request Timeout`                                | ✅       |
-| Incomplete response                | `Network error: connection closed before message completed`    | ✅       |
-| Connection reset / aborted         | `Network error: Connection reset by server`                    | ✅       |
-| Connection refused / error         | `Network error: connection refused`                            | ❌       |
-| Certificate / TLS error            | `Network error: invalid certificate`                           | ❌       |
-| Redirect error                     | `Failed: Too many redirects`                                   | ❌       |
-| Client error (4xx, except 408/429) | `Response: 404 Not Found`                                      | ❌       |
+| Error Type                      | Retried? | Examples                                      |
+| ------------------------------- | -------- | --------------------------------------------- |
+| 5xx Server Errors               | ✅ Yes   | 500, 502, 503, 504                            |
+| 408 Request Timeout             | ✅ Yes   | Request took too long                         |
+| 429 Too Many Requests           | ✅ Yes   | Rate limit exceeded                           |
+| Connection Timeout              | ✅ Yes   | Server didn't respond in time                 |
+| Connection Reset                | ✅ Yes   | Connection dropped unexpectedly               |
+| Connection Aborted              | ✅ Yes   | Connection terminated mid-request             |
+| Incomplete Message              | ✅ Yes   | Response cut off before completion            |
+| 4xx Client Errors               | ❌ No    | 400, 401, 403, 404 (except 408, 429)          |
+| 2xx Success                     | ❌ No    | 200, 201, 204                                 |
+| 3xx Redirects                   | ❌ No    | 301, 302                                      |
+| Initial Connection Failure      | ❌ No    | Can't reach server at all                     |
+| Certificate Issues              | ❌ No    | SSL/TLS errors                                |
+| Invalid Request Body            | ❌ No    | Malformed data                                |
+| Decoding Errors                 | ❌ No    | Can't parse response                          |
+| Redirect Errors                 | ❌ No    | Too many redirects, etc.                      |
+
+**As a rule of thumb:**
+- **Retries:** Temporary problems (server down, network hiccup, timeout)
+- **No Retry:** Permanent problems (bad request, auth failure, not found)
 
 ### Configuring retries
 
