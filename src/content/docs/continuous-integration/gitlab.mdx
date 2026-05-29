@@ -21,7 +21,7 @@ Check links:
     - apt-get update -qq && apt-get install -y -qq wget
     # recommended to pin a stable version such as "lychee-v0.24.0"
     - version="nightly"
-    - wget -qO- "https://github.com/lycheeverse/lychee/releases/download/$version/lychee-x86_64-unknown-linux-gnu.tar.gz" | tar -xz
+    - wget -qO- "https://github.com/lycheeverse/lychee/releases/download/$version/lychee-x86_64-unknown-linux-gnu.tar.gz" | tar --strip-components=1 -xz
     - ./lychee --verbose --include-mail --format junit --output results.xml TEST.md
   artifacts:
     when: always
