@@ -63,6 +63,7 @@ export default defineConfig({
 					items: [
 						"recipes/anchors",
 						"recipes/caching",
+						"recipes/cookies",
 						"recipes/excluding-links",
 						"recipes/excluding-paths",
 						"recipes/local-folder",

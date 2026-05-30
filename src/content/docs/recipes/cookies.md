@@ -1,0 +1,50 @@
+---
+title: Cookies
+---
+
+Some websites require cookies to return the right response. For example, a site
+might set a session cookie on the first request and expect it on the next one.
+lychee can persist cookies between requests using a cookie jar.
+
+## Using a cookie jar
+
+Pass `--cookie-jar` with a path to a JSON file:
+
+```bash
+lychee --cookie-jar cookies.json https://example.com
+```
+
+lychee loads existing cookies from the file before checking, stores any cookies
+the server sets during the run, and writes them back to the same file when it's
+done. If the file doesn't exist yet, lychee creates it.
+
+This means you can run lychee once to collect cookies and reuse them on later
+runs by pointing at the same file.
+
+## File format
+
+The cookie jar is a plain JSON array. Each entry is a single cookie:
+
+```json
+[
+  {
+    "raw_cookie": "session=abc123; Secure; Path=/; Domain=example.com; Expires=Tue, 03 Aug 2100 00:38:37 GMT",
+    "path": ["/", true],
+    "domain": { "Suffix": "example.com" },
+    "expires": { "AtUtc": "2100-08-03T00:38:37Z" }
+  }
+]
+```
+
+The fields are:
+
+- `raw_cookie`: the full `Set-Cookie` string. Everything else is derived from this.
+- `path`: the cookie path, plus whether it was set explicitly (`true`) or defaulted from the request URL (`false`).
+- `domain`: `{ "Suffix": "example.com" }` for a `Domain=` cookie (matches subdomains too), `{ "HostOnly": "example.com" }` for an exact host, or `"NotPresent"`.
+- `expires`: `{ "AtUtc": "2100-08-03T00:38:37Z" }` for a fixed expiry, or `"SessionEnd"` for session cookies.
+
+:::note
+Only unexpired, persistent cookies are written back, so session cookies and
+expired ones won't appear in the saved file. You can hand-edit the file as long
+as it stays a valid JSON array.
+:::
