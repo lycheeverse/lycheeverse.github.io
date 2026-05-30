@@ -19,7 +19,7 @@ the server sets during the run, and writes them back to the same file when it's
 done. If the file doesn't exist yet, lychee creates it.
 
 This means you can run lychee once to collect cookies and reuse them on later
-runs by pointing at the same file.
+runs by pointing at the same file, which can save some manual work!
 
 ## File format
 
@@ -38,7 +38,7 @@ The cookie jar is a plain JSON array. Each entry is a single cookie:
 
 The fields are:
 
-- `raw_cookie`: the full `Set-Cookie` string. Everything else is derived from this.
+- `raw_cookie`: the full [`Set-Cookie`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Set-Cookie) string.
 - `path`: the cookie path, plus whether it was set explicitly (`true`) or defaulted from the request URL (`false`).
 - `domain`: `{ "Suffix": "example.com" }` for a `Domain=` cookie (matches subdomains too), `{ "HostOnly": "example.com" }` for an exact host, or `"NotPresent"`.
 - `expires`: `{ "AtUtc": "2100-08-03T00:38:37Z" }` for a fixed expiry, or `"SessionEnd"` for session cookies.
