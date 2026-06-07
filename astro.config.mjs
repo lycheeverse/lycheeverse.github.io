@@ -68,6 +68,7 @@ export default defineConfig({
 						"recipes/excluding-paths",
 						"recipes/local-folder",
 						"recipes/migration",
+						"recipes/remap-github-commit",
 						"recipes/base-url",
 						"recipes/root-dir",
 						"recipes/pretty-urls",
