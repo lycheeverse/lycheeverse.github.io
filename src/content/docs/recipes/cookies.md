@@ -46,6 +46,12 @@ The fields are:
 - `domain`: `{ "Suffix": "example.com" }` for a `Domain=` cookie (matches subdomains too), `{ "HostOnly": "example.com" }` for an exact host, or `"NotPresent"`.
 - `expires`: `{ "AtUtc": "2100-08-03T00:38:37Z" }` for a fixed expiry, or `"SessionEnd"` for session cookies.
 
+The `raw_cookie` string and the other fields overlap because that's how the
+`cookie_store` crate represents a cookie: it keeps the original `Set-Cookie`
+header alongside the `path`, `domain`, and `expires` values it parsed out of it.
+Those parsed fields are what it uses to decide whether a cookie applies to a
+given request, following RFC 6265.
+
 :::note
 Only unexpired, persistent cookies are written back, so session cookies and
 expired ones won't appear in the saved file. You can hand-edit the file as long
