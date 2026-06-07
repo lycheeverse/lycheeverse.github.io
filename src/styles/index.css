@@ -112,6 +112,40 @@ h6 {
 	--sl-color-black: #17181c;
 }
 
+/* Sponsor cards. */
+.sponsors {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+.sponsor {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 1.25rem 1.75rem;
+}
+
+.sponsor-logo {
+	flex: 0 0 auto;
+	display: inline-flex;
+	/* White, padded background keeps dark logos readable in dark mode. */
+	background: #ffffff;
+	border-radius: 0.5rem;
+	padding: 1rem 1.25rem;
+}
+
+.sponsor-logo img {
+	width: 200px;
+	height: auto;
+}
+
+.sponsor-description {
+	flex: 1 1 16rem;
+	margin: 0;
+}
+
 /* Light mode colors. */
 :root[data-theme="light"] {
 	--sl-color-accent-low: #f0cbd9;
