@@ -43,18 +43,27 @@ The table below summarises which error types trigger a retry:
 | 5xx Server Errors               | <Yes />        | 500, 502, 503, 504                            |
 | 408 Request Timeout             | <Yes />        | Request took too long                         |
 | 429 Too Many Requests           | <Yes />        | Rate limit exceeded                           |
-| Connection Timeout              | <Yes />        | Server didn't respond in time                 |
+| Connection Timeout              | <Yes />        | Server accepted connection but never replied  |
 | Connection Reset                | <Yes />        | Connection dropped unexpectedly               |
 | Connection Aborted              | <Yes />        | Connection terminated mid-request             |
 | Incomplete Message              | <Yes />        | Response cut off before completion            |
 | 4xx Client Errors               | <No />         | 400, 401, 403, 404 (except 408, 429)          |
 | 2xx Success                     | <No />         | 200, 201, 204                                 |
 | 3xx Redirects                   | <No />         | 301, 302                                      |
-| Initial Connection Failure      | <No />         | Can't reach server at all                     |
+| Connection Refused / Failure    | <No />         | Connection refused, DNS failure, blocked port |
 | Certificate Issues              | <No />         | SSL/TLS errors                                |
 | Invalid Request Body            | <No />         | Malformed data                                |
 | Decoding Errors                 | <No />         | Can't parse response                          |
 | Redirect Errors                 | <No />         | Too many redirects, etc.                      |
+
+The distinction between the two connection rows matters: a *Connection Timeout*
+means lychee reached the server but gave up waiting for a reply, so it's worth
+retrying. A *Connection Refused / Failure* means lychee never established a
+connection in the first place &mdash; for example a refused port, a firewall
+blocking the connection, or a DNS lookup that returned no result &mdash; so a
+retry won't help. lychee reports these as `Connection refused - server may be
+down or port blocked` or `Connection failed. Check network connectivity and
+firewall settings`.
 
 **As a rule of thumb:**
 - **Retries:** Temporary problems (server down, network hiccup, timeout)
