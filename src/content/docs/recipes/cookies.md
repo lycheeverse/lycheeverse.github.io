@@ -23,7 +23,10 @@ runs by pointing at the same file, which can save some manual work!
 
 ## File format
 
-The cookie jar is a plain JSON array. Each entry is a single cookie:
+The cookie jar is a plain JSON array. Each entry is a single cookie, serialized
+in the format used by the [`cookie_store`](https://docs.rs/cookie_store/latest/cookie_store/struct.Cookie.html)
+crate, which lychee uses to manage cookies. Cookie storage and matching follow
+the rules of [RFC 6265](https://datatracker.ietf.org/doc/html/rfc6265):
 
 ```json
 [
