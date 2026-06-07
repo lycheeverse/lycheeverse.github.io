@@ -15,3 +15,6 @@ dist/404/index.html$
 # Websites with aggressive rate limiting / bot detection
 https://www.nongnu.org/atool
 https://builtwith.com/
+
+# Open Collective returns 403 to automated checkers (bot detection)
+https://opencollective.com/
