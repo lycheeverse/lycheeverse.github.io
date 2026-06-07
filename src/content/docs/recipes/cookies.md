@@ -52,6 +52,12 @@ header alongside the `path`, `domain`, and `expires` values it parsed out of it.
 Those parsed fields are what it uses to decide whether a cookie applies to a
 given request, following RFC 6265.
 
+:::caution
+This format is not a stable API and may change between lychee releases. If you
+depend on the file layout, check the [release notes](https://github.com/lycheeverse/lychee/releases)
+when upgrading.
+:::
+
 :::note
 Only unexpired, persistent cookies are written back, so session cookies and
 expired ones won't appear in the saved file.
