@@ -14,7 +14,7 @@ jobs:
       - name: Build site
         uses: withastro/action@v5
         with:
-          package-manager: pnpm@latest
+          package-manager: pnpm@11.5.2
 
       - name: Check links
         uses: lycheeverse/lychee-action@v2
