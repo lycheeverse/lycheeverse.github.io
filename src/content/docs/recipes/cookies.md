@@ -54,6 +54,9 @@ given request, following RFC 6265.
 
 :::note
 Only unexpired, persistent cookies are written back, so session cookies and
-expired ones won't appear in the saved file. You can hand-edit the file as long
-as it stays a valid JSON array.
+expired ones won't appear in the saved file.
+
+When editing the file by hand, keep each entry in the format shown above, since
+lychee parses it back into the same structure. If lychee cannot parse the file's
+contents, it reports an error and aborts rather than ignoring the bad entries.
 :::
