@@ -19,11 +19,13 @@ pnpm install
 pnpm dev
 ```
 
-Other scripts: `pnpm build` (production build), `pnpm preview` (serve the build), `pnpm lint`, and `pnpm format`.
+Other scripts: `pnpm build` (production build), `pnpm preview` (serve the build), `pnpm lint`, and `pnpm format`. You can also run `make watch` as a shortcut for `pnpm dev`.
 
 ## Contributing
 
 Documentation lives in `src/content/` as Markdown/MDX. To contribute, fork the repo, make your changes on a branch, and open a pull request. For problems, [open an issue](https://github.com/lycheeverse/lycheeverse.github.io/issues/new/choose).
+
+Before opening a pull request, run `pnpm precommit` to check formatting and linting, since CI enforces both.
 
 ## Project Structure
 
