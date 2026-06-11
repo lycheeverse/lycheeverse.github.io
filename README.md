@@ -1,6 +1,6 @@
 # lychee Documentation
 
-This is the source code for the official documentation of [lychee](https://github.com/lycheeverse/lychee/), a fast, async link checker.
+Source for the official documentation of [lychee](https://github.com/lycheeverse/lychee/), a fast, async link checker.
 
 [![Links](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-links.yml)
 [![Code Quality](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/check-code-quality.yml)
@@ -8,44 +8,22 @@ This is the source code for the official documentation of [lychee](https://githu
 [![Deploy](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml/badge.svg)](https://github.com/lycheeverse/lycheeverse.github.io/actions/workflows/deploy.yml)
 [![Built with Starlight](https://astro.badg.es/v2/built-with-starlight/tiny.svg)](https://starlight.astro.build)
 
-## Quick Start
+## Development
 
-### Prerequisites
-
-- [Node.js](https://nodejs.org/) (v18+)
-- [pnpm](https://pnpm.io/) package manager
-
-### Development
+Requires [Node.js](https://nodejs.org/) (v18+) and [pnpm](https://pnpm.io/).
 
 ```bash
-# Clone the repository
 git clone https://github.com/lycheeverse/lycheeverse.github.io.git
-```
-
-```bash
-# Install dependencies
+cd lycheeverse.github.io
 pnpm install
-```
-
-```bash
-# Start local dev server
 pnpm dev
 ```
 
+Other scripts: `pnpm build` (production build), `pnpm preview` (serve the build), `pnpm lint`, and `pnpm format`.
+
 ## Contributing
 
-We welcome contributions! Here's how to help:
-
-### Report Issues
-
-Found a problem? Check if it's already been reported in our [issues](https://github.com/lycheeverse/lycheeverse.github.io/issues). If not, [create a new issue](https://github.com/lycheeverse/lycheeverse.github.io/issues/new/choose).
-
-### Submit Changes
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes (fix typos, broken links, etc.)
-4. Submit a pull request
+Documentation lives in `src/content/` as Markdown/MDX. To contribute, fork the repo, make your changes on a branch, and open a pull request. For problems, [open an issue](https://github.com/lycheeverse/lycheeverse.github.io/issues/new/choose).
 
 ## Project Structure
 
