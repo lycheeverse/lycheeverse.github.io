@@ -36,6 +36,6 @@ We want the extractors to be as fast and memory-efficient as possible.
 
 Currently we support three main extractors:
 
-- [Pulldown CMark](https://github.com/raphlinus/pulldown-cmark) for Markdown files
+- [Pulldown CMark](https://github.com/pulldown-cmark/pulldown-cmark) for Markdown files
 - [html5gum](https://github.com/untitaker/html5gum) for HTML
 - [linkify](https://github.com/robinst/linkify) as a fallback for plaintext files and other unknown formats.

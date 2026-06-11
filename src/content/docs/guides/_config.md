@@ -2,7 +2,7 @@
 title: Configuration File
 ---
 
-The configuration file is a [TOML](https://toml.io) file that can be used to specify the options that are also available on the command line.
+The configuration file is a [TOML](https://toml.io/en/) file that can be used to specify the options that are also available on the command line.
 It comes in handy when you want to specify a lot of options, or when you want to configure lychee for continuous integration as part of a repository.
 
 By default `lychee.toml` is used if it exists in the current working directory.

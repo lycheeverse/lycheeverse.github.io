@@ -11,4 +11,4 @@ You can use that argument multiple times to add more headers.
 Or, you can accept all content/MIME types: `--header "accept=*/*"`.
 
 Learn more about the `Accept` header
-[over at MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept).
+[over at MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Headers/Accept).
