@@ -30,6 +30,17 @@ Please head over to our [Open Collective](https://opencollective.com/lychee-coll
       <a href="https://ngi.eu">Next Generation Internet</a> programme.
     </p>
   </div>
+  <div class="sponsor">
+    <a class="sponsor-logo" href="https://opencollective.com/lychee-collective">
+      <img src="/sponsors/opencollective.svg" alt="Open Collective logo" width="200" />
+    </a>
+    <p class="sponsor-description">
+      Open Collective is home to our
+      <a href="https://opencollective.com/lychee-collective">lychee Collective</a>,
+      where individuals and companies back lychee's development out in the open. A
+      huge thank you to everyone who contributes there!
+    </p>
+  </div>
 </div>
 
 ## Past sponsors
@@ -56,3 +67,7 @@ A heartfelt thank you to those who supported lychee in the past.
     </p>
   </div>
 </div>
+
+---
+
+We are deeply grateful to all of our sponsors and backers. Your support keeps lychee free, open source, and sustainable. Thank you!
