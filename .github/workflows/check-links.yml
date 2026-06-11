@@ -16,8 +16,6 @@ jobs:
 
       - name: Build site
         uses: withastro/action@v5
-        with:
-          package-manager: pnpm@11.5.2
 
       - name: Link Checker
         id: lychee
