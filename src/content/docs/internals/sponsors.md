@@ -25,7 +25,7 @@ Please head over to our [Open Collective](https://opencollective.com/lychee-coll
     </a>
     <p class="sponsor-description">
       NLnet is supporting the open internet since 1997. lychee received financial
-      support through the <a href="https://nlnet.nl/core">NGI0 Core Fund</a>,
+      support through the <a href="https://nlnet.nl/core/">NGI0 Core Fund</a>,
       established by NLnet with financial support from the European Commission's
       <a href="https://ngi.eu">Next Generation Internet</a> programme.
     </p>
